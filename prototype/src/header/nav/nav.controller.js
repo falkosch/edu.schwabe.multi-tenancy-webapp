@@ -1,23 +1,20 @@
 import { NavServiceName } from './nav.service';
 
 export class NavController {
+
     static $inject = [
         '$scope',
         NavServiceName,
     ];
 
-    #$scope;
-
-    #navService;
-
     constructor($scope, navService) {
-        this.#$scope = $scope;
-        this.#navService = navService;
+        this.$scope = $scope;
+        this.navService = navService;
     }
 
     $onInit() {
-        this.#$scope.$watchCollection(
-            () => this.#navService.entries,
+        this.$scope.$watchCollection(
+            () => this.navService.entries,
             (v) => { this.entries = v; },
         );
     }

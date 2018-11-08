@@ -1,36 +1,48 @@
-// import { expect } from 'chai';
-// import { createStubInstance } from 'sinon';
-// import { NavService } from './nav.service';
+import { NavModule } from './nav.module';
+import { NavController } from './nav.controller';
+import { NavServiceName } from './nav.service';
+import { NavName } from './nav.component';
 
-// const AppControllerInjector = require('inject-loader!./nav.controller');
+describe(`${NavModule}.${NavName} component controller`, () => {
 
-// describe('nav.controller', () => {
+    const testData = [{
+        text: 'test',
+        state: 'Test',
+    }];
 
-//    let navService;
-//    let controller;
+    const navServiceMock = {
+        entries: testData,
+    };
 
-//    beforeEach(() => {
-//        module('app.header.nav');
+    let $scope;
+    let navController;
 
-//        // mock the service
-//        inject((_navService_) => {
-//            navService = _navService_;
-//        });
-//    });
+    beforeEach(() => {
 
-//    it('Should exist', () => {
-//        expect(service).to.be.defined;
-//    });
+        angular.mock.module(NavModule);
 
-//    beforeEach(() => {
-//        const { AppController } = AppControllerInjector({
-//            './fancyJsModule.js': {},
-//        });
+        inject(($rootScope, $componentController) => {
 
-//        controller = new AppController(scope, createStubInstance(NavService));
-//    });
+            $scope = $rootScope.$new();
 
-//    it('should test', () => {
-//        expect(controller).to.be.not.undefined();
-//    });
-// });
+            navController = $componentController(NavName, {
+                $scope,
+                [NavServiceName]: navServiceMock,
+            });
+        });
+    });
+
+    it(`should be an instanceof ${NavName} component controller`, () => {
+        expect(navController)
+            .toEqual(jasmine.any(NavController));
+    });
+
+    it(`should put ${NavServiceName}.entries on "this" when $onInit is called`, () => {
+        navController.$onInit();
+        $scope.$digest();
+
+        expect(navController.entries)
+            .toEqual(testData);
+    });
+
+});

@@ -4,18 +4,22 @@ module.exports = (config) => {
     const testSuite = './src/app.karma.js';
 
     config.set({
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['jasmine'],
         files: [testSuite],
         preprocessors: {
             [testSuite]: ['webpack', 'sourcemap'],
         },
         webpack: webpackConfig,
-        webpackMiddleware: {},
-
-        reporters: ['progress', 'mocha', 'coverage'],
-        mochaReporter: {
-            output: 'autowatch',
+        webpackMiddleware: {
+            stats: 'minimal',
         },
+
+        reporters: [
+            'spec',
+            'kjhtml',
+            'coverage',
+            'summary',
+        ],
         coverageReporter: {
             dir: 'coverage/',
             reporters: [{ type: 'text' }],

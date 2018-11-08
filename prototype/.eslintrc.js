@@ -1,8 +1,13 @@
 module.exports = {
-    extends: 'airbnb-base',
+    extends: [
+        'airbnb-base',
+        'plugin:jasmine/recommended',
+        'plugin:lodash/canonical',
+    ],
     parser: 'babel-eslint',
     plugins: [
-        'mocha',
+        'jasmine',
+        'lodash',
     ],
     rules: {
         'indent': ['error', 4],
@@ -17,13 +22,14 @@ module.exports = {
                 'src/**/*.spec.js',
             ],
             env: {
-                mocha: true,
+                jasmine: true,
             },
             globals: {
                 angular: true,
                 inject: true,
             },
             rules: {
+                'jasmine/no-spec-dupes': 'off',
             },
         },
         {
@@ -33,7 +39,7 @@ module.exports = {
                 'src/**/*.spec.js',
             ],
             rules: {
-                'import/no-extraneous-dependencies': 'off',
+                'import/no-extraneous-dependencies': 'off'
             },
         },
     ],

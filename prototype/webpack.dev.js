@@ -18,9 +18,6 @@ module.exports = merge(
         },
         plugins: [
             new HotModuleReplacementPlugin(),
-            new SourceMapDevToolPlugin({
-                exclude: /vendors/,
-            }),
         ],
     },
 );
