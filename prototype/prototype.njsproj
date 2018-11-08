@@ -123,7 +123,6 @@
     <Content Include="src\start\start.template.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="coverage\" />
     <Folder Include="src\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\roboto\" />
