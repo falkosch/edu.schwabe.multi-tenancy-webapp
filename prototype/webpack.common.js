@@ -1,0 +1,71 @@
+const path = require('path');
+const { HashedModuleIdsPlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const polyfillSuite = '@babel/polyfill';
+const srcSuite = './src/app.module.js';
+
+module.exports = {
+    entry: {
+        [polyfillSuite]: polyfillSuite,
+        [srcSuite]: srcSuite,
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'src/index.html',
+        }),
+        new HashedModuleIdsPlugin(),
+    ],
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /[\\/]node_modules[\\/]/,
+                use: ['babel-loader'],
+            },
+            {
+                test: /\.template\.html?$/,
+                use: [
+                    'ngtemplate-loader?requireAngular',
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            minimize: true,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.(png|svg|jpe?g|gif)$/,
+                use: ['file-loader'],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: ['file-loader'],
+            },
+        ],
+    },
+};

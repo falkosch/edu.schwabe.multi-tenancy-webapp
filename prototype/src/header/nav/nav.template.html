@@ -1,0 +1,12 @@
+<ol>
+    <li ng-repeat="entry in $ctrl.entries">
+        <a ng-if="entry.state" ui-sref="{{entry.state}}" ui-sref-active="active">
+            <span ng-bind="entry.text"></span>
+            |
+        </a>
+        <a ng-if="entry.handler" ng-click="entry.handler($event)">
+            <span ng-bind="entry.text"></span>
+            <span ng-if="!$last">|</span>
+        </a>
+    </li>
+</ol>

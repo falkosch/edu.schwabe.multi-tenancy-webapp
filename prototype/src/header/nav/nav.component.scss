@@ -1,0 +1,14 @@
+
+app-nav {
+    ol {
+        display: inline-block;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    .active {
+        outline: 1px solid green;
+    }
+}
