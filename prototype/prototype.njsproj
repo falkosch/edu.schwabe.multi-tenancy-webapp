@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".eslintrc.js" />
+    <Compile Include="jsdoc.conf.js" />
     <Compile Include="karma.conf.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
