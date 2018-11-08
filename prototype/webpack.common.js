@@ -2,13 +2,10 @@ const path = require('path');
 const { HashedModuleIdsPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const polyfillSuite = '@babel/polyfill';
-const srcSuite = './src/app.module.js';
-
 module.exports = {
     entry: {
-        [polyfillSuite]: polyfillSuite,
-        [srcSuite]: srcSuite,
+        'babel-polyfill': '@babel/polyfill',
+        app: './src/app.module.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

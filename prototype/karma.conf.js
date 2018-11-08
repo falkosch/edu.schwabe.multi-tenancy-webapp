@@ -1,14 +1,12 @@
 const webpackConfig = require('./webpack.dev');
 
 module.exports = (config) => {
-    const srcSuite = './src/app.module.js';
     const testSuite = './src/app.karma.js';
 
     config.set({
         frameworks: ['mocha', 'chai'],
-        files: [srcSuite, testSuite],
+        files: [testSuite],
         preprocessors: {
-            [srcSuite]: ['webpack', 'sourcemap', 'coverage'],
             [testSuite]: ['webpack', 'sourcemap'],
         },
         webpack: webpackConfig,
@@ -20,7 +18,7 @@ module.exports = (config) => {
         },
         coverageReporter: {
             dir: 'coverage/',
-            reporters: [{ type: 'html' }, { type: 'text' }],
+            reporters: [{ type: 'text' }],
         },
 
         browsers: ['ChromeHeadless'],

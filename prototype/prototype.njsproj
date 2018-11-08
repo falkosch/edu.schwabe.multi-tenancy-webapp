@@ -139,7 +139,8 @@
     <Compile Include="karma.conf.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
-    <Compile Include="src\app.controller.spec.js" />
+    <Compile Include="src\header\nav\nav.service.spec.js" />
+    <Compile Include="src\header\nav\nav.controller.spec.js" />
     <Compile Include="src\app.karma.js" />
     <Compile Include="src\app.module.js" />
     <Compile Include="src\app.route.js" />
