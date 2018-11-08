@@ -16,7 +16,6 @@ module.exports = (config) => {
 
         reporters: [
             'spec',
-            'kjhtml',
             'coverage',
             'summary',
         ],
@@ -25,6 +24,6 @@ module.exports = (config) => {
             reporters: [{ type: 'text' }],
         },
 
-        browsers: ['ChromeHeadless'],
+        browsers: ['ChromeHeadless', 'PhantomJS'],
     });
 };
