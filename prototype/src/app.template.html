@@ -1,3 +1,26 @@
-<header ui-view="header"><app-header></app-header></header>
-<main ui-view="main"></main>
-<footer ui-view="footer"><app-footer></app-footer></footer>
+<div layout="row" flex>
+    <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="2">
+        <header ui-view="header">
+            <app-header></app-header>
+        </header>
+    </md-sidenav>
+
+    <div layout="column" flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button ng-click="$ctrl.toggleSideNav()" hide-gt-sm class="md-icon-button">
+                    <md-icon>menu</md-icon>
+                </md-button>
+                <h2 flex md-truncate>Toolbar</h2>
+            </div>
+        </md-toolbar>
+
+        <main ui-view="main"></main>
+
+        <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">
+            <footer ui-view="footer">
+                <app-footer></app-footer>
+            </footer>
+        </div>
+    </div>
+</div>
