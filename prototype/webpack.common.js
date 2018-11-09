@@ -1,6 +1,7 @@
 const path = require('path');
 const { HashedModuleIdsPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -15,6 +16,13 @@ module.exports = {
             template: 'src/index.html',
         }),
         new HashedModuleIdsPlugin(),
+        new FaviconsWebpackPlugin({
+            logo: './src/assets/favicon.png',
+            icons: {
+                appleStartup: false,
+                windows: true,
+            },
+        }),
     ],
     optimization: {
         runtimeChunk: 'single',
