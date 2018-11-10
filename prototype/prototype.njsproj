@@ -32,6 +32,7 @@
   <ItemGroup>
     <Content Include=".babelrc.js" />
     <Content Include=".eslintignore" />
+    <Content Include=".stylelintignore" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\app.component.scss" />
@@ -188,6 +189,7 @@
     <Compile Include="src\ui\busy-spinner\busy-spinner.component.js" />
     <Compile Include="src\ui\busy-spinner\busy-spinner.controller.js" />
     <Compile Include="src\ui\ui.module.js" />
+    <Compile Include="stylelint.config.js" />
     <Compile Include="webpack.common.js" />
     <Compile Include="webpack.dev.js" />
     <Compile Include="webpack.prod.js" />

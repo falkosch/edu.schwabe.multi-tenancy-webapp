@@ -6,7 +6,7 @@ app-nav {
     }
 
     .material-icons {
-        &:before {
+        &::before {
             vertical-align: middle;
         }
 

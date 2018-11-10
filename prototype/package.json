@@ -11,7 +11,9 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "cross-env NODE_ENV=test karma start --single-run",
     "docs": "jsdoc -c jsdoc.conf.js",
-    "docs:serve": "http-server -s --cors ./docs"
+    "docs:serve": "http-server -s --cors ./docs",
+    "lint:js": "eslint . --fix",
+    "lint:scss": "stylelint . --fix"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -22,8 +24,11 @@
     "angular-aria": "^1.7.5",
     "angular-material": "^1.1.10",
     "angular-messages": "^1.7.5",
+    "jslinq": "^1.0.21",
     "lodash": "^4.17.11",
-    "material-icons": "^0.2.3"
+    "material-icons": "^0.2.3",
+    "moment": "^2.22.2",
+    "uuid-browser": "^3.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -66,6 +71,9 @@
     "sass-loader": "^7.1.0",
     "sinon": "^7.1.1",
     "style-loader": "^0.23.1",
+    "stylelint": "^9.8.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-scss": "^3.4.0",
     "webpack": "^4.24.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",

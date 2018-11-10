@@ -4,3 +4,8 @@
 /obj/**
 /bin/**
 /docs/**
+*.json
+*.eot
+*.ttf
+*.woff
+*.png
