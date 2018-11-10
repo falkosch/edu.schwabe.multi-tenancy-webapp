@@ -1,5 +1,5 @@
 const merge = require('webpack-merge');
-const { HotModuleReplacementPlugin, SourceMapDevToolPlugin } = require('webpack');
+const { HotModuleReplacementPlugin } = require('webpack');
 
 const common = require('./webpack.common');
 
