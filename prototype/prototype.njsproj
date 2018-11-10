@@ -116,6 +116,8 @@
     <Content Include="src\header\nav\nav.component.scss" />
     <Content Include="src\header\nav\nav.template.html" />
     <Content Include="src\index.html" />
+    <Content Include="src\login\login.component.scss" />
+    <Content Include="src\login\login.template.html" />
     <Content Include="src\scss\base\_all.scss" />
     <Content Include="src\scss\base\_mixins.scss" />
     <Content Include="src\scss\vendor\_angular-material-variables.scss" />
@@ -135,6 +137,7 @@
     <Folder Include="src\header\" />
     <Folder Include="src\footer\" />
     <Folder Include="src\header\nav\" />
+    <Folder Include="src\login\" />
     <Folder Include="src\scss\" />
     <Folder Include="src\scss\base\" />
     <Folder Include="src\scss\vendor\" />
@@ -151,6 +154,11 @@
     <Compile Include="src\app.karma.js" />
     <Compile Include="src\app.module.js" />
     <Compile Include="src\app.route.js" />
+    <Compile Include="src\login\login-navigation.run.js" />
+    <Compile Include="src\login\login.component.js" />
+    <Compile Include="src\login\login.controller.js" />
+    <Compile Include="src\login\login.module.js" />
+    <Compile Include="src\login\login.route.js" />
     <Compile Include="src\start\start-navigation.run.js" />
     <Compile Include="src\start\start.run.js" />
     <Compile Include="src\footer\footer.component.js" />

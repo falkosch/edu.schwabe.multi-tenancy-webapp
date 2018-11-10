@@ -8,6 +8,7 @@ import uiRouter from '@uirouter/angularjs';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { StartModule } from './start/start.module';
+import { LoginModule } from './login/login.module';
 
 import { AppComponent, AppName } from './app.component';
 import { appRoute } from './app.route';
@@ -22,6 +23,7 @@ export const AppModule = angular
         HeaderModule,
         FooterModule,
         StartModule,
+        LoginModule,
     ])
     .component(AppName, AppComponent)
     .config(appRoute)
