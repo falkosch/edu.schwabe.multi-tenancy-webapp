@@ -15,17 +15,4 @@ export class NavService {
 
         return this;
     }
-
-    /**
-     * @param {string} text human-readable text for the link
-     * @param {Function} handler handler click callback
-     */
-    forHandler(text, handler) {
-        this.entries.push({
-            text,
-            handler,
-        });
-
-        return this;
-    }
 }
