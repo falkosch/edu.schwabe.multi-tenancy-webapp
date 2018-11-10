@@ -1,5 +1,5 @@
 <div layout="row" flex>
-    <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="2">
+    <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-is-open="true" md-whiteframe="2">
         <header ui-view="header">
             <app-header></app-header>
         </header>
@@ -8,14 +8,15 @@
     <div layout="column" flex>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <md-button ng-click="$ctrl.toggleSideNav()" hide-gt-sm class="md-icon-button">
+                <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
                     <md-icon>menu</md-icon>
                 </md-button>
-                <h2 flex md-truncate>Toolbar</h2>
+                <h2 flex md-truncate ng-bind="$ctrl.currentStateTitle || 'Toolbar'"></h2>
             </div>
         </md-toolbar>
 
-        <main ui-view="main"></main>
+        <md-content role="main" ui-view="main" layout="row" layout-align="center">
+        </md-content>
 
         <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">
             <footer ui-view="footer">

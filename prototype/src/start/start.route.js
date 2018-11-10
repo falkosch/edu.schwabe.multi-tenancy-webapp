@@ -8,7 +8,7 @@ export function startRoute($stateProvider) {
     $stateProvider
         .state({
             name: StartStateId,
-            url: '',
+            url: '/',
             views: {
                 main: StartName,
             },

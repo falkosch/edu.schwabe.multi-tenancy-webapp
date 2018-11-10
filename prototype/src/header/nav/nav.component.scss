@@ -1,10 +1,21 @@
+@import "../../scss/vendor/_material-icons-mixins.scss";
 
 app-nav {
-    ol {
-        display: inline-block;
+    li {
+        list-style-type: none;
     }
 
-    li {
-        display: inline-block;
+    .material-icons {
+        &:before {
+            vertical-align: middle;
+        }
+
+        @include material-icon("radio_button_unchecked");
+    }
+
+    .active {
+        .material-icons {
+            @include material-icon("radio_button_checked");
+        }
     }
 }

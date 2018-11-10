@@ -36,6 +36,7 @@
     <Content Include="README.md" />
     <Content Include="src\app.component.scss" />
     <Content Include="src\app.template.html" />
+    <Content Include="src\assets\favicon.png" />
     <Content Include="src\assets\roboto\Roboto-Black-webfont.eot" />
     <Content Include="src\assets\roboto\Roboto-Black-webfont.svg" />
     <Content Include="src\assets\roboto\Roboto-Black-webfont.ttf" />
