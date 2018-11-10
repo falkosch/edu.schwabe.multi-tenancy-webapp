@@ -136,10 +136,12 @@
     <Folder Include="src\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\roboto\" />
+    <Folder Include="src\core\promise-tracker\" />
     <Folder Include="src\header\" />
     <Folder Include="src\footer\" />
     <Folder Include="src\header\nav\" />
     <Folder Include="src\login\" />
+    <Folder Include="src\core\" />
     <Folder Include="src\ui\" />
     <Folder Include="src\scss\" />
     <Folder Include="src\scss\base\" />
@@ -153,6 +155,10 @@
     <Compile Include="karma.conf.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
+    <Compile Include="src\app-ui-router-transitions.run.js" />
+    <Compile Include="src\core\core.module.js" />
+    <Compile Include="src\core\promise-tracker\promise-tracker.service.js" />
+    <Compile Include="src\core\promise-tracker\promise-tracker.module.js" />
     <Compile Include="src\header\nav\nav.service.spec.js" />
     <Compile Include="src\header\nav\nav.controller.spec.js" />
     <Compile Include="src\app.karma.js" />
