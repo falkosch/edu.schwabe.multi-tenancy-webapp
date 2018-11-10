@@ -5,6 +5,8 @@ import angularMessages from 'angular-messages';
 import angularMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
 
+import { CoreModule } from './core/core.module';
+import { UiModule } from './ui/ui.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { StartModule } from './start/start.module';
@@ -12,6 +14,7 @@ import { LoginModule } from './login/login.module';
 
 import { AppComponent, AppName } from './app.component';
 import { appRoute } from './app.route';
+import { appUiRouterTransitionsRun } from './app-ui-router-transitions.run';
 
 export const AppModule = angular
     .module('app', [
@@ -20,6 +23,8 @@ export const AppModule = angular
         angularMessages,
         angularMaterial,
         uiRouter,
+        CoreModule,
+        UiModule,
         HeaderModule,
         FooterModule,
         StartModule,
@@ -27,4 +32,5 @@ export const AppModule = angular
     ])
     .component(AppName, AppComponent)
     .config(appRoute)
+    .run(appUiRouterTransitionsRun)
     .name;

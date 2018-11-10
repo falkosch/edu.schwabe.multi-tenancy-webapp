@@ -1,5 +1,6 @@
 <div layout="row" flex>
     <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-is-open="true" md-whiteframe="2">
+<app-busy-spinner busy="$ctrl.isBusy"></app-busy-spinner>
         <header ui-view="header">
             <app-header></app-header>
         </header>

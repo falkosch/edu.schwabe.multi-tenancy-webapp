@@ -129,6 +129,8 @@
     <Content Include="src\scss\vendor\_all.scss" />
     <Content Include="src\start\start.component.scss" />
     <Content Include="src\start\start.template.html" />
+    <Content Include="src\ui\busy-spinner\busy-spinner.component.scss" />
+    <Content Include="src\ui\busy-spinner\busy-spinner.template.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
@@ -138,10 +140,12 @@
     <Folder Include="src\footer\" />
     <Folder Include="src\header\nav\" />
     <Folder Include="src\login\" />
+    <Folder Include="src\ui\" />
     <Folder Include="src\scss\" />
     <Folder Include="src\scss\base\" />
     <Folder Include="src\scss\vendor\" />
     <Folder Include="src\start\" />
+    <Folder Include="src\ui\busy-spinner\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".eslintrc.js" />
@@ -175,6 +179,9 @@
     <Compile Include="src\start\start.controller.js" />
     <Compile Include="src\start\start.route.js" />
     <Compile Include="src\start\start.module.js" />
+    <Compile Include="src\ui\busy-spinner\busy-spinner.component.js" />
+    <Compile Include="src\ui\busy-spinner\busy-spinner.controller.js" />
+    <Compile Include="src\ui\ui.module.js" />
     <Compile Include="webpack.common.js" />
     <Compile Include="webpack.dev.js" />
     <Compile Include="webpack.prod.js" />
