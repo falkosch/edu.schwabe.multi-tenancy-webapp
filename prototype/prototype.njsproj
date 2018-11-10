@@ -115,10 +115,15 @@
     <Content Include="src\header\nav\nav.component.scss" />
     <Content Include="src\header\nav\nav.template.html" />
     <Content Include="src\index.html" />
+    <Content Include="src\scss\base\_all.scss" />
+    <Content Include="src\scss\base\_mixins.scss" />
+    <Content Include="src\scss\vendor\_angular-material-variables.scss" />
+    <Content Include="src\scss\vendor\_material-icons-mixins.scss" />
+    <Content Include="src\scss\vendor\_material-icons.scss" />
     <Content Include="src\scss\vendor\_angular-material.scss" />
-    <Content Include="src\scss\_fonts.scss" />
-    <Content Include="src\scss\_variables.scss" />
-    <Content Include="src\scss\_vendor.scss" />
+    <Content Include="src\scss\vendor\_fonts.scss" />
+    <Content Include="src\scss\base\_variables.scss" />
+    <Content Include="src\scss\vendor\_all.scss" />
     <Content Include="src\start\start.component.scss" />
     <Content Include="src\start\start.template.html" />
   </ItemGroup>
@@ -130,6 +135,7 @@
     <Folder Include="src\footer\" />
     <Folder Include="src\header\nav\" />
     <Folder Include="src\scss\" />
+    <Folder Include="src\scss\base\" />
     <Folder Include="src\scss\vendor\" />
     <Folder Include="src\start\" />
   </ItemGroup>
