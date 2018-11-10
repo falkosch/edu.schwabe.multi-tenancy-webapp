@@ -13,6 +13,7 @@ module.exports = merge(
             filename: '[name].bundle.js',
         },
         devServer: {
+            historyApiFallback: true,
             contentBase: './dist',
             hot: true,
         },
