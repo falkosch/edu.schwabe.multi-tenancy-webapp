@@ -1,10 +1,13 @@
 import { AppName } from './app.component';
 
-appRoute.$inject = ['$stateProvider'];
+appRoute.$inject = ['$locationProvider', '$stateProvider'];
 
 export function appRoute(
+    $locationProvider,
     $stateProvider,
 ) {
+    $locationProvider.html5Mode(true);
+
     $stateProvider
         .state({
             name: 'app',
