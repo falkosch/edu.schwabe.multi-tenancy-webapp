@@ -1,6 +1,6 @@
-<div layout="row" flex>
-    <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-is-open="true" md-whiteframe="2">
 <app-busy-spinner busy="$ctrl.isBusy"></app-busy-spinner>
+<div layout="row">
+    <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-whiteframe="2">
         <header ui-view="header">
             <app-header></app-header>
         </header>
@@ -12,11 +12,17 @@
                 <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
                     <md-icon>menu</md-icon>
                 </md-button>
-                <h2 flex md-truncate ng-bind="$ctrl.currentStateTitle || 'Toolbar'"></h2>
+                <h2 md-truncate>
+                    Welcome
+                    <span ng-if="$ctrl.currentStateTitle">
+                        -
+                        <span ng-bind="$ctrl.currentStateTitle"></span>
+                    </span>
+                </h2>
             </div>
         </md-toolbar>
 
-        <md-content role="main" ui-view="main" layout="row" layout-align="center">
+        <md-content role="main" ui-view="main" layout="row" layout-align="center" md-scroll-y>
         </md-content>
 
         <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">

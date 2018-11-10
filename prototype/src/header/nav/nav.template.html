@@ -1,6 +1,6 @@
-<ol>
+<ol layout-padding>
     <li ng-repeat="entry in $ctrl.entries" ui-sref-active="active">
-        <span class="material-icons"></span> 
+        <span class="material-icons"></span>
         <a ng-if="entry.state" ui-sref="{{entry.state}}" ui-sref-active="md-accent" ng-bind="entry.text"></a>
         <a ng-if="entry.handler" ng-click="entry.handler($event)" ng-bind="entry.text"></a>
     </li>
