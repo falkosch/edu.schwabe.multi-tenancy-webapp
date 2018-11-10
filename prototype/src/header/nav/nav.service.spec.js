@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import { NavServiceName, NavService } from './nav.service';
 import { NavModule } from './nav.module';
