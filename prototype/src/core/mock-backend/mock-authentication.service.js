@@ -3,7 +3,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import { AuthenticationServiceName, Authorization, Permissions } from '../backend/authentication.service';
-import { BackendErrors } from '../backend/backend-base';
+import { BackendErrors } from '../backend/backend-errors';
 
 export const MockAuthenticationServiceName = AuthenticationServiceName;
 

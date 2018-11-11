@@ -1,4 +1,4 @@
-import { BackendErrors } from './backend-base';
+import { BackendErrors } from './backend-errors';
 
 export const AuthenticationServiceName = 'authenticationService';
 
