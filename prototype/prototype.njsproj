@@ -150,6 +150,7 @@
     <Compile Include="src\core\annotations\injection.service.js" />
     <Compile Include="src\core\mock-backend\mock-backend.module.js" />
     <Compile Include="src\core\mock-backend\mock-authentication.service.js" />
+    <Compile Include="src\core\promise-tracker\promise-tracker.service.spec.js" />
     <Compile Include="src\core\promise-tracker\promise-tracker.service.js" />
     <Compile Include="src\core\promise-tracker\promise-tracker.module.js" />
     <Compile Include="src\core\user-state\user-state.service.js" />
@@ -162,6 +163,7 @@
     <Compile Include="src\app.karma.js" />
     <Compile Include="src\app.module.js" />
     <Compile Include="src\app.route.js" />
+    <Compile Include="src\login\login.controller.spec.js" />
     <Compile Include="src\login\login-navigation.run.js" />
     <Compile Include="src\login\login.component.js" />
     <Compile Include="src\login\login.controller.js" />
@@ -169,6 +171,7 @@
     <Compile Include="src\login\login.route.js" />
     <Compile Include="src\app.route.spec.js" />
     <Compile Include="src\login\login.route.spec.js" />
+    <Compile Include="src\login\login-navigation.run.spec.js" />
     <Compile Include="src\start\start-navigation.run.spec.js" />
     <Compile Include="src\start\start.route.spec.js" />
     <Compile Include="src\start\start.run.spec.js" />
