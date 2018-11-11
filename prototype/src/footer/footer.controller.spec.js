@@ -11,9 +11,7 @@ describe(`${FooterModule}.${FooterName} component controller`, () => {
         angular.mock.module(FooterModule);
 
         inject(($componentController) => {
-
             footerController = $componentController(FooterName);
-
         });
 
     });

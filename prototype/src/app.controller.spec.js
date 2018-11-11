@@ -5,49 +5,41 @@ import { PromiseTrackerServiceName } from './core/promise-tracker/promise-tracke
 
 describe(`${AppModule}.${AppName} component controller`, () => {
 
+    const promiseTrackerServiceMock = {
+        isBusy: false,
+    };
+
+    let toggleSpy;
+    let $mdSidenavMock;
+
     let appController;
 
-    describe('', () => {
+    beforeEach(() => {
 
-        beforeEach(() => {
+        toggleSpy = jasmine.createSpy('toggle');
 
-            angular.mock.module(AppModule);
+        $mdSidenavMock = jasmine.createSpy('$mdSidenav')
+            .and.returnValue({ toggle: toggleSpy });
 
-            inject(($componentController) => {
+        angular.mock.module(AppModule);
 
-                appController = $componentController(AppName);
-
+        inject(($componentController) => {
+            appController = $componentController(AppName, {
+                $mdSidenav: $mdSidenavMock,
+                [PromiseTrackerServiceName]: promiseTrackerServiceMock,
             });
-
-        });
-
-        it(`should be an instanceof ${AppName} component controller`, () => {
-
-            expect(appController)
-                .toEqual(jasmine.any(AppController));
-
         });
 
     });
 
+    it(`should be an instanceof ${AppName} component controller`, () => {
+
+        expect(appController)
+            .toEqual(jasmine.any(AppController));
+
+    });
+
     describe('.isBusy', () => {
-
-        const promiseTrackerServiceMock = {
-            isBusy: false,
-        };
-
-        beforeEach(() => {
-
-            angular.mock.module(AppModule);
-
-            inject(($componentController) => {
-
-                appController = $componentController(AppName, {
-                    [PromiseTrackerServiceName]: promiseTrackerServiceMock,
-                });
-
-            });
-        });
 
         it(`should passthrough the return value of ${PromiseTrackerServiceName}.isBusy`, () => {
 
@@ -60,6 +52,7 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
             expect(appController.isBusy)
                 .toEqual(promiseTrackerServiceMock.isBusy);
+
         });
     });
 
@@ -82,27 +75,6 @@ describe(`${AppModule}.${AppName} component controller`, () => {
     });
 
     describe('.toggleSideNav', () => {
-
-        let toggleSpy;
-        let $mdSidenavMock;
-
-        beforeEach(() => {
-
-            toggleSpy = jasmine.createSpy('toggle');
-
-            $mdSidenavMock = jasmine.createSpy('$mdSidenav')
-                .and.returnValue({ toggle: toggleSpy });
-
-            angular.mock.module(AppModule);
-
-            inject(($componentController) => {
-
-                appController = $componentController(AppName, {
-                    $mdSidenav: $mdSidenavMock,
-                });
-
-            });
-        });
 
         it(`should invoke $mdSidenav with ${AppName}.sideNavId and then call .toggle() of the returned object`, () => {
 

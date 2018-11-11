@@ -12,7 +12,6 @@ describe(`${AppModule} route config`, () => {
 
         angular.mock.module(uiRouter, ($stateProvider) => {
             $stateProviderMock = $stateProvider;
-
             spyOn($stateProviderMock, 'state');
         });
 

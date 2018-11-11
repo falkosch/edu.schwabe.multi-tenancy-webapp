@@ -10,10 +10,10 @@ describe(`${StartModule}.${StartName} component controller`, () => {
 
         angular.mock.module(StartModule);
 
-        inject(($rootScope, $componentController) => {
-
+        inject(($componentController) => {
             startController = $componentController(StartName);
         });
+
     });
 
     it(`should be an instanceof ${StartName} component controller`, () => {

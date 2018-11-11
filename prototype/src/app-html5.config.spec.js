@@ -8,6 +8,11 @@ describe(`${AppModule} html5 config`, () => {
 
     beforeEach(() => {
 
+        /*
+         * We initialize another module with a load-callback, so that we can access the one
+         * provider that we need to spy on or mock. That can't be done with the module under
+         * test.
+         */
         angular.mock.module('ng', ($locationProvider) => {
             $locationProviderMock = $locationProvider;
             spyOn($locationProviderMock, 'html5Mode');
@@ -16,7 +21,7 @@ describe(`${AppModule} html5 config`, () => {
         angular.mock.module(AppModule);
 
         /*
-         * An inject() call is required to trigger execution of the module callback for
+         * Calling inject() is required to trigger execution of the module callback for
          * angular.mock.module(...).
          */
         inject();

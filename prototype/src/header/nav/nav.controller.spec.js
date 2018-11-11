@@ -22,9 +22,7 @@ describe(`${NavModule}.${NavName} component controller`, () => {
         angular.mock.module(NavModule);
 
         inject(($rootScope, $componentController) => {
-
             $scope = $rootScope.$new();
-
             navController = $componentController(NavName, {
                 $scope,
                 [NavServiceName]: navServiceMock,

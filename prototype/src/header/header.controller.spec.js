@@ -11,7 +11,6 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
         angular.mock.module(HeaderModule);
 
         inject(($componentController) => {
-
             headerController = $componentController(HeaderName);
         });
 
