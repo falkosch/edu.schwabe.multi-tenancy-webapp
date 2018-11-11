@@ -2,12 +2,17 @@ import uuidV4 from 'uuid-browser/v4';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { AuthenticationServiceName, Authorization, Permissions } from '../backend/authentication.service';
+import {
+    AuthenticationServiceName,
+    Authorization,
+    Permissions,
+    AuthenticationService,
+} from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
 
 export const MockAuthenticationServiceName = AuthenticationServiceName;
 
-export class MockAuthenticationService {
+export class MockAuthenticationService extends AuthenticationService {
 
     static $inject = [
         '$timeout',
@@ -15,6 +20,8 @@ export class MockAuthenticationService {
     ];
 
     constructor($timeout, $q) {
+        super($q);
+
         this.$timeout = $timeout;
         this.$q = $q;
     }
