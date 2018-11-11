@@ -6,11 +6,13 @@ describe(`${NavModule}.${NavServiceName}`, () => {
     let navService;
 
     beforeEach(() => {
+
         angular.mock.module(NavModule);
 
         inject((_navService_) => {
             navService = _navService_;
         });
+
     });
 
     it(`should be an instanceof ${NavServiceName}`, () => {
@@ -23,8 +25,10 @@ describe(`${NavModule}.${NavServiceName}`, () => {
     describe('.entries', () => {
 
         it('should be an array that is empty at first', () => {
+
             expect(navService.entries)
                 .toEqual([]);
+
         });
 
     });

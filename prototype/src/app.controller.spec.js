@@ -54,6 +54,7 @@ describe(`${AppModule}.${AppName} component controller`, () => {
                 .toEqual(promiseTrackerServiceMock.isBusy);
 
         });
+
     });
 
     describe('.sideNavId', () => {

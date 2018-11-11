@@ -14,20 +14,18 @@ describe(`${NavModule}.${NavName} component controller`, () => {
         entries: testData,
     };
 
-    let $scope;
     let navController;
 
     beforeEach(() => {
 
         angular.mock.module(NavModule);
 
-        inject(($rootScope, $componentController) => {
-            $scope = $rootScope.$new();
+        inject(($componentController) => {
             navController = $componentController(NavName, {
-                $scope,
                 [NavServiceName]: navServiceMock,
             });
         });
+
     });
 
     it(`should be an instanceof ${NavName} component controller`, () => {
@@ -39,11 +37,14 @@ describe(`${NavModule}.${NavName} component controller`, () => {
 
     it(`should put ${NavServiceName}.entries on "this" when ${NavName}.$onInit is called`, () => {
 
-        navController.$onInit();
-        $scope.$digest();
+        inject(($rootScope) => {
+            navController.$onInit();
+            $rootScope.$digest();
 
-        expect(navController.entries)
-            .toEqual(testData);
+            expect(navController.entries)
+                .toEqual(testData);
+
+        });
 
     });
 

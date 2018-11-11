@@ -15,11 +15,11 @@ describe(`${UiModule}.${BusySpinnerName} component controller`, () => {
         };
     }
 
-    function busyChangeObj(newBusy, prevBusy) {
+    function createChangeObj(newValue, prevValue = !newValue, name = 'busy') {
         return {
-            busy: {
-                currentValue: newBusy,
-                previousValue: (arguments.length === 1) ? !newBusy : prevBusy,
+            [name]: {
+                currentValue: newValue,
+                previousValue: prevValue,
             },
         };
     }
@@ -113,8 +113,25 @@ describe(`${UiModule}.${BusySpinnerName} component controller`, () => {
 
             inject(createInjectWithBindings(undefined));
 
-            busySpinnerController.$onChanges(busyChangeObj(false, false));
-            busySpinnerController.$onChanges(busyChangeObj(true, true));
+            busySpinnerController.$onChanges(createChangeObj(false, false));
+            busySpinnerController.$onChanges(createChangeObj(true, true));
+
+            expect(mocks.$element.addClass)
+                .toHaveBeenCalledTimes(0);
+
+            expect(mocks.$element.removeClass)
+                .toHaveBeenCalledTimes(0);
+
+        });
+
+        it('should noop when something else but not busy changes', () => {
+
+            inject(createInjectWithBindings(undefined));
+
+            busySpinnerController.$onChanges(createChangeObj(false, false, 'other'));
+            busySpinnerController.$onChanges(createChangeObj(false, true, 'other'));
+            busySpinnerController.$onChanges(createChangeObj(true, false, 'other'));
+            busySpinnerController.$onChanges(createChangeObj(true, true, 'other'));
 
             expect(mocks.$element.addClass)
                 .toHaveBeenCalledTimes(0);
@@ -128,7 +145,7 @@ describe(`${UiModule}.${BusySpinnerName} component controller`, () => {
 
             inject(createInjectWithBindings(undefined));
 
-            busySpinnerController.$onChanges(busyChangeObj(false));
+            busySpinnerController.$onChanges(createChangeObj(false));
 
             expect(mocks.$element.addClass)
                 .toHaveBeenCalledWith(NgHide);
@@ -142,7 +159,7 @@ describe(`${UiModule}.${BusySpinnerName} component controller`, () => {
 
             inject(createInjectWithBindings(undefined));
 
-            busySpinnerController.$onChanges(busyChangeObj(true));
+            busySpinnerController.$onChanges(createChangeObj(true));
 
             expect(mocks.$element.addClass)
                 .toHaveBeenCalledTimes(0);
