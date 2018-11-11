@@ -1,17 +1,21 @@
+import _ from 'lodash';
+
 import { PromiseTrackerServiceName, PromiseTrackerService } from './promise-tracker.service';
 import { PromiseTrackerModule } from './promise-tracker.module';
 
 describe(`${PromiseTrackerModule}.${PromiseTrackerServiceName}`, () => {
 
     let $q;
+    let $rootScope;
     let promiseTrackerService;
 
     beforeEach(() => {
 
         angular.mock.module(PromiseTrackerModule);
 
-        inject((_$q_, _promiseTrackerService_) => {
+        inject((_$q_, _$rootScope_, _promiseTrackerService_) => {
             $q = _$q_;
+            $rootScope = _$rootScope_;
             promiseTrackerService = _promiseTrackerService_;
         });
 
@@ -59,16 +63,9 @@ describe(`${PromiseTrackerModule}.${PromiseTrackerServiceName}`, () => {
 
     });
 
-    describe('.tracked', () => {
+    describe('.track', () => {
 
-        it('should be an array that is empty at first', () => {
-
-            expect(promiseTrackerService.tracked)
-                .toEqual([]);
-
-        });
-
-        it('should contain a promise after tracking that promise', () => {
+        it('should accept promises', () => {
 
             const deferred = $q.defer();
             const { promise } = deferred;
@@ -80,14 +77,88 @@ describe(`${PromiseTrackerModule}.${PromiseTrackerServiceName}`, () => {
 
         });
 
+        it('should accept anything but not track it', () => {
+
+            promiseTrackerService.track(undefined);
+            promiseTrackerService.track(null);
+            promiseTrackerService.track(0);
+            promiseTrackerService.track(1);
+            promiseTrackerService.track(0.1);
+            promiseTrackerService.track('');
+            promiseTrackerService.track('any');
+            promiseTrackerService.track([]);
+            promiseTrackerService.track({});
+
+            expect(promiseTrackerService.tracked)
+                .toEqual([]);
+
+        });
 
     });
 
-    describe('.isIdling', () => {
+    describe('.isIdling and .isBusy', () => {
 
-    });
+        it('should be idling and not busy on initialization', () => {
 
-    describe('.isBusy', () => {
+            expect(promiseTrackerService.isIdling)
+                .toEqual(true);
+
+            expect(promiseTrackerService.isBusy)
+                .toEqual(false);
+
+        });
+
+        it('should be not idling and busy when a promise is tracked', () => {
+
+            const deferred = $q.defer();
+            const { promise } = deferred;
+
+            promiseTrackerService.track(promise);
+
+            expect(promiseTrackerService.isIdling)
+                .toEqual(false);
+
+            expect(promiseTrackerService.isBusy)
+                .toEqual(true);
+
+        });
+
+        it('should be idling and not busy again when promise gets resolved', () => {
+
+            const deferred = $q.defer();
+            const { promise } = deferred;
+
+            promiseTrackerService.track(promise);
+
+            deferred.resolve();
+            $rootScope.$digest();
+
+            expect(promiseTrackerService.isIdling)
+                .toEqual(true);
+
+            expect(promiseTrackerService.isBusy)
+                .toEqual(false);
+
+        });
+
+        it('should be idling and not busy again when promise gets rejected', () => {
+
+            const deferred = $q.defer();
+            // the catch handles the reject appropriately, so that no error is thrown by angular
+            const promise = deferred.promise.catch(_.noop);
+
+            promiseTrackerService.track(promise);
+
+            deferred.reject();
+            $rootScope.$digest();
+
+            expect(promiseTrackerService.isIdling)
+                .toEqual(true);
+
+            expect(promiseTrackerService.isBusy)
+                .toEqual(false);
+
+        });
 
     });
 

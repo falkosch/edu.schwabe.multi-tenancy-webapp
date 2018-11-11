@@ -29,7 +29,7 @@ describe(`${UiModule}.${BusySpinnerName} component controller`, () => {
         angular.mock.module(UiModule);
 
         mocks = {
-            $element: jasmine.createSpyObj('$element', ['addClass', 'removeClass'])
+            $element: jasmine.createSpyObj('$element', ['addClass', 'removeClass']),
         };
 
     });
