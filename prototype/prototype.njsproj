@@ -36,6 +36,7 @@
     <Compile Include="karma.conf.js" />
     <Compile Include="src\app-html5.config.js" />
     <Compile Include="src\app-html5.config.spec.js" />
+    <Compile Include="src\app.service.js" />
     <Compile Include="src\app-ui-router-transitions.run.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
@@ -81,6 +82,7 @@
     <Compile Include="src\login\login.module.js" />
     <Compile Include="src\login\login.route.js" />
     <Compile Include="src\login\login.route.spec.js" />
+    <Compile Include="src\app-ui-router-transitions.run.spec.js" />
     <Compile Include="src\start\start-navigation.run.js" />
     <Compile Include="src\start\start-navigation.run.spec.js" />
     <Compile Include="src\start\start.component.js" />
