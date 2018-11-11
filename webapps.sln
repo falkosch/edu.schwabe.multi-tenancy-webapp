@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "prototype", "prototype\prototype.njsproj", "{AC9CE7A4-B5D8-45FF-9891-175920451064}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{461D4E70-E078-49B4-8A14-0A49F9F7E2DB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{021EC525-ACC7-4EF5-9A46-77070B6441D7}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "prototype", "prototype\prototype.njsproj", "{AC89541C-639A-4DF6-A3FD-70C96022289F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,15 +18,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC9CE7A4-B5D8-45FF-9891-175920451064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC9CE7A4-B5D8-45FF-9891-175920451064}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC9CE7A4-B5D8-45FF-9891-175920451064}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC9CE7A4-B5D8-45FF-9891-175920451064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC89541C-639A-4DF6-A3FD-70C96022289F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC89541C-639A-4DF6-A3FD-70C96022289F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC89541C-639A-4DF6-A3FD-70C96022289F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC89541C-639A-4DF6-A3FD-70C96022289F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0D8063F2-7597-4397-AC74-6A16E7F6438D}
+		SolutionGuid = {329E4BC2-3CBF-4CBC-8330-C43B2F45405D}
 	EndGlobalSection
 EndGlobal
