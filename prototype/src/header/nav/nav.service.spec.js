@@ -14,11 +14,13 @@ describe(`${NavModule}.${NavServiceName}`, () => {
     });
 
     it(`should be an instanceof ${NavServiceName}`, () => {
+
         expect(navService)
             .toEqual(jasmine.any(NavService));
+
     });
 
-    describe('#entries', () => {
+    describe('.entries', () => {
 
         it('should be an array that is empty at first', () => {
             expect(navService.entries)
@@ -27,7 +29,7 @@ describe(`${NavModule}.${NavServiceName}`, () => {
 
     });
 
-    describe('#forState()', () => {
+    describe('.forState()', () => {
 
         const data = {
             text: 'test',
@@ -35,18 +37,23 @@ describe(`${NavModule}.${NavServiceName}`, () => {
         };
 
         it('should be chainable', () => {
+
             expect(navService.forState(data.text, data.state))
                 .toBe(navService);
+
         });
 
-        it('should add an object with the "text" and "state" to #entries', () => {
+        it('should add an object with the "text" and "state" to .entries', () => {
+
             expect(navService.forState(data.text, data.state).entries)
                 .toEqual(jasmine.arrayContaining([
                     jasmine.objectContaining(data),
                 ]));
+
         });
 
-        it('should add one object to #entries at a time', () => {
+        it('should add one object to .entries at a time', () => {
+
             expect(navService.entries.length)
                 .toEqual(0);
 
@@ -55,6 +62,7 @@ describe(`${NavModule}.${NavServiceName}`, () => {
 
             expect(navService.forState(data.text, data.state).entries.length)
                 .toEqual(2);
+
         });
 
     });

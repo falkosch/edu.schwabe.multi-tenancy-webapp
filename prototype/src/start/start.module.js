@@ -1,4 +1,5 @@
 import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
 
 import { NavModule } from '../header/nav/nav.module';
 
@@ -9,6 +10,7 @@ import { startRun } from './start.run';
 
 export const StartModule = angular
     .module('app.start', [
+        uiRouter,
         NavModule,
     ])
     .component(StartName, StartComponent)

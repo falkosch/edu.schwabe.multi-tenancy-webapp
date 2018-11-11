@@ -161,6 +161,8 @@
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
     <Compile Include="src\app-ui-router-transitions.run.js" />
+    <Compile Include="src\app-html5.config.js" />
+    <Compile Include="src\app-html5.config.spec.js" />
     <Compile Include="src\core\backend\backend-base.js" />
     <Compile Include="src\core\backend\authentication.service.js" />
     <Compile Include="src\core\backend\backend.module.js" />
@@ -173,6 +175,9 @@
     <Compile Include="src\core\promise-tracker\promise-tracker.module.js" />
     <Compile Include="src\core\user-state\user-state.service.js" />
     <Compile Include="src\core\user-state\user-state.module.js" />
+    <Compile Include="src\footer\footer.controller.spec.js" />
+    <Compile Include="src\app.controller.spec.js" />
+    <Compile Include="src\header\header.controller.spec.js" />
     <Compile Include="src\header\nav\nav.service.spec.js" />
     <Compile Include="src\header\nav\nav.controller.spec.js" />
     <Compile Include="src\app.karma.js" />
@@ -183,6 +188,9 @@
     <Compile Include="src\login\login.controller.js" />
     <Compile Include="src\login\login.module.js" />
     <Compile Include="src\login\login.route.js" />
+    <Compile Include="src\app.route.spec.js" />
+    <Compile Include="src\start\start.run.spec.js" />
+    <Compile Include="src\start\start.controller.spec.js" />
     <Compile Include="src\start\start-navigation.run.js" />
     <Compile Include="src\start\start.run.js" />
     <Compile Include="src\footer\footer.component.js" />

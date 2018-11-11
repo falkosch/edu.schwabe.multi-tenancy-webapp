@@ -1,16 +1,15 @@
 import { AppName } from './app.component';
 
-appRoute.$inject = ['$locationProvider', '$stateProvider'];
+appRoute.$inject = ['$stateProvider'];
+
+export const AppStateId = 'app';
 
 export function appRoute(
-    $locationProvider,
     $stateProvider,
 ) {
-    $locationProvider.html5Mode(true);
-
     $stateProvider
         .state({
-            name: 'app',
+            name: AppStateId,
             url: '',
             abstract: true,
             component: AppName,

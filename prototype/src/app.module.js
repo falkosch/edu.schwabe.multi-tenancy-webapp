@@ -13,6 +13,7 @@ import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
 
 import { AppComponent, AppName } from './app.component';
+import { appHtml5Config } from './app-html5.config';
 import { appRoute } from './app.route';
 import { appUiRouterTransitionsRun } from './app-ui-router-transitions.run';
 
@@ -23,6 +24,7 @@ export const AppModule = angular
         angularMessages,
         angularMaterial,
         uiRouter,
+
         CoreModule,
         UiModule,
         HeaderModule,
@@ -31,6 +33,7 @@ export const AppModule = angular
         LoginModule,
     ])
     .component(AppName, AppComponent)
+    .config(appHtml5Config)
     .config(appRoute)
     .run(appUiRouterTransitionsRun)
     .name;

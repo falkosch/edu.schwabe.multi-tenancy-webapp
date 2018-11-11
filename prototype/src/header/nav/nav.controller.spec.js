@@ -33,16 +33,20 @@ describe(`${NavModule}.${NavName} component controller`, () => {
     });
 
     it(`should be an instanceof ${NavName} component controller`, () => {
+
         expect(navController)
             .toEqual(jasmine.any(NavController));
+
     });
 
-    it(`should put ${NavServiceName}.entries on "this" when $onInit is called`, () => {
+    it(`should put ${NavServiceName}.entries on "this" when ${NavName}.$onInit is called`, () => {
+
         navController.$onInit();
         $scope.$digest();
 
         expect(navController.entries)
             .toEqual(testData);
+
     });
 
 });
