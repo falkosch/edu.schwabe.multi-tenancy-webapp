@@ -5,6 +5,9 @@ import angularMessages from 'angular-messages';
 import angularMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
 
+import 'moment';
+import 'moment/min/locales';
+
 import { CoreModule } from './core/core.module';
 import { UiModule } from './ui/ui.module';
 import { HeaderModule } from './header/header.module';
