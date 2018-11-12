@@ -36,6 +36,10 @@ module.exports = {
         },
         {
             files: [
+                'karma.conf.js',
+                'stylelint.config.js',
+                'jsdoc.conf.js',
+                '.babelrc.js',
                 'webpack.*',
                 'src/app.karma.js',
                 'src/**/*.spec.js',
