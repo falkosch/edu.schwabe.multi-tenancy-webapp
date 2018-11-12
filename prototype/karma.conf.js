@@ -11,14 +11,13 @@ const testWebpackConfig = _.assign(
         module: {
             rules: _.map(webpackConfig.module.rules, (rule) => {
                 const { test } = rule;
-                if (test.test('.js')) {
+                const whitelist = [
+                    '.js',
+                    '.template.html',
+                ];
+                const ruleIsWhitelisted = _.some(whitelist, v => test.test(v));
+                if (ruleIsWhitelisted) {
                     return rule;
-                }
-                if (test.test('.template.html')) {
-                    return {
-                        test,
-                        use: ['ngtemplate-loader?requireAngular', 'html-loader'],
-                    };
                 }
                 return _.assign({}, rule, { use: 'ignore-loader' });
             }),

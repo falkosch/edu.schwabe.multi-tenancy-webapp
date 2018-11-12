@@ -20,5 +20,13 @@ module.exports = merge(
         plugins: [
             new HotModuleReplacementPlugin(),
         ],
+        module: {
+            rules: [
+                {
+                    test: /\.template\.html?$/,
+                    use: ['ngtemplate-loader?requireAngular', 'html-loader'],
+                },
+            ],
+        },
     },
 );

@@ -14,5 +14,21 @@ module.exports = merge(
         plugins: [
             new CleanWebpackPlugin(['dist']),
         ],
+        module: {
+            rules: [
+                {
+                    test: /\.template\.html?$/,
+                    use: [
+                        'ngtemplate-loader?requireAngular',
+                        {
+                            loader: 'html-loader',
+                            options: {
+                                minimize: true,
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
     },
 );

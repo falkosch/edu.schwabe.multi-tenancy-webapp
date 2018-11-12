@@ -44,18 +44,6 @@ module.exports = {
                 use: ['babel-loader'],
             },
             {
-                test: /\.template\.html?$/,
-                use: [
-                    'ngtemplate-loader?requireAngular',
-                    {
-                        loader: 'html-loader',
-                        options: {
-                            minimize: true,
-                        },
-                    },
-                ],
-            },
-            {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
             },
