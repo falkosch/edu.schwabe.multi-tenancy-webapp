@@ -19,39 +19,47 @@ export class MockAuthenticationService extends AuthenticationService {
         '$q',
     ];
 
+    static MockDelay = 500;
+
     constructor($timeout, $q) {
         super($q);
 
         this.$timeout = $timeout;
-        this.$q = $q;
     }
 
     authenticate(userNameClaim, userPasswordProof) {
-        if (_.isNil(userPasswordProof)) {
+        if (_.isNil(userPasswordProof) || _.isEmpty(userPasswordProof)) {
             return this.$q.reject(BackendErrors.missingUserPasswordProof());
         }
 
-        const id = uuidV4();
+        return this.$timeout(
+            () => {
 
-        const fakeAuthentication = () => ({
-            id,
-            authorization: {
-                type: Authorization.Basic,
-                key: uuidV4(),
-            },
-            ident: {
-                id,
-                name: userNameClaim,
-                firstName: 'Mock',
-                lastName: 'User',
-                birthdate: moment().toDate(),
-            },
-            permissions: {
-                [id]: [Permissions.Read, Permissions.Write],
-                greet: [Permissions.Read],
-            },
-        });
+                const id = uuidV4();
+                const key = uuidV4();
+                const birthdate = moment().toDate();
 
-        return this.$timeout(fakeAuthentication, 500);
+                return {
+                    id,
+                    authorization: {
+                        type: Authorization.Basic,
+                        key,
+                    },
+                    ident: {
+                        id,
+                        name: userNameClaim,
+                        firstName: 'Mock',
+                        lastName: 'User',
+                        birthdate,
+                    },
+                    permissions: {
+                        [id]: [Permissions.Read, Permissions.Write],
+                        greet: [Permissions.Read],
+                    },
+                };
+
+            },
+            MockAuthenticationService.MockDelay,
+        );
     }
 }
