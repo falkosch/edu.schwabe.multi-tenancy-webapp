@@ -1,17 +1,19 @@
 ﻿# prototype
 
-Set me up with `npm i`
+Set up package with `npm i`
 
-Run my `dist/` with `npm build`
+Run the prototype with `npm start`
 
-Run me with `npm start`
+Build it into `dist/` with `npm build`
 
-Test me with `npm run test`
+Serve `dist/` with `npm build:serve`
 
-Lint my js with `npm run lint:js`
+Run unit tests with `npm run test`
 
-Lint my scss with `npm run lint:scss`
+Lint JS files with `npm run lint:js`
 
-Generate my jsdoc in `docs/` with `npm run docs`
+Lint SCSS files with `npm run lint:scss`
+
+Generate JSDoc into `docs/` with `npm run docs`
 
 Serve `docs/` with `npm run docs:serve`

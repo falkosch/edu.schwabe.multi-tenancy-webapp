@@ -8,11 +8,12 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
+    "build:serve": "http-server --cors ./dist",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "cross-env NODE_ENV=test karma start --single-run",
     "test:watch": "cross-env NODE_ENV=test karma start",
     "docs": "jsdoc -c jsdoc.conf.js",
-    "docs:serve": "http-server -s --cors ./docs",
+    "docs:serve": "http-server --cors ./docs",
     "lint:js": "eslint . --fix",
     "lint:scss": "stylelint . --fix"
   },
