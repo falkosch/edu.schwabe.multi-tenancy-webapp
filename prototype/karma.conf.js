@@ -11,8 +11,14 @@ const testWebpackConfig = _.assign(
         module: {
             rules: _.map(webpackConfig.module.rules, (rule) => {
                 const { test } = rule;
-                if (test.test('.js') || test.test('.template.html')) {
+                if (test.test('.js')) {
                     return rule;
+                }
+                if (test.test('.template.html')) {
+                    return {
+                        test,
+                        use: ['ngtemplate-loader?requireAngular', 'html-loader'],
+                    };
                 }
                 return _.assign({}, rule, { use: 'ignore-loader' });
             }),
