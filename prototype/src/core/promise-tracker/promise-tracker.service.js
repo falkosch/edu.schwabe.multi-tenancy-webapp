@@ -19,7 +19,7 @@ class PromiseTracker {
     track(promise) {
         if (promise && angular.isFunction(promise.finally)) {
             this.tracked.push(promise);
-            
+
             promise.finally(() => {
                 this.tracked = _.without(this.tracked, promise);
             });

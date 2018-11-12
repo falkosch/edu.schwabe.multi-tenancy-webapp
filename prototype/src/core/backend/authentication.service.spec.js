@@ -4,7 +4,6 @@ import { BackendErrors } from './backend-errors';
 
 describe(`${BackendModule}.${AuthenticationServiceName}`, () => {
 
-    let $q;
     let $rootScope;
     let authenticationService;
 
@@ -12,8 +11,7 @@ describe(`${BackendModule}.${AuthenticationServiceName}`, () => {
 
         angular.mock.module(BackendModule);
 
-        inject((_$q_, _$rootScope_, _authenticationService_) => {
-            $q = _$q_;
+        inject((_$rootScope_, _authenticationService_) => {
             $rootScope = _$rootScope_;
             authenticationService = _authenticationService_;
         });
