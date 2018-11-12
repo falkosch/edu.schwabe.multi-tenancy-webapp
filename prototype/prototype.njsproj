@@ -34,6 +34,7 @@
     <Compile Include=".eslintrc.js" />
     <Compile Include="jsdoc.conf.js" />
     <Compile Include="karma.conf.js" />
+    <Compile Include="postcss.config.js" />
     <Compile Include="src\app-html5.config.js" />
     <Compile Include="src\app-html5.config.spec.js" />
     <Compile Include="src\app.service.js" />

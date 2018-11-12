@@ -20,11 +20,46 @@ module.exports = merge(
         plugins: [
             new HotModuleReplacementPlugin(),
         ],
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    scss: {
+                        test: /\.s?css/,
+                        name: 'scss',
+                        chunks: 'all',
+                    },
+                },
+            },
+        },
         module: {
             rules: [
                 {
                     test: /\.template\.html?$/,
                     use: ['ngtemplate-loader?requireAngular', 'html-loader'],
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: { sourceMap: true },
+                        },
+                    ],
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: { sourceMap: true },
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: { sourceMap: true },
+                        },
+                    ],
                 },
             ],
         },

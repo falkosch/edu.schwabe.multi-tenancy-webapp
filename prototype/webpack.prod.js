@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const common = require('./webpack.common');
 
@@ -13,6 +14,10 @@ module.exports = merge(
         },
         plugins: [
             new CleanWebpackPlugin(['dist']),
+            new MiniCssExtractPlugin({
+                chunkFilename: '[name].[hash].chunk.css',
+                filename: '[name].[hash].bundle.css',
+            }),
         ],
         module: {
             rules: [
@@ -26,6 +31,29 @@ module.exports = merge(
                                 minimize: true,
                             },
                         },
+                    ],
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: { importLoaders: 1 },
+                        },
+                        'postcss-loader',
+                    ],
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: { importLoaders: 1 },
+                        },
+                        'postcss-loader',
+                        'sass-loader',
                     ],
                 },
             ],
