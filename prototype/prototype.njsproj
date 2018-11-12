@@ -46,6 +46,7 @@
     <Compile Include="src\app.route.js" />
     <Compile Include="src\app.route.spec.js" />
     <Compile Include="src\core\annotations\annotations.module.js" />
+    <Compile Include="src\core\annotations\injection.service.spec.js" />
     <Compile Include="src\core\annotations\injection.service.js" />
     <Compile Include="src\core\backend\authentication.service.js" />
     <Compile Include="src\core\backend\backend-errors.spec.js" />

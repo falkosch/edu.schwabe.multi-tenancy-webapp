@@ -14,7 +14,7 @@ export class InjectionService {
      * @param {Function | class} type
      */
     injectByStaticInjectionNames(type) {
-        if (_.isNil(type)) {
+        if (!_.isObject(type)) {
             return;
         }
 
@@ -26,7 +26,8 @@ export class InjectionService {
             _.forEach(
                 $inject,
                 (injectName, injectProperty) => {
-                    const typeProperty = _.isString(injectProperty) ? injectProperty : injectName;
+                    const remapInject = _.isString(injectProperty);
+                    const typeProperty = remapInject ? injectProperty : injectName;
                     type[typeProperty] = this.$injector.get(injectName);
                 },
             );
