@@ -1,12 +1,13 @@
 <app-busy-spinner busy="$ctrl.isBusy"></app-busy-spinner>
-<div layout="row">
+
+<div class="height-100" layout="row">
     <md-sidenav flex="33" md-component-id="{{$ctrl.sideNavId}}" md-whiteframe="2">
         <header ui-view="header">
             <app-header></app-header>
         </header>
     </md-sidenav>
 
-    <div layout="column" flex>
+    <div class="height-100" flex layout="column">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
@@ -22,10 +23,9 @@
             </div>
         </md-toolbar>
 
-        <md-content role="main" ui-view="main" layout="row" layout-align="center" md-scroll-y>
-        </md-content>
+        <md-content flex="noshrink" layout="row" layout-align="center" md-scroll-y role="main" ui-view="main"></md-content>
 
-        <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">
+        <div layout="row" layout-align="center center">
             <footer ui-view="footer">
                 <app-footer></app-footer>
             </footer>

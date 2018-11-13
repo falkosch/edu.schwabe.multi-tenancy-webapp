@@ -1,5 +1,6 @@
-@import "./scss/vendor/_all.scss";
+@import "./scss/base/all";
+@import "./scss/vendor/all";
 
 app {
-
+    @extend %height-100;
 }

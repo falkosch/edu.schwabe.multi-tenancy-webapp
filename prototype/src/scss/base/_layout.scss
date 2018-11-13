@@ -1,0 +1,5 @@
+@import "../abstracts/layout";
+
+.height-100 {
+    @extend %height-100;
+}
