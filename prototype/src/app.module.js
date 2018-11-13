@@ -1,12 +1,13 @@
+import 'moment';
+import 'moment/min/locales';
+
 import angular from 'angular';
+import 'rx-angular';
 import angularAnimate from 'angular-animate';
 import angularAria from 'angular-aria';
 import angularMessages from 'angular-messages';
 import angularMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
-
-import 'moment';
-import 'moment/min/locales';
 
 import { CoreModule } from './core/core.module';
 import { UiModule } from './ui/ui.module';
@@ -28,6 +29,7 @@ export const AppModule = angular
         angularMessages,
         angularMaterial,
         uiRouter,
+        'rx',
 
         CoreModule,
         UiModule,
