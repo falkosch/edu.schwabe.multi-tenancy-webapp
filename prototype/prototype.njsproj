@@ -55,6 +55,9 @@
     <Compile Include="src\core\backend\backend.module.js" />
     <Compile Include="src\core\backend\authentication.service.spec.js" />
     <Compile Include="src\core\core.module.js" />
+    <Compile Include="src\core\event-emitter\event-emitter.module.js" />
+    <Compile Include="src\core\event-emitter\event-emitter.service.js" />
+    <Compile Include="src\core\event-emitter\event-emitter.service.spec.js" />
     <Compile Include="src\core\mock-backend\mock-authentication.service.spec.js" />
     <Compile Include="src\core\mock-backend\mock-authentication.service.js" />
     <Compile Include="src\core\mock-backend\mock-backend.module.js" />
@@ -217,6 +220,7 @@
     <Folder Include="src\core\annotations\" />
     <Folder Include="src\core\backend\" />
     <Folder Include="src\core\mock-backend\" />
+    <Folder Include="src\core\event-emitter\" />
     <Folder Include="src\core\promise-tracker\" />
     <Folder Include="src\core\user-state\" />
     <Folder Include="src\footer\" />
