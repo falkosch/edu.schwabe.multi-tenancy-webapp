@@ -1,11 +1,22 @@
 import { InjectionServiceName } from '../annotations/injection.service';
 import { AuthenticationServiceName } from '../backend/authentication.service';
+import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
 export const UserStateServiceName = 'userStateService';
 
+export class UserStateEvents {
+
+    Login = 'user-state-login';
+
+    Logout = 'user-state-logout';
+
+}
+
 class AuthenticatedUser {
 
-    static $inject = ['$q'];
+    static $inject = [
+        '$q',
+    ];
 
     constructor(context, authentication) {
         this.context = context;
@@ -24,14 +35,16 @@ class AuthenticatedUser {
 
     logout() {
         this.context.userState = new AnonymousUser(this);
+        return this.$q.resolve();
     }
 }
 
 class AnonymousUser {
 
-    static $inject = {
-        authenticationService: AuthenticationServiceName,
-    };
+    static $inject = [
+        '$q',
+        AuthenticationServiceName,
+    ];
 
     constructor(context) {
         this.context = context;
@@ -44,14 +57,17 @@ class AnonymousUser {
     }
 
     login(userNameClaim, userPasswordProof) {
-        return this.authenticationService.authenticate(userNameClaim, userPasswordProof)
+        return this.authenticationService
+            .authenticate(userNameClaim, userPasswordProof)
             .then((authentication) => {
                 this.context.userState = new AuthenticatedUser(this.context, authentication);
+                return authentication;
             });
     }
 
     logout() {
         this.context.userState = new AnonymousUser(this);
+        return this.$q.resolve();
     }
 }
 
@@ -60,18 +76,25 @@ export class UserStateService {
     static $inject = [
         '$rootScope',
         InjectionServiceName,
+        EventEmitterServiceName,
     ];
 
-    static Events = {
-        Login: 'user-state-login',
-        Logout: 'user-state-logout',
-    };
+    onLogin;
+
+    onLogout;
 
     userState;
 
-    constructor($rootScope, injectionService) {
+    constructor(
+        $rootScope,
+        injectionService,
+        eventEmitterService,
+    ) {
         this.$rootScope = $rootScope;
         this.injectionService = injectionService;
+
+        this.onLogin = eventEmitterService.of(UserStateEvents.Login);
+        this.onLogout = eventEmitterService.of(UserStateEvents.Logout);
 
         this.userState = new AnonymousUser(this);
     }
@@ -81,26 +104,20 @@ export class UserStateService {
     }
 
     login(userNameClaim, userPasswordProof) {
-        return this.userState.login(userNameClaim, userPasswordProof);
+        return this.userState
+            .login(userNameClaim, userPasswordProof)
+            .then((authentication) => {
+                this.onLogin.emit(authentication);
+                return authentication;
+            });
     }
 
     logout() {
-        return this.userState.logout();
+        return this.userState
+            .logout()
+            .then(() => {
+                this.onLogout.emit();
+            });
     }
 
-    fireLoginPre() {
-        this.$rootScope.$broadcast(`${UserStateService.Events.Login}:pre`, this.userState);
-    }
-
-    fireLoginPost() {
-        this.$rootScope.$broadcast(`${UserStateService.Events.Login}:post`, this.userState);
-    }
-
-    fireLogoutPre() {
-        this.$rootScope.$broadcast(`${UserStateService.Events.Logout}:pre`, this.userState);
-    }
-
-    fireLogoutPost() {
-        this.$rootScope.$broadcast(`${UserStateService.Events.Logout}:post`, this.userState);
-    }
 }

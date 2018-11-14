@@ -64,6 +64,7 @@
     <Compile Include="src\core\promise-tracker\promise-tracker.module.js" />
     <Compile Include="src\core\promise-tracker\promise-tracker.service.js" />
     <Compile Include="src\core\promise-tracker\promise-tracker.service.spec.js" />
+    <Compile Include="src\core\user-state\user-state.service.spec.js" />
     <Compile Include="src\core\user-state\user-state.module.js" />
     <Compile Include="src\core\user-state\user-state.service.js" />
     <Compile Include="src\footer\footer.component.js" />
