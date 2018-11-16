@@ -19,8 +19,6 @@ import { LoginModule } from './login/login.module';
 import { AppComponent, AppName } from './app.component';
 import { appHtml5Config } from './app-html5.config';
 import { appRoute } from './app.route';
-import { appUiRouterTransitionsRun } from './app-ui-router-transitions.run';
-import { AppService, AppServiceName } from './app.service';
 
 export const AppModule = angular
     .module('app', [
@@ -41,6 +39,4 @@ export const AppModule = angular
     .component(AppName, AppComponent)
     .config(appHtml5Config)
     .config(appRoute)
-    .run(appUiRouterTransitionsRun)
-    .service(AppServiceName, AppService)
     .name;

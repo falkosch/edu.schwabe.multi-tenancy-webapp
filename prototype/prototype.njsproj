@@ -37,8 +37,7 @@
     <Compile Include="postcss.config.js" />
     <Compile Include="src\app-html5.config.js" />
     <Compile Include="src\app-html5.config.spec.js" />
-    <Compile Include="src\app.service.js" />
-    <Compile Include="src\app-ui-router-transitions.run.js" />
+    <Compile Include="src\ui\global-spinner\global-spinner-ui-router-transitions.run.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
     <Compile Include="src\app.controller.spec.js" />
@@ -89,7 +88,7 @@
     <Compile Include="src\login\login.module.js" />
     <Compile Include="src\login\login.route.js" />
     <Compile Include="src\login\login.route.spec.js" />
-    <Compile Include="src\app-ui-router-transitions.run.spec.js" />
+    <Compile Include="src\ui\global-spinner\global-spinner-ui-router-transitions.run.spec.js" />
     <Compile Include="src\start\start-navigation.run.js" />
     <Compile Include="src\start\start-navigation.run.spec.js" />
     <Compile Include="src\start\start.component.js" />
@@ -103,6 +102,9 @@
     <Compile Include="src\ui\busy-spinner\busy-spinner.component.js" />
     <Compile Include="src\ui\busy-spinner\busy-spinner.controller.js" />
     <Compile Include="src\ui\busy-spinner\busy-spinner.controller.spec.js" />
+    <Compile Include="src\ui\busy-spinner\busy-spinner.module.js" />
+    <Compile Include="src\ui\global-spinner\global-spinner.service.js" />
+    <Compile Include="src\ui\global-spinner\global-spinner.module.js" />
     <Compile Include="src\ui\ui.module.js" />
     <Compile Include="stylelint.config.js" />
     <Compile Include="webpack.common.js" />
@@ -235,6 +237,7 @@
     <Folder Include="src\start\" />
     <Folder Include="src\ui\" />
     <Folder Include="src\ui\busy-spinner\" />
+    <Folder Include="src\ui\global-spinner\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

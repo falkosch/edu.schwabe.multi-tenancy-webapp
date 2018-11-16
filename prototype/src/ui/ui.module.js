@@ -1,8 +1,11 @@
 import angular from 'angular';
-import { BusySpinnerName, BusySpinnerComponent } from './busy-spinner/busy-spinner.component';
+
+import { BusySpinnerModule } from './busy-spinner/busy-spinner.module';
+import { GlobalSpinnerModule } from './global-spinner/global-spinner.module';
 
 export const UiModule = angular
     .module('app.ui', [
+        BusySpinnerModule,
+        GlobalSpinnerModule,
     ])
-    .component(BusySpinnerName, BusySpinnerComponent)
     .name;

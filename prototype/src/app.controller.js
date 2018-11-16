@@ -1,21 +1,21 @@
-import { PromiseTrackerServiceName } from './core/promise-tracker/promise-tracker.service';
+import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.service';
 
 export class AppController {
 
     static $inject = [
         '$mdSidenav',
-        PromiseTrackerServiceName,
+        GlobalSpinnerServiceName,
     ];
 
-    constructor($mdSidenav, promiseTrackerService) {
+    constructor($mdSidenav, globalSpinnerService) {
         this.$mdSidenav = $mdSidenav;
-        this.promiseTrackerService = promiseTrackerService;
+        this.globalSpinnerService = globalSpinnerService;
 
         this.sideNavId = 'left';
     }
 
     get isBusy() {
-        return this.promiseTrackerService.isBusy;
+        return this.globalSpinnerService.isBusy;
     }
 
     toggleSideNav() {

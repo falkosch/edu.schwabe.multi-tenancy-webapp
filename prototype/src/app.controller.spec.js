@@ -1,11 +1,11 @@
 import { AppModule } from './app.module';
 import { AppName } from './app.component';
 import { AppController } from './app.controller';
-import { PromiseTrackerServiceName } from './core/promise-tracker/promise-tracker.service';
+import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.service';
 
 describe(`${AppModule}.${AppName} component controller`, () => {
 
-    const promiseTrackerServiceMock = {
+    const globalSpinnerServiceMock = {
         isBusy: false,
     };
 
@@ -26,7 +26,7 @@ describe(`${AppModule}.${AppName} component controller`, () => {
         inject(($componentController) => {
             appController = $componentController(AppName, {
                 $mdSidenav: $mdSidenavMock,
-                [PromiseTrackerServiceName]: promiseTrackerServiceMock,
+                [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
             });
         });
 
@@ -41,17 +41,17 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
     describe('.isBusy', () => {
 
-        it(`should passthrough the return value of ${PromiseTrackerServiceName}.isBusy`, () => {
+        it(`should passthrough the return value of ${GlobalSpinnerServiceName}.isBusy`, () => {
 
-            promiseTrackerServiceMock.isBusy = false;
-
-            expect(appController.isBusy)
-                .toEqual(promiseTrackerServiceMock.isBusy);
-
-            promiseTrackerServiceMock.isBusy = true;
+            globalSpinnerServiceMock.isBusy = false;
 
             expect(appController.isBusy)
-                .toEqual(promiseTrackerServiceMock.isBusy);
+                .toEqual(globalSpinnerServiceMock.isBusy);
+
+            globalSpinnerServiceMock.isBusy = true;
+
+            expect(appController.isBusy)
+                .toEqual(globalSpinnerServiceMock.isBusy);
 
         });
 
