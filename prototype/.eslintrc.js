@@ -17,6 +17,8 @@ module.exports = {
         'padded-blocks': 'off',
         'class-methods-use-this': 'off',
         'lodash/prefer-constant': 'off',
+        'no-param-reassign': 'off',
+        'no-underscore-dangle': 'off',
     },
     overrides: [
         {
