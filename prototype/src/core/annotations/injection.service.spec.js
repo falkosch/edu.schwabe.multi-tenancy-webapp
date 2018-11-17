@@ -28,23 +28,37 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
 
     describe('.injectByInjectionNames', () => {
 
-        it('should noop when parameter "type" is not an object', () => {
+        it('should noop when parameter "instance" is not an object', () => {
 
             /*
              * Obviously, this is difficult to test with an expect that the given types were not
-             * mutated. We simply assume that no thrown JS errors in these cases is good enough.
+             * mutated. We simply assume that there should be no thrown JS errors in these cases
+             * is good enough.
              */
 
-            injectionService.injectByInjectionNames(undefined);
-            injectionService.injectByInjectionNames(null);
-            injectionService.injectByInjectionNames(0);
-            injectionService.injectByInjectionNames(1);
-            injectionService.injectByInjectionNames(0.1);
-            injectionService.injectByInjectionNames('');
+            expect(() => injectionService.injectByInjectionNames(undefined))
+                .not.toThrow();
+
+            expect(() => injectionService.injectByInjectionNames(null))
+                .not.toThrow();
+
+            // Primitive values and strings cannot be mutated, but we expect no errors either
+
+            expect(() => injectionService.injectByInjectionNames(0))
+                .not.toThrow();
+
+            expect(() => injectionService.injectByInjectionNames(1))
+                .not.toThrow();
+
+            expect(() => injectionService.injectByInjectionNames(0.1))
+                .not.toThrow();
+
+            expect(() => injectionService.injectByInjectionNames(''))
+                .not.toThrow();
 
         });
 
-        it('should noop when parameter "type" is an object but has no array or object on its $inject property', () => {
+        it('should noop when parameter "instance" is an object but has no array or object on its $inject property', () => {
 
             const originalTestType = {
                 $inject: '$q',
