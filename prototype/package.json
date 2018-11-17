@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:serve": "http-server --cors ./dist",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "test": "karma start --single-run",
+    "test": "karma start",
     "test:debug": "karma start --browsers Chrome",
     "docs": "jsdoc -c jsdoc.conf.js",
     "docs:serve": "http-server --cors ./docs",

@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { HotModuleReplacementPlugin } = require('webpack');
 
 const webpackConfig = require('./webpack.dev');
 
@@ -7,7 +8,22 @@ const testWebpackConfig = _.assign(
     {},
     webpackConfig,
     {
-        plugins: _.reject(webpackConfig.plugins, v => v instanceof FaviconsWebpackPlugin),
+        devServer: _.mapValues(webpackConfig.devServer, (value, key) => {
+
+            if (key === 'hot') {
+                return false;
+            }
+
+            return value;
+        }),
+        plugins: _.reject(webpackConfig.plugins, (plugin) => {
+            const blacklistedPlugins = [
+                FaviconsWebpackPlugin,
+                HotModuleReplacementPlugin,
+            ];
+
+            return _.some(blacklistedPlugins, pluginType => plugin instanceof pluginType);
+        }),
         module: {
             rules: _.map(webpackConfig.module.rules, (rule) => {
                 const { test } = rule;
