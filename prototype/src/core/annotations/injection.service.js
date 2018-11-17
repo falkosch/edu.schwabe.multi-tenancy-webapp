@@ -11,27 +11,43 @@ export class InjectionService {
     }
 
     /**
-     * @param {Function | class} type
+     * @param {Object} instance
      */
-    injectByStaticInjectionNames(type) {
-        if (!_.isObject(type)) {
+    injectByInjectionNames(instance) {
+        if (!_.isObject(instance)) {
             return;
         }
 
+        const { $inject } = instance;
+
+        this._inject(instance, $inject);
+    }
+
+    /**
+     * @param {Object} instance
+     */
+    injectByStaticInjectionNames(instance) {
+        if (!_.isObject(instance)) {
+            return;
+        }
+
+        const prototype = Object.getPrototypeOf(instance);
+        const { constructor: { $inject } } = prototype;
+
+        this._inject(instance, $inject);
+    }
+
+    _inject(instance, $inject) {
         /* eslint-disable no-param-reassign */
-
-        const { $inject } = type;
-
         if (_.isArray($inject) || _.isObject($inject)) {
             _.forEach(
                 $inject,
                 (injectName, injectProperty) => {
                     const remapInject = _.isString(injectProperty);
                     const typeProperty = remapInject ? injectProperty : injectName;
-                    type[typeProperty] = this.$injector.get(injectName);
+                    instance[typeProperty] = this.$injector.get(injectName);
                 },
             );
         }
-
     }
 }

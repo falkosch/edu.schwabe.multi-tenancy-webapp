@@ -8,6 +8,9 @@ export function loginRoute($stateProvider) {
     $stateProvider
         .state({
             name: LoginStateId,
+            accessControl: {
+                public: true,
+            },
             resolve: {},
             url: '/login',
             views: {

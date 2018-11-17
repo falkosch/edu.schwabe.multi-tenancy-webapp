@@ -1,5 +1,27 @@
 export const EventEmitterServiceName = 'eventEmitterService';
 
+class EventEmitter {
+
+    constructor($rootScope, eventName) {
+        this.$rootScope = $rootScope;
+        this.eventName = eventName;
+
+        this.observeable = this.$rootScope.$eventToObservable(this.eventName);
+    }
+
+    emit(value) {
+        this.$rootScope.$broadcast(this.eventName, value);
+    }
+
+    subscribe(consumer) {
+        return this.observeable
+            .subscribe(consumer);
+    }
+
+}
+
+const cachedEmitters = {};
+
 export class EventEmitterService {
 
     static $inject = [
@@ -24,20 +46,15 @@ export class EventEmitterService {
             return this.$injector.get(injectableName);
         }
 
-        class EventEmitter {
-
-            emit(value) {
-                this.$rootScope.$broadcast(eventName, value);
-            }
-
-            subscribe(consumer) {
-                return this.$rootScope.$eventToObservable(eventName)
-                    .subscribe(consumer);
-            }
-
+        if (injectableName in cachedEmitters) {
+            return cachedEmitters[injectableName];
         }
 
-        return new EventEmitter();
+        const eventEmitter = new EventEmitter(this.$rootScope, eventName);
+
+        cachedEmitters[injectableName] = eventEmitter;
+
+        return eventEmitter;
     }
 
 }

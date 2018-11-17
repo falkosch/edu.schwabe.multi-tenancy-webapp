@@ -45,6 +45,11 @@
     <Compile Include="src\app.module.js" />
     <Compile Include="src\app.route.js" />
     <Compile Include="src\app.route.spec.js" />
+    <Compile Include="src\core\access-control\require-login-access-control.service.spec.js" />
+    <Compile Include="src\core\access-control\require-login-access-control.service.js" />
+    <Compile Include="src\core\access-control\access-control.service.js" />
+    <Compile Include="src\core\access-control\access-control.module.js" />
+    <Compile Include="src\core\access-control\access-control.service.spec.js" />
     <Compile Include="src\core\annotations\annotations.module.js" />
     <Compile Include="src\core\annotations\injection.service.spec.js" />
     <Compile Include="src\core\annotations\injection.service.js" />
@@ -224,6 +229,7 @@
     <Folder Include="src\core\backend\" />
     <Folder Include="src\core\mock-backend\" />
     <Folder Include="src\core\event-emitter\" />
+    <Folder Include="src\core\access-control\" />
     <Folder Include="src\core\promise-tracker\" />
     <Folder Include="src\core\user-state\" />
     <Folder Include="src\footer\" />

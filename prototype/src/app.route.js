@@ -13,5 +13,8 @@ export function appRoute(
             url: '',
             abstract: true,
             component: AppName,
+            accessControl: {
+                public: true,
+            },
         });
 }

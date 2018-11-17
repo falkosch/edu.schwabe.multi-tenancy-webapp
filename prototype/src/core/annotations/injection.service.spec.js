@@ -26,7 +26,7 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
 
     });
 
-    describe('.injectByStaticInjectionNames', () => {
+    describe('.injectByInjectionNames', () => {
 
         it('should noop when parameter "type" is not an object', () => {
 
@@ -35,12 +35,12 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
              * mutated. We simply assume that no thrown JS errors in these cases is good enough.
              */
 
-            injectionService.injectByStaticInjectionNames(undefined);
-            injectionService.injectByStaticInjectionNames(null);
-            injectionService.injectByStaticInjectionNames(0);
-            injectionService.injectByStaticInjectionNames(1);
-            injectionService.injectByStaticInjectionNames(0.1);
-            injectionService.injectByStaticInjectionNames('');
+            injectionService.injectByInjectionNames(undefined);
+            injectionService.injectByInjectionNames(null);
+            injectionService.injectByInjectionNames(0);
+            injectionService.injectByInjectionNames(1);
+            injectionService.injectByInjectionNames(0.1);
+            injectionService.injectByInjectionNames('');
 
         });
 
@@ -52,7 +52,7 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
 
             const copyTestType = { ...originalTestType };
 
-            injectionService.injectByStaticInjectionNames(copyTestType);
+            injectionService.injectByInjectionNames(copyTestType);
 
             expect(copyTestType)
                 .toEqual(originalTestType);
@@ -69,7 +69,7 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
 
             const testType = { ...originalTestType };
 
-            injectionService.injectByStaticInjectionNames(testType);
+            injectionService.injectByInjectionNames(testType);
 
             // no property in testType should be overwritten
             expect(testType)
@@ -93,7 +93,7 @@ describe(`${AnnotationsModule}.${InjectionServiceName}`, () => {
 
             const testType = { ...originalTestType };
 
-            injectionService.injectByStaticInjectionNames(testType);
+            injectionService.injectByInjectionNames(testType);
 
             // no property in testType should be overwritten
             expect(testType)

@@ -1,1 +1,22 @@
-Login
+<md-content layout-padding>
+    <form name="$ctrl.loginForm" ng-submit="$ctrl.login()">
+        <md-input-container class="md-block">
+            <label for="username">Username</label>
+            <input id="username" md-maxlength="255" name="username" ng-model="$ctrl.username" required>
+            <div ng-messages="$ctrl.loginForm.username.$error">
+                <div ng-message="required">Please enter a username.</div>
+                <div ng-message="md-maxlength">The username cannot be longer than 255 characters.</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label for="password">Password</label>
+            <input id="password" md-maxlength="255" name="password" ng-model="$ctrl.password">
+            <div ng-messages="$ctrl.loginForm.password.$error">
+                <div ng-message="md-maxlength">The password cannot be longer than 255 characters.</div>
+            </div>
+        </md-input-container>
+        <div layout="row" layout-align="center">
+            <md-button type="submit">Submit</md-button>
+        </div>
+    </form>
+</md-content>

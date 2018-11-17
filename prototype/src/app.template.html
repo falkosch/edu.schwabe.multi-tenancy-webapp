@@ -13,17 +13,17 @@
                 <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
                     <md-icon>menu</md-icon>
                 </md-button>
-                <h2 md-truncate>
+                <h1 md-truncate>
                     Welcome
                     <span ng-if="$ctrl.currentStateTitle">
                         -
                         <span ng-bind="$ctrl.currentStateTitle"></span>
                     </span>
-                </h2>
+                </h1>
             </div>
         </md-toolbar>
 
-        <md-content flex="noshrink" layout="row" layout-align="center" md-scroll-y role="main" ui-view="main"></md-content>
+        <md-content flex="noshrink" layout="row" layout-align="center center" md-scroll-y role="main" ui-view="main"></md-content>
 
         <div layout="row" layout-align="center center">
             <footer ui-view="footer">

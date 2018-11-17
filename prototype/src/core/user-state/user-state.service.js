@@ -100,7 +100,7 @@ export class UserStateService {
     }
 
     get isLoggedIn() {
-        return this.userState.isLoggedIn();
+        return this.userState.isLoggedIn;
     }
 
     login(userNameClaim, userPasswordProof) {
