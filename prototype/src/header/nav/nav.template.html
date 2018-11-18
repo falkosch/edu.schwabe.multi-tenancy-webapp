@@ -1,6 +1,8 @@
 <ol layout-padding>
-    <li ng-repeat="entry in $ctrl.entries" ui-sref-active="active">
-        <span class="material-icons"></span>
-        <a ui-state="entry.state" ui-sref-active="md-accent" ng-bind="entry.text"></a>
+    <li ng-repeat="entry in $ctrl.entries">
+        <div ui-sref-active="active">
+            <span class="material-icons"></span>
+            <a ui-state="entry.state" ng-bind="entry.text"></a>
+        </div>
     </li>
 </ol>
