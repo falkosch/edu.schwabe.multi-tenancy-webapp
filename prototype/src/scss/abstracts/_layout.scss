@@ -1,4 +1,18 @@
 
+@mixin height-x($x) {
+    height: $x;
+    max-height: $x;
+    min-height: $x;
+}
+
+@mixin zindex-x($x) {
+    z-index: $x;
+}
+
 %height-100 {
-    height: 100%;
+    @include height-x(100%);
+}
+
+%zindex-1 {
+    @include zindex-x(1);
 }

@@ -205,7 +205,6 @@
     <Content Include="src\login\login.template.html" />
     <Content Include="src\scss\abstracts\_all.scss" />
     <Content Include="src\scss\abstracts\_layout.scss" />
-    <Content Include="src\scss\abstracts\_mixins.scss" />
     <Content Include="src\scss\abstracts\_variables.scss" />
     <Content Include="src\scss\base\_layout.scss" />
     <Content Include="src\scss\base\all.scss" />
