@@ -25,13 +25,15 @@ module.exports = {
         }),
     ],
     optimization: {
-        runtimeChunk: 'single',
+        runtimeChunk: {
+            name: 'vendors',
+        },
         splitChunks: {
             cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
+                vendors: {
                     chunks: 'all',
+                    name: 'vendors',
+                    test: /[\\/]node_modules[\\/]/,
                 },
             },
         },
