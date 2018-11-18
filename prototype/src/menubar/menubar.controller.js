@@ -49,14 +49,20 @@ export class MenubarController {
         return _.get(this.$state.current, 'data.title', this.$state.current.name);
     }
 
+    get profileName() {
+        return _.get(this.profile, 'name', {});
+    }
+
     _onLogin(authentication) {
         this.authentication = authentication;
 
-        this.profileService
-            .getProfile(this.authentication.id)
-            .then((profile) => {
-                this.profile = profile;
-            });
+        this.globalSpinnerService.spinWhilePromise(
+            this.profileService
+                .getProfile(this.authentication.id)
+                .then((profile) => {
+                    this.profile = profile;
+                }),
+        );
     }
 
     _onLogout() {

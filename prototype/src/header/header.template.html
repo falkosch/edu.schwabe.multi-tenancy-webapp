@@ -3,9 +3,9 @@
     <div><span class="md-display-1 material-icons">thumb_up</span></div>
 </div>
 <div layout="row" layout-align="center">
-    <div ng-if="$ctrl.isLoggedIn">
-        <span ng-bind="$ctrl.ident.name"></span>
-        (<span ng-bind="$ctrl.ident.firstName"></span> <span ng-bind="$ctrl.ident.lastName"></span>)
+    <div ng-if="$ctrl.profile">
+        <span ng-bind="$ctrl.authentication.ident.name"></span>
+        (<span ng-bind="$ctrl.profileName.first"></span> <span ng-bind="$ctrl.profileName.last"></span>)
     </div>
 </div>
 <md-content>
