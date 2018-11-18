@@ -13,13 +13,9 @@
                 <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
                     <md-icon>menu</md-icon>
                 </md-button>
-                <h1 md-truncate>
-                    Welcome
-                    <span ng-if="$ctrl.currentStateTitle">
-                        -
-                        <span ng-bind="$ctrl.currentStateTitle"></span>
-                    </span>
-                </h1>
+                <ui-view name="menubar" role="menubar">
+                    <app-menubar></app-menubar>
+                </ui-view>
             </div>
         </md-toolbar>
 

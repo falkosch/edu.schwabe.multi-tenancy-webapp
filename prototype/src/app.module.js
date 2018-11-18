@@ -15,6 +15,7 @@ import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
+import { MenubarModule } from './menubar/menubar.module';
 
 import { AppComponent, AppName } from './app.component';
 import { appHtml5Config } from './app-html5.config';
@@ -35,6 +36,7 @@ export const AppModule = angular
         FooterModule,
         StartModule,
         LoginModule,
+        MenubarModule,
     ])
     .component(AppName, AppComponent)
     .config(appHtml5Config)
