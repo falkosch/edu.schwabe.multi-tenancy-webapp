@@ -71,13 +71,12 @@ export class AccessControlService {
     }
 
     _getGuardService(guard) {
-        const guardService = guard.$cachedService;
-
-        if (_.isObject(guardService)) {
-            return guardService;
+        if (_.isObject(guard.$cachedService)) {
+            return guard.$cachedService;
         }
 
-        return (guard.$cachedService = this.$injector.get(guard.serviceName));
+        guard.$cachedService = this.$injector.get(guard.serviceName);
+        return guard.$cachedService;
     }
 
 }

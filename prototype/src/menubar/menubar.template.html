@@ -1,7 +1,15 @@
-<h1 md-truncate>
-    Welcome
-    <span ng-if="$ctrl.currentStateTitle">
-        -
+<div layout="row" layout-align="space-between center">
+    <h1 md-truncate>
         <span ng-bind="$ctrl.currentStateTitle"></span>
-    </span>
-</h1>
+    </h1>
+    <div ng-if="$ctrl.profile" layout="row" layout-align="end center" layout-margin>
+        <div class="capatalize">
+            <span ng-bind="$ctrl.profile.name.title"></span>
+            <span ng-bind="$ctrl.profile.name.first"></span>
+            <span ng-bind="$ctrl.profile.name.last"></span>
+        </div>
+        <div>
+            <img ng-alt="{{$ctrl.profile.name.title}} {{$ctrl.profile.name.first}} {{$ctrl.profile.name.last}}" class="avatar" ng-src="{{$ctrl.profile.picture.thumbnail}}">
+        </div>
+    </div>
+</div>

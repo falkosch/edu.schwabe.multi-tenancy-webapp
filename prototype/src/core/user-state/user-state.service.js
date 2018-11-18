@@ -6,9 +6,9 @@ export const UserStateServiceName = 'userStateService';
 
 export class UserStateEvents {
 
-    Login = 'user-state-login';
+    static Login = 'user-state-login';
 
-    Logout = 'user-state-logout';
+    static Logout = 'user-state-logout';
 
 }
 
@@ -17,6 +17,8 @@ class AuthenticatedUser {
     static $inject = [
         '$q',
     ];
+
+    authentication;
 
     constructor(context, authentication) {
         this.context = context;
@@ -101,6 +103,10 @@ export class UserStateService {
 
     get isLoggedIn() {
         return this.userState.isLoggedIn;
+    }
+
+    get authentication() {
+        return this.userState.authentication;
     }
 
     login(userNameClaim, userPasswordProof) {

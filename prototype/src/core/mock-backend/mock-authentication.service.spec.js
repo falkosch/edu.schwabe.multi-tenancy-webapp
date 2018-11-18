@@ -5,11 +5,16 @@ import { MockBackendModule } from './mock-backend.module';
 import { BackendModule } from '../backend/backend.module';
 import { AuthenticationServiceName, Authorization, Permissions } from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
+import { ProfileServiceName } from '../backend/profile.service';
 
 describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${BackendModule}.${AuthenticationServiceName}`, () => {
 
     const testUserNameClaim = 'test';
     const testUserPasswordProof = 'password';
+
+    class ProfileServiceMock {
+        profiles = [];
+    }
 
     let $q;
     let $timeout;
@@ -17,7 +22,9 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
 
     beforeEach(() => {
 
-        angular.mock.module(MockBackendModule);
+        angular.mock.module(MockBackendModule, ($provide) => {
+            $provide.service(ProfileServiceName, ProfileServiceMock);
+        });
 
         inject((_$q_, _$timeout_, _authenticationService_) => {
             $q = _$q_;
@@ -25,6 +32,10 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
             authenticationService = _authenticationService_;
         });
 
+    });
+
+    afterEach(() => {
+        $timeout.verifyNoPendingTasks();
     });
 
     it(`should be an instanceof ${MockAuthenticationServiceName}`, () => {
@@ -62,7 +73,6 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
                 .catch(e => done(e));
 
             $timeout.flush();
-            $timeout.verifyNoPendingTasks();
 
         });
 
@@ -100,7 +110,6 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
 
             // flush timeout(s) for all code under test.
             $timeout.flush();
-            $timeout.verifyNoPendingTasks();
 
         });
 

@@ -15,7 +15,7 @@ class EventEmitter {
 
     subscribe(consumer) {
         return this.observeable
-            .subscribe(consumer);
+            .subscribe(([event, data]) => consumer(event, data));
     }
 
 }

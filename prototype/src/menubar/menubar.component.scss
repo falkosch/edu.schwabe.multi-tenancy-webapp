@@ -1,2 +1,13 @@
 app-menubar {
+
+    .capatalize {
+        text-transform: capitalize;
+    }
+
+    .avatar {
+        display: block;
+        max-height: 32px;
+        max-width: 32px;
+        border-radius: 50%;
+    }
 }

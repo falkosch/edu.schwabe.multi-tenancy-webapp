@@ -37,6 +37,11 @@
     <Compile Include="postcss.config.js" />
     <Compile Include="src\app-html5.config.js" />
     <Compile Include="src\app-html5.config.spec.js" />
+    <Compile Include="src\core\backend\profile.service.js" />
+    <Compile Include="src\core\backend\profile.service.spec.js" />
+    <Compile Include="src\core\mock-backend\mock-profiles-url.constant.js" />
+    <Compile Include="src\core\mock-backend\mock-profile.service.js" />
+    <Compile Include="src\core\mock-backend\mock-profile.service.spec.js" />
     <Compile Include="src\menubar\menubar.component.js" />
     <Compile Include="src\menubar\menubar.controller.js" />
     <Compile Include="src\menubar\menubar.controller.spec.js" />

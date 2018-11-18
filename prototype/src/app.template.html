@@ -9,11 +9,11 @@
 
     <div class="height-100" flex layout="column">
         <md-toolbar>
-            <div class="md-toolbar-tools">
+            <div class="md-toolbar-tools" layout="row">
                 <md-button ng-click="$ctrl.toggleSideNav()" class="md-icon-button">
                     <md-icon>menu</md-icon>
                 </md-button>
-                <ui-view name="menubar" role="menubar">
+                <ui-view name="menubar" role="menubar" flex>
                     <app-menubar></app-menubar>
                 </ui-view>
             </div>
