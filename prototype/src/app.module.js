@@ -1,5 +1,4 @@
 import 'moment';
-import 'moment/min/locales';
 
 import angular from 'angular';
 import 'rx-angular';
