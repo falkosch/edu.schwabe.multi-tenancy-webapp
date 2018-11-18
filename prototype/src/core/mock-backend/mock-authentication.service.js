@@ -4,9 +4,11 @@ import _ from 'lodash';
 
 import {
     AuthenticationServiceName,
-    Authorization,
-    Permissions,
     AuthenticationService,
+    Authentication,
+    BasicAuthorization,
+    IdentWithProfile,
+    PermissionsWithDefault,
 } from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
 import { ProfileServiceName } from '../backend/profile.service';
@@ -41,30 +43,24 @@ export class MockAuthenticationService extends AuthenticationService {
                     const firstProfile = _.head(profiles);
                     const id = _.get(firstProfile, 'login.uuid') || uuidV4();
                     const key = uuidV4();
-                    const birthdate = moment().toDate();
 
-                    return {
-                        id,
-                        authorization: {
-                            type: Authorization.Basic,
-                            key,
-                        },
-                        ident: {
-                            id,
-                            name: userNameClaim,
-                            firstName: 'Mock',
-                            lastName: 'User',
-                            birthdate,
-                        },
-                        permissions: {
-                            [id]: [Permissions.Read, Permissions.Write],
-                            greet: [Permissions.Read],
-                        },
-                    };
-
+                    return new Authentication()
+                        .setAuthorization(new BasicAuthorization().setKey(key))
+                        .setIdent(
+                            new IdentWithProfile()
+                                .setId(id)
+                                .setName(userNameClaim)
+                                .setFirstName(_.get(firstProfile, 'name.first', 'Mock'))
+                                .setLastName(_.get(firstProfile, 'name.last', 'User'))
+                                .setBirthdate(moment().toDate()),
+                        )
+                        .setPermissions(
+                            new PermissionsWithDefault()
+                                .setDefault(id)
+                                .setPermission('greet', true, false),
+                        );
                 },
                 MockAuthenticationService.MockDelay,
             ));
-
     }
 }

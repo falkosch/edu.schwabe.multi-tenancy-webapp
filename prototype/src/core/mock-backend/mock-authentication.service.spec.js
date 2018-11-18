@@ -3,7 +3,13 @@ import _ from 'lodash';
 import { MockAuthenticationServiceName, MockAuthenticationService } from './mock-authentication.service';
 import { MockBackendModule } from './mock-backend.module';
 import { BackendModule } from '../backend/backend.module';
-import { AuthenticationServiceName, Authorization, Permissions } from '../backend/authentication.service';
+import {
+    AuthenticationServiceName,
+    Permissions,
+    Authorization,
+    Authentication,
+    Ident,
+} from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
 import { ProfileServiceName } from '../backend/profile.service';
 
@@ -81,9 +87,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
         it('should return authentication data-mock-object', (done) => {
 
             const expectedAuthentication = jasmine.objectContaining({
-                id: jasmine.any(String),
                 authorization: jasmine.objectContaining({
-                    type: Authorization.Basic,
                     key: jasmine.any(String),
                 }),
                 ident: jasmine.objectContaining({
@@ -101,6 +105,18 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
             authenticationService
                 .authenticate(testUserNameClaim, testUserPasswordProof)
                 .then((authentication) => {
+
+                    expect(authentication)
+                        .toEqual(jasmine.any(Authentication));
+
+                    expect(authentication.authorization)
+                        .toEqual(jasmine.any(Authorization));
+
+                    expect(authentication.ident)
+                        .toEqual(jasmine.any(Ident));
+
+                    expect(authentication.permissions)
+                        .toEqual(jasmine.any(Permissions));
 
                     expect(authentication)
                         .toEqual(expectedAuthentication);
