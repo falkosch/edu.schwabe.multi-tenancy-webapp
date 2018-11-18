@@ -7,6 +7,8 @@ export class NavController {
         NavServiceName,
     ];
 
+    sideNav;
+
     constructor($scope, navService) {
         this.$scope = $scope;
         this.navService = navService;
@@ -17,5 +19,11 @@ export class NavController {
             () => this.navService.entries,
             (v) => { this.entries = v; },
         );
+    }
+
+    onClickNavLink() {
+        if (this.sideNav) {
+            this.sideNav.close();
+        }
     }
 }

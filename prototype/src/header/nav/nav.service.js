@@ -1,6 +1,7 @@
 export const NavServiceName = 'navService';
 
 export class NavService {
+
     entries = [];
 
     /**

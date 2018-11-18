@@ -8,4 +8,7 @@ export const NavName = 'appNav';
 export const NavComponent = {
     controller: NavController,
     templateUrl,
+    require: {
+        sideNav: '^?mdSidenav'
+    },
 };
