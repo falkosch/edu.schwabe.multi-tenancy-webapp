@@ -8,8 +8,15 @@
             <span ng-bind="$ctrl.profileName.first"></span>
             <span ng-bind="$ctrl.profileName.last"></span>
         </div>
-        <div>
-            <img ng-alt="{{$ctrl.profileName.title}} {{$ctrl.profileName.first}} {{$ctrl.profileName.last}}" class="avatar" ng-src="{{$ctrl.profile.picture.thumbnail}}">
-        </div>
+        <md-menu>
+            <md-button aria-label="User menu" class="md-icon-button" ng-click="$mdMenu.open()">
+                <img class="avatar" md-menu-origin ng-alt="{{$ctrl.profileName.title}} {{$ctrl.profileName.first}} {{$ctrl.profileName.last}}" ng-src="{{$ctrl.profile.picture.thumbnail}}">
+            </md-button>
+            <md-menu-content ng-mouseleave="$mdMenu.close()">
+                <md-menu-item>
+                    <md-button ng-click="$ctrl.logout()">Logout</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
     </div>
 </div>

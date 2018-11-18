@@ -56,7 +56,7 @@ export class MenubarController {
     _onLogin(authentication) {
         this.authentication = authentication;
 
-        this.globalSpinnerService.spinWhilePromise(
+        return this.globalSpinnerService.spinWhilePromise(
             this.profileService
                 .getProfile(this.authentication.id)
                 .then((profile) => {
@@ -68,5 +68,11 @@ export class MenubarController {
     _onLogout() {
         this.authentication = undefined;
         this.profile = undefined;
+    }
+
+    logout() {
+        return this.globalSpinnerService.spinWhilePromise(
+            this.userStateService.logout()
+        );
     }
 }

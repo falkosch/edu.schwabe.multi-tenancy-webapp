@@ -5,9 +5,10 @@ app-menubar {
     }
 
     .avatar {
-        display: block;
-        max-height: 32px;
-        max-width: 32px;
-        border-radius: 50%;
+        position: absolute;
+        width: 100%;
+        height: auto;
+        left: 0;
+        top: 0;
     }
 }

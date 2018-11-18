@@ -36,7 +36,7 @@ class AuthenticatedUser {
     }
 
     logout() {
-        this.context.userState = new AnonymousUser(this);
+        this.context.userState = new AnonymousUser(this.context);
         return this.$q.resolve();
     }
 }
@@ -68,7 +68,7 @@ class AnonymousUser {
     }
 
     logout() {
-        this.context.userState = new AnonymousUser(this);
+        this.context.userState = new AnonymousUser(this.context);
         return this.$q.resolve();
     }
 }
