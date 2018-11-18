@@ -11,6 +11,9 @@ export function loginRoute($stateProvider) {
             accessControl: {
                 public: true,
             },
+            data: {
+                title: 'Login',
+            },
             resolve: {},
             url: '/login',
             views: {
