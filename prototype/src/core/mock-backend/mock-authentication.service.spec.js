@@ -17,6 +17,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
     }
 
     let $q;
+    let $rootScope;
     let $timeout;
     let authenticationService;
 
@@ -26,8 +27,9 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
             $provide.service(ProfileServiceName, ProfileServiceMock);
         });
 
-        inject((_$q_, _$timeout_, _authenticationService_) => {
+        inject((_$q_, _$rootScope_, _$timeout_, _authenticationService_) => {
             $q = _$q_;
+            $rootScope = _$rootScope_;
             $timeout = _$timeout_;
             authenticationService = _authenticationService_;
         });
@@ -108,7 +110,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
                 })
                 .catch(e => done(e));
 
-            // flush timeout(s) for all code under test.
+            $rootScope.$digest();
             $timeout.flush();
 
         });
