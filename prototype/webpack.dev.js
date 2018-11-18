@@ -1,3 +1,4 @@
+const path = require('path');
 const merge = require('webpack-merge');
 const { HotModuleReplacementPlugin } = require('webpack');
 
@@ -35,7 +36,16 @@ module.exports = merge(
             rules: [
                 {
                     test: /\.template\.html?$/,
-                    use: ['ngtemplate-loader?requireAngular', 'html-loader'],
+                    use: [
+                        {
+                            loader: 'ngtemplate-loader',
+                            options: {
+                                relativeTo: path.resolve(__dirname, './src'),
+                                requireAngular: true,
+                            },
+                        },
+                        'html-loader',
+                    ],
                 },
                 {
                     test: /\.css$/,
