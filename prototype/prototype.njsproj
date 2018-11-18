@@ -46,6 +46,14 @@
     <Compile Include="src\menubar\menubar.controller.js" />
     <Compile Include="src\menubar\menubar.controller.spec.js" />
     <Compile Include="src\menubar\menubar.module.js" />
+    <Compile Include="src\profile\profile-navigation.run.js" />
+    <Compile Include="src\profile\profile-navigation.run.spec.js" />
+    <Compile Include="src\profile\profile.component.js" />
+    <Compile Include="src\profile\profile.controller.js" />
+    <Compile Include="src\profile\profile.controller.spec.js" />
+    <Compile Include="src\profile\profile.module.js" />
+    <Compile Include="src\profile\profile.route.js" />
+    <Compile Include="src\profile\profile.route.spec.js" />
     <Compile Include="src\ui\global-spinner\global-spinner-ui-router-transitions.run.js" />
     <Compile Include="src\app.component.js" />
     <Compile Include="src\app.controller.js" />
@@ -214,6 +222,8 @@
     <Content Include="src\login\login.template.html" />
     <Content Include="src\menubar\menubar.component.scss" />
     <Content Include="src\menubar\menubar.template.html" />
+    <Content Include="src\profile\profile.component.scss" />
+    <Content Include="src\profile\profile.template.html" />
     <Content Include="src\scss\abstracts\_all.scss" />
     <Content Include="src\scss\abstracts\_layout.scss" />
     <Content Include="src\scss\abstracts\_variables.scss" />
@@ -247,6 +257,7 @@
     <Folder Include="src\header\nav\" />
     <Folder Include="src\login\" />
     <Folder Include="src\menubar\" />
+    <Folder Include="src\profile\" />
     <Folder Include="src\scss\" />
     <Folder Include="src\scss\abstracts\" />
     <Folder Include="src\scss\base\" />

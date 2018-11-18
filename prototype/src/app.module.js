@@ -19,6 +19,7 @@ import { MenubarModule } from './menubar/menubar.module';
 import { AppComponent, AppName } from './app.component';
 import { appHtml5Config } from './app-html5.config';
 import { appRoute } from './app.route';
+import { ProfileModule } from './profile/profile.module';
 
 export const AppModule = angular
     .module('app', [
@@ -32,10 +33,11 @@ export const AppModule = angular
         CoreModule,
         UiModule,
         HeaderModule,
+        MenubarModule,
         FooterModule,
         StartModule,
         LoginModule,
-        MenubarModule,
+        ProfileModule,
     ])
     .component(AppName, AppComponent)
     .config(appHtml5Config)
