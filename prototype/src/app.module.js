@@ -15,11 +15,12 @@ import { FooterModule } from './footer/footer.module';
 import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
 import { MenubarModule } from './menubar/menubar.module';
+import { ProfileModule } from './profile/profile.module';
 
 import { AppComponent, AppName } from './app.component';
 import { appHtml5Config } from './app-html5.config';
 import { appRoute } from './app.route';
-import { ProfileModule } from './profile/profile.module';
+import { appRun } from './app.run';
 
 export const AppModule = angular
     .module('app', [
@@ -42,4 +43,5 @@ export const AppModule = angular
     .component(AppName, AppComponent)
     .config(appHtml5Config)
     .config(appRoute)
+    .run(appRun)
     .name;

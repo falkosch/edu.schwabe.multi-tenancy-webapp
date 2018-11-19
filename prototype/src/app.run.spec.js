@@ -1,11 +1,11 @@
-import { StartModule } from './start.module';
-import { StartStateId } from './start.route';
+import { AppModule } from './app.module';
+import { StartStateId } from './start/start.route';
 
-describe(`${StartModule} run`, () => {
+describe(`${AppModule} run`, () => {
 
     beforeEach(() => {
 
-        angular.mock.module(StartModule, ($provide) => {
+        angular.mock.module(AppModule, ($provide) => {
             $provide.value('$state', {
                 go: jasmine.createSpy('go'),
             });
