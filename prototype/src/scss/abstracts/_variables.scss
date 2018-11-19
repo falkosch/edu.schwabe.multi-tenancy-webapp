@@ -1,2 +1,9 @@
 // just have an own app-wide variable for the baseline-grid for easy use in the app scss
 $app-baseline-grid: 8px;
+
+$app-layout-gutter-width: ($app-baseline-grid * 2);
+
+$app-layout-breakpoint-xs: 600px;
+$app-layout-breakpoint-sm: 960px;
+$app-layout-breakpoint-md: 1280px;
+$app-layout-breakpoint-lg: 1920px;

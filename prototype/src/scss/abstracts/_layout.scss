@@ -1,3 +1,10 @@
+@import "./variables";
+
+@mixin width-x($x) {
+    width: $x;
+    max-width: $x;
+    min-width: $x;
+}
 
 @mixin height-x($x) {
     height: $x;
@@ -9,10 +16,80 @@
     z-index: $x;
 }
 
+// equals a screen size media queries
+
+@mixin mq-xs {
+    @media (max-width: $app-layout-breakpoint-xs - 1) {
+        @content;
+    }
+}
+
+@mixin mq-sm {
+    @media (min-width: $app-layout-breakpoint-xs) and (max-width: $app-layout-breakpoint-sm - 1) {
+        @content;
+    }
+}
+
+@mixin mq-md {
+    @media (min-width: $app-layout-breakpoint-sm) and (max-width: $app-layout-breakpoint-md - 1) {
+        @content;
+    }
+}
+
+@mixin mq-lg {
+    @media (min-width: $app-layout-breakpoint-md) and (max-width: $app-layout-breakpoint-lg - 1) {
+        @content;
+    }
+}
+
+// greater than a screen size media queries
+
+@mixin mq-gt-xs {
+    @media (min-width: $app-layout-breakpoint-xs) {
+        @content;
+    }
+}
+
+@mixin mq-gt-sm {
+    @media (min-width: $app-layout-breakpoint-sm) {
+        @content;
+    }
+}
+
+@mixin mq-gt-md {
+    @media (min-width: $app-layout-breakpoint-md) {
+        @content;
+    }
+}
+
+@mixin mq-gt-lg {
+    @media (min-width: $app-layout-breakpoint-lg) {
+        @content;
+    }
+}
+
 %height-100 {
     @include height-x(100%);
 }
 
 %zindex-1 {
     @include zindex-x(1);
+}
+
+%layout-container {
+    @include mq-xs() {
+        @include width-x(calc(100% - #{$app-layout-gutter-width}));
+    }
+    @include mq-sm() {
+        @include width-x($app-layout-breakpoint-xs - $app-layout-gutter-width);
+    }
+    @include mq-md() {
+        @include width-x($app-layout-breakpoint-sm - $app-layout-gutter-width);
+    }
+    @include mq-lg() {
+        @include width-x($app-layout-breakpoint-md - $app-layout-gutter-width);
+    }
+    @include mq-gt-lg() {
+        @include width-x($app-layout-breakpoint-lg - $app-layout-gutter-width);
+    }
 }

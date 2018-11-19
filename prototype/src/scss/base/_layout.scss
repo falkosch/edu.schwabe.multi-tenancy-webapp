@@ -1,9 +1,18 @@
 @import "../abstracts/layout";
 
+body {
+    /* together with meta viewport tag, this will downscale the content for viewport widths below 320px */
+    min-width: 320px;
+}
+
 .height-100 {
     @extend %height-100;
 }
 
 .zindex-1 {
     @extend %zindex-1;
+}
+
+.layout-container {
+    @extend %layout-container;
 }
