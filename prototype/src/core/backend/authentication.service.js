@@ -1,8 +1,23 @@
+import uuidV4 from 'uuid-browser/v4';
+
 import { BackendErrors } from './backend-errors';
 
 export const AuthenticationServiceName = 'authenticationService';
 
 export class Authorization {
+
+    setKey() {
+        return this;
+    }
+
+    get type() {
+        return undefined;
+    }
+}
+
+export class BasicAuthorization extends Authorization {
+
+    static Type = 'Basic';
 
     key;
 
@@ -10,11 +25,6 @@ export class Authorization {
         this.key = value;
         return this;
     }
-}
-
-export class BasicAuthorization extends Authorization {
-
-    static Type = 'Basic';
 
     get type() {
         return BasicAuthorization.Type;
@@ -25,8 +35,28 @@ export class BearerAuthorization extends Authorization {
 
     static Type = 'Bearer';
 
+    key;
+
+    setKey(value) {
+        this.key = value;
+        return this;
+    }
+
     get type() {
         return BearerAuthorization.Type;
+    }
+}
+
+export class AnonymousAuthorization extends Authorization {
+
+    static Type = 'Anonymous';
+
+    get key() {
+        return undefined;
+    }
+
+    get type() {
+        return AnonymousAuthorization.Type;
     }
 }
 
@@ -139,5 +169,13 @@ export class AuthenticationService {
 
     authenticate() {
         return this.$q.reject(BackendErrors.notImplemented());
+    }
+
+    get anonymous() {
+        const anonymousId = uuidV4();
+        return new Authentication()
+            .setAuthorization(new AnonymousAuthorization())
+            .setIdent(new Ident().setId(anonymousId))
+            .setPermissions(new PermissionsWithDefault().setDefault(anonymousId));
     }
 }

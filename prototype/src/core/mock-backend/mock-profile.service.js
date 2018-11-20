@@ -5,6 +5,15 @@ import { MockProfilesUrlName } from './mock-profiles-url.constant';
 
 export const MockProfileServiceName = ProfileServiceName;
 
+export class AnonymousProfile {
+
+    login = {};
+
+    constructor(userId) {
+        this.login.uuid = userId;
+    }
+}
+
 export class MockProfileService extends ProfileService {
 
     static $inject = [
@@ -37,7 +46,15 @@ export class MockProfileService extends ProfileService {
 
     getProfile(userId) {
         return this.$q.when(this.initializePromise)
-            .then(profiles => _.find(profiles, ['login.uuid', userId]));
+            .then((profiles) => {
+                const profile = _.find(profiles, ['login.uuid', userId]);
+
+                if (profile) {
+                    return profile;
+                }
+
+                return new AnonymousProfile(userId);
+            });
     }
 
     updateProfile() {

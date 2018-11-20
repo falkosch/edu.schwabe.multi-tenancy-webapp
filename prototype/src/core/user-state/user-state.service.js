@@ -1,5 +1,7 @@
 import { InjectionServiceName } from '../annotations/injection.service';
-import { AuthenticationServiceName } from '../backend/authentication.service';
+import {
+    AuthenticationServiceName, Authentication, BasicAuthorization, AnonymousAuthorization, Ident,
+} from '../backend/authentication.service';
 import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
 export const UserStateServiceName = 'userStateService';
@@ -48,10 +50,13 @@ class AnonymousUser {
         AuthenticationServiceName,
     ];
 
+    authentication;
+
     constructor(context) {
         this.context = context;
-
         context.injectionService.injectByStaticInjectionNames(this);
+
+        this.authentication = this.authenticationService.anonymous;
     }
 
     get isLoggedIn() {
