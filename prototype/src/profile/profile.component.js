@@ -8,4 +8,7 @@ export const ProfileName = 'appProfile';
 export const ProfileComponent = {
     controller: ProfileController,
     templateUrl,
+    bindings: {
+        viewmodel: '<',
+    },
 };

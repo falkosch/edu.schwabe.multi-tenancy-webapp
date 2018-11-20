@@ -9,6 +9,9 @@ import { GlobalSpinnerModule } from '../ui/global-spinner/global-spinner.module'
 import { ProfileName, ProfileComponent } from './profile.component';
 import { profileRoute } from './profile.route';
 import { profileNavigationRun } from './profile-navigation.run';
+import { ProfileUnsetValueFilterName, ProfileUnsetValueFilter } from './profile-unset-value.filter';
+import { ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective } from './profile-unset-value.formatter';
+import { ProfileUnsetValueParserName, ProfileUnsetValueParserDirective } from './profile-unset-value.parser';
 
 export const ProfileModule = angular
     .module('app.profile', [
@@ -19,6 +22,9 @@ export const ProfileModule = angular
         GlobalSpinnerModule,
     ])
     .component(ProfileName, ProfileComponent)
+    .filter(ProfileUnsetValueFilterName, ProfileUnsetValueFilter)
+    .directive(ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective)
+    .directive(ProfileUnsetValueParserName, ProfileUnsetValueParserDirective)
     .config(profileRoute)
     .run(profileNavigationRun)
     .name;
