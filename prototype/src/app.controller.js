@@ -3,12 +3,11 @@ import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.ser
 export class AppController {
 
     static $inject = [
-        '$state',
         '$mdSidenav',
         GlobalSpinnerServiceName,
     ];
 
-    constructor($state, $mdSidenav, globalSpinnerService) {
+    constructor($mdSidenav, globalSpinnerService) {
         this.$mdSidenav = $mdSidenav;
         this.globalSpinnerService = globalSpinnerService;
 
