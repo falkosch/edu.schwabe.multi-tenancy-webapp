@@ -5,9 +5,7 @@ import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.ser
 
 describe(`${AppModule}.${AppName} component controller`, () => {
 
-    const globalSpinnerServiceMock = {
-        isBusy: false,
-    };
+    let mockIsBusy;
 
     let toggleSpy;
     let $mdSidenavMock;
@@ -15,6 +13,8 @@ describe(`${AppModule}.${AppName} component controller`, () => {
     let appController;
 
     beforeEach(() => {
+
+        mockIsBusy = false;
 
         toggleSpy = jasmine.createSpy('toggle');
 
@@ -26,7 +26,11 @@ describe(`${AppModule}.${AppName} component controller`, () => {
         inject(($componentController) => {
             appController = $componentController(AppName, {
                 $mdSidenav: $mdSidenavMock,
-                [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
+                [GlobalSpinnerServiceName]: {
+                    get isBusy() {
+                        return mockIsBusy;
+                    },
+                },
             });
         });
 
@@ -43,15 +47,15 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
         it(`should passthrough the return value of ${GlobalSpinnerServiceName}.isBusy`, () => {
 
-            globalSpinnerServiceMock.isBusy = false;
+            mockIsBusy = true;
 
             expect(appController.isBusy)
-                .toEqual(globalSpinnerServiceMock.isBusy);
+                .toEqual(true);
 
-            globalSpinnerServiceMock.isBusy = true;
+            mockIsBusy = false;
 
             expect(appController.isBusy)
-                .toEqual(globalSpinnerServiceMock.isBusy);
+                .toEqual(false);
 
         });
 
