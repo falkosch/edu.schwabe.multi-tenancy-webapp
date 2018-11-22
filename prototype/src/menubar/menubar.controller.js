@@ -30,7 +30,7 @@ export class MenubarController {
             .subscribe(() => this._onLogout());
 
         if (this.userStateService.isLoggedIn) {
-            this.authentication = this.userStateService.authentication;
+            this._onLogin(this.userStateService.authentication);
         }
     }
 
@@ -53,6 +53,12 @@ export class MenubarController {
         return _.get(this.profile, 'name', {});
     }
 
+    logout() {
+        return this.globalSpinnerService.spinWhilePromise(
+            this.userStateService.logout(),
+        );
+    }
+
     _onLogin(authentication) {
         this.authentication = authentication;
 
@@ -68,11 +74,5 @@ export class MenubarController {
     _onLogout() {
         this.authentication = undefined;
         this.profile = undefined;
-    }
-
-    logout() {
-        return this.globalSpinnerService.spinWhilePromise(
-            this.userStateService.logout()
-        );
     }
 }

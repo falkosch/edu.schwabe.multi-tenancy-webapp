@@ -62,7 +62,7 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
 
     });
 
-    describe('.spinWhilePromise', () => {
+    describe('.spinWhilePromise()', () => {
 
         it(`should pass the given promise to ${PromiseTrackerServiceName}.track and return the same promise again`, () => {
 
@@ -78,7 +78,7 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
 
     });
 
-    describe('.spinWhileTransition', () => {
+    describe('.spinWhileTransition()', () => {
 
         it(`should pass the promise of the given transition to ${PromiseTrackerServiceName}.track and return that promise again`, () => {
 
