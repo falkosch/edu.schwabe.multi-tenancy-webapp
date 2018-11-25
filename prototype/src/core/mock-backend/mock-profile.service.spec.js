@@ -7,7 +7,6 @@ describe(`${MockBackendModule}.${MockProfileServiceName}`, () => {
     const testData = _getTestData();
 
     let $httpBackend;
-    let authRequestHandler;
     let profileService;
     let mockProfilesUrl;
 
@@ -20,7 +19,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName}`, () => {
             profileService = _profileService_;
             mockProfilesUrl = _mockProfilesUrl_;
 
-            authRequestHandler = $httpBackend
+            $httpBackend
                 .when('GET', mockProfilesUrl)
                 .respond(testData);
 

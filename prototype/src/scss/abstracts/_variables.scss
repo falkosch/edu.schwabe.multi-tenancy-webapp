@@ -1,4 +1,6 @@
-// just have an own app-wide variable for the baseline-grid for easy use in the app scss
+// have own app-wide variables for easy use in the app scss
+
+// for the baseline-grid of angular-material
 $app-baseline-grid: 8px;
 
 $app-layout-gutter-width: ($app-baseline-grid * 2);

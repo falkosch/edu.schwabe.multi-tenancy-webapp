@@ -1,7 +1,5 @@
 import { InjectionServiceName } from '../annotations/injection.service';
-import {
-    AuthenticationServiceName, Authentication, BasicAuthorization, AnonymousAuthorization, Ident,
-} from '../backend/authentication.service';
+import { AuthenticationServiceName } from '../backend/authentication.service';
 import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
 export const UserStateServiceName = 'userStateService';

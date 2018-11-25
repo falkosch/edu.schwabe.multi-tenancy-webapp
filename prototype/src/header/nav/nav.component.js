@@ -9,6 +9,6 @@ export const NavComponent = {
     controller: NavController,
     templateUrl,
     require: {
-        sideNav: '^?mdSidenav'
+        sideNav: '^?mdSidenav',
     },
 };

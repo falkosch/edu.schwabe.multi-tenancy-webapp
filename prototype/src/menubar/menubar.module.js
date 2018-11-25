@@ -9,6 +9,7 @@ import { BackendModule } from '../core/backend/backend.module';
 export const MenubarModule = angular
     .module('app.menubar', [
         uiRouter,
+        BackendModule,
         UserStateModule,
         GlobalSpinnerModule,
     ])
