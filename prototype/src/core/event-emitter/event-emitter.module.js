@@ -1,4 +1,5 @@
 import angular from 'angular';
+import 'rx-angular';
 
 import { EventEmitterServiceName, EventEmitterService } from './event-emitter.service';
 

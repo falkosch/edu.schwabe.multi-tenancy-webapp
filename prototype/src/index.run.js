@@ -1,7 +1,7 @@
 import { StartStateId } from './start/start.route';
 
-appRun.$inject = ['$state'];
+indexRun.$inject = ['$state'];
 
-export function appRun($state) {
+export function indexRun($state) {
     return $state.go(StartStateId);
 }

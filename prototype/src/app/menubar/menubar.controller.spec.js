@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { MenubarModule } from './menubar.module';
 import { MenubarName } from './menubar.component';
 import { MenubarController } from './menubar.controller';
-import { UserStateServiceName } from '../core/user-state/user-state.service';
-import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
-import { ProfileServiceName } from '../core/backend/profile.service';
+import { UserStateServiceName } from '../../core/user-state/user-state.service';
+import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
+import { ProfileServiceName } from '../../core/backend/profile.service';
 
 describe(`${MenubarModule}.${MenubarName} component controller`, () => {
 

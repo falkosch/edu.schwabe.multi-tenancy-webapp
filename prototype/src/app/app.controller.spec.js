@@ -1,7 +1,7 @@
 import { AppModule } from './app.module';
 import { AppName } from './app.component';
 import { AppController } from './app.controller';
-import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.service';
+import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
 
 describe(`${AppModule}.${AppName} component controller`, () => {
 

@@ -1,8 +1,8 @@
 import angular from 'angular';
 
-import { AppModule } from './app.module';
+import { IndexModule } from './index.module';
 
-describe(`${AppModule} html5 config`, () => {
+describe(`${IndexModule} html5 config`, () => {
 
     let $locationProviderMock;
 
@@ -18,7 +18,7 @@ describe(`${AppModule} html5 config`, () => {
             spyOn($locationProviderMock, 'html5Mode');
         });
 
-        angular.mock.module(AppModule);
+        angular.mock.module(IndexModule);
 
         /*
          * Calling inject() is required to trigger execution of the module callback for

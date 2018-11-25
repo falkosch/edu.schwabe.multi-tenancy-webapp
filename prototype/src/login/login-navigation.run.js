@@ -1,8 +1,9 @@
-import { NavServiceName } from '../header/nav/nav.service';
+import { NavigationServiceName } from '../core/navigation/navigation.service';
+
 import { LoginStateId } from './login.route';
 
-loginNavigationRun.$inject = [NavServiceName];
+loginNavigationRun.$inject = [NavigationServiceName];
 
-export function loginNavigationRun(navService) {
-    navService.forState('Login', LoginStateId);
+export function loginNavigationRun(navigationService) {
+    navigationService.forState('Login', LoginStateId);
 }

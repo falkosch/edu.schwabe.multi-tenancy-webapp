@@ -1,10 +1,11 @@
 import angular from 'angular';
 
 import { NavComponent, NavName } from './nav.component';
-import { NavServiceName, NavService } from './nav.service';
+import { NavigationModule } from '../../../core/navigation/navigation.module';
 
 export const NavModule = angular
-    .module('app.header.nav', [])
-    .service(NavServiceName, NavService)
+    .module('app.header.nav', [
+        NavigationModule,
+    ])
     .component(NavName, NavComponent)
     .name;

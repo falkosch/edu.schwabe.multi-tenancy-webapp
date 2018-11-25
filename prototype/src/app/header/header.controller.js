@@ -1,20 +1,18 @@
 import _ from 'lodash';
 
-import { UserStateServiceName } from '../core/user-state/user-state.service';
-import { ProfileServiceName } from '../core/backend/profile.service';
-import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
+import { UserStateServiceName } from '../../core/user-state/user-state.service';
+import { ProfileServiceName } from '../../core/backend/profile.service';
+import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
 
-export class MenubarController {
+export class HeaderController {
 
     static $inject = [
-        '$state',
         UserStateServiceName,
         ProfileServiceName,
         GlobalSpinnerServiceName,
     ];
 
-    constructor($state, userStateService, profileService, globalSpinnerService) {
-        this.$state = $state;
+    constructor(userStateService, profileService, globalSpinnerService) {
         this.userStateService = userStateService;
         this.profileService = profileService;
         this.globalSpinnerService = globalSpinnerService;
@@ -30,7 +28,7 @@ export class MenubarController {
             .subscribe(() => this._onLogout());
 
         if (this.userStateService.isLoggedIn) {
-            this._onLogin(this.userStateService.authentication);
+            this.authentication = this.userStateService.authentication;
         }
     }
 
@@ -45,24 +43,18 @@ export class MenubarController {
         }
     }
 
-    get currentStateTitle() {
-        return _.get(this.$state.current, 'data.title', this.$state.current.name);
+    get isLoggedIn() {
+        return this.userStateService.isLoggedIn;
     }
 
     get profileName() {
         return _.get(this.profile, 'name', {});
     }
 
-    logout() {
-        return this.globalSpinnerService.spinWhilePromise(
-            this.userStateService.logout(),
-        );
-    }
-
     _onLogin(authentication) {
         this.authentication = authentication;
 
-        return this.globalSpinnerService.spinWhilePromise(
+        this.globalSpinnerService.spinWhilePromise(
             this.profileService
                 .getProfile(this.authentication.id)
                 .then((profile) => {

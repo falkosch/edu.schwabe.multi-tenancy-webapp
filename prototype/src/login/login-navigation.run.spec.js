@@ -1,6 +1,6 @@
-import { NavServiceName } from '../header/nav/nav.service';
 import { LoginModule } from './login.module';
 import { LoginStateId } from './login.route';
+import { NavigationServiceName } from '../core/navigation/navigation.service';
 
 describe(`${LoginModule} navigation run`, () => {
 
@@ -13,7 +13,7 @@ describe(`${LoginModule} navigation run`, () => {
         };
 
         angular.mock.module(LoginModule, ($provide) => {
-            $provide.value(NavServiceName, navServiceMock);
+            $provide.value(NavigationServiceName, navServiceMock);
         });
 
         inject();

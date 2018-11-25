@@ -1,8 +1,9 @@
-import { NavServiceName } from '../header/nav/nav.service';
+import { NavigationServiceName } from '../core/navigation/navigation.service';
+
 import { StartStateId } from './start.route';
 
-startNavigationRun.$inject = [NavServiceName];
+startNavigationRun.$inject = [NavigationServiceName];
 
-export function startNavigationRun(navService) {
-    navService.forState('Start', StartStateId);
+export function startNavigationRun(navigationService) {
+    navigationService.forState('Start', StartStateId);
 }

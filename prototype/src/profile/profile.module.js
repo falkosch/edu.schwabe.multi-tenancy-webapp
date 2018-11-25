@@ -2,8 +2,8 @@ import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import angularMaterial from 'angular-material';
 
-import { NavModule } from '../header/nav/nav.module';
 import { UserStateModule } from '../core/user-state/user-state.module';
+import { NavigationModule } from '../core/navigation/navigation.module';
 import { GlobalSpinnerModule } from '../ui/global-spinner/global-spinner.module';
 
 import { ProfileName, ProfileComponent } from './profile.component';
@@ -17,7 +17,7 @@ export const ProfileModule = angular
     .module('app.profile', [
         uiRouter,
         angularMaterial,
-        NavModule,
+        NavigationModule,
         UserStateModule,
         GlobalSpinnerModule,
     ])

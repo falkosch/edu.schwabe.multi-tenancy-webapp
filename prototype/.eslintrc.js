@@ -24,7 +24,7 @@ module.exports = {
     overrides: [
         {
             files: [
-                'src/**/*.spec.js',
+                '{src,tenancy}/**/*.spec.js',
             ],
             env: {
                 jasmine: true,
@@ -44,8 +44,8 @@ module.exports = {
                 'jsdoc.conf.js',
                 '.babelrc.js',
                 'webpack.*',
-                'src/app.karma.js',
-                'src/**/*.spec.js',
+                '{src,tenancy}/**/*.karma.js',
+                '{src,tenancy}/**/*.spec.js',
             ],
             rules: {
                 'import/no-extraneous-dependencies': 'off'

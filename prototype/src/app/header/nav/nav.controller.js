@@ -1,10 +1,10 @@
-import { NavServiceName } from './nav.service';
+import { NavigationServiceName } from '../../../core/navigation/navigation.service';
 
 export class NavController {
 
     static $inject = [
         '$scope',
-        NavServiceName,
+        NavigationServiceName,
     ];
 
     sideNav;

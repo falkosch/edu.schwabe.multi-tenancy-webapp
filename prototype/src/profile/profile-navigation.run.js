@@ -1,8 +1,9 @@
-import { NavServiceName } from '../header/nav/nav.service';
+import { NavigationServiceName } from '../core/navigation/navigation.service';
+
 import { ProfileStateId } from './profile.route';
 
-profileNavigationRun.$inject = [NavServiceName];
+profileNavigationRun.$inject = [NavigationServiceName];
 
-export function profileNavigationRun(navService) {
-    navService.forState('Profile', ProfileStateId);
+export function profileNavigationRun(navigationService) {
+    navigationService.forState('Profile', ProfileStateId);
 }

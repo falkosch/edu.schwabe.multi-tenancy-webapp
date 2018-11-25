@@ -3,8 +3,8 @@ const merge = require('webpack-merge');
 
 const common = require('./webpack.common');
 
-module.exports = merge(
-    common,
+module.exports = env => merge(
+    common(env),
     {
         mode: 'development',
         devtool: 'cheap-module-eval-source-map',
@@ -32,15 +32,7 @@ module.exports = merge(
                     ],
                 },
                 {
-                    test: /\.css$/,
-                    use: 'ignore-loader',
-                },
-                {
-                    test: /\.scss$/,
-                    use: 'ignore-loader',
-                },
-                {
-                    test: /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
+                    test: /\.(s?css|png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
                     use: 'ignore-loader',
                 },
             ],

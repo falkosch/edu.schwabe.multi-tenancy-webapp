@@ -1,4 +1,4 @@
-import { GlobalSpinnerServiceName } from './ui/global-spinner/global-spinner.service';
+import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
 
 export class AppController {
 

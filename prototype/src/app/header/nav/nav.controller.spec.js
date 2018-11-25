@@ -1,7 +1,7 @@
 import { NavModule } from './nav.module';
 import { NavController } from './nav.controller';
-import { NavServiceName } from './nav.service';
 import { NavName } from './nav.component';
+import { NavigationServiceName } from '../../../core/navigation/navigation.service';
 
 describe(`${NavModule}.${NavName} component controller`, () => {
 
@@ -22,7 +22,7 @@ describe(`${NavModule}.${NavName} component controller`, () => {
 
         inject(($componentController) => {
             navController = $componentController(NavName, {
-                [NavServiceName]: navServiceMock,
+                [NavigationServiceName]: navServiceMock,
             });
         });
 
@@ -35,7 +35,7 @@ describe(`${NavModule}.${NavName} component controller`, () => {
 
     });
 
-    it(`should put ${NavServiceName}.entries on "this" when ${NavName}.$onInit is called`, () => {
+    it(`should put ${NavigationServiceName}.entries on "this" when ${NavName}.$onInit is called`, () => {
 
         inject(($rootScope) => {
             navController.$onInit();

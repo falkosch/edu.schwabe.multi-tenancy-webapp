@@ -19,8 +19,8 @@ module.exports = (api) => {
                 plugins: [
                     ['istanbul', {
                         exclude: [
-                            'src/app.karma.js',
-                            'src/**/*.spec.js'
+                            '{src,tenancy}/**/*.karma.js',
+                            '{src,tenancy}/**/*.spec.js'
                         ],
                     }],
                 ],

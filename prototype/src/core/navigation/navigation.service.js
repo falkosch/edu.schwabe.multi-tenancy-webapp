@@ -1,6 +1,6 @@
-export const NavServiceName = 'navService';
+export const NavigationServiceName = 'navigationService';
 
-export class NavService {
+export class NavigationService {
 
     entries = [];
 

@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import angularMaterial from 'angular-material';
 
-import { NavModule } from '../header/nav/nav.module';
+import { NavModule } from '../app/header/nav/nav.module';
 import { UserStateModule } from '../core/user-state/user-state.module';
 import { GlobalSpinnerModule } from '../ui/global-spinner/global-spinner.module';
 
