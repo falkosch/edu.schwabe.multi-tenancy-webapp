@@ -1,9 +1,9 @@
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
 
 const { HashedModuleIdsPlugin } = require('webpack');
 
@@ -19,11 +19,19 @@ module.exports = env => common(env)
         plugins: [
             new CleanWebpackPlugin(['dist']),
             new HashedModuleIdsPlugin(),
-            new FaviconsWebpackPlugin({
+            new WebappWebpackPlugin({
                 logo: './src/assets/favicon.png',
-                icons: {
-                    appleStartup: false,
-                    windows: true,
+                favicons: {
+                    icons: {
+                        android: false,
+                        appleIcon: false,
+                        appleStartup: false,
+                        coast: false,
+                        favicons: true,
+                        firefox: false,
+                        windows: false,
+                        yandex: false,
+                    },
                 },
             }),
             new MiniCssExtractPlugin({
