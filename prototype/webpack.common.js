@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -83,6 +84,9 @@ class WebpackConfigBuilder {
                 entry,
                 plugins: [
                     new HtmlWebpackPlugin(htmlWebpackPluginConfig),
+                    new ScriptExtHtmlWebpackPlugin({
+                        defaultAttribute: 'defer',
+                    }),
                 ],
             },
             ...appendConfigs,
