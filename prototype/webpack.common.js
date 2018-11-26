@@ -1,73 +1,108 @@
 const _ = require('lodash');
+const merge = require('webpack-merge');
 const path = require('path');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-class ParametersDecorator {
+class WebpackConfigBuilder {
 
-    entry(entryOptions) {
-        return entryOptions;
+    constructor() {
+        this.configs = [];
+        this.entries = [];
+        this.htmlWebpackPluginConfigs = [];
+        this.tenant = '';
     }
 
-    templateParameters(templateParameterOptions) {
-        return templateParameterOptions;
-    }
-}
-
-class ParametersDecoratorForTenantByName extends ParametersDecorator {
-
-    constructor(tenantName) {
-        super();
-        this.tenantName = tenantName;
+    static isNotEmptyString(value) {
+        return _.isString(value) && !_.isEmpty(_.trim(value));
     }
 
-    entry(entryOptions) {
-        return _.assign(
-            {},
-            super.entry(entryOptions),
+    isWithTenant() {
+        return WebpackConfigBuilder.isNotEmptyString(this.tenant);
+    }
+
+    withTenant(tenant = '') {
+        this.tenant = tenant;
+        return this;
+    }
+
+    addEntry(entry) {
+        if (WebpackConfigBuilder.isNotEmptyString(entry)) {
+            this.entries.push(entry);
+        }
+        return this;
+    }
+
+    addHtmlWebpackPluginConfig(config = {}) {
+        this.htmlWebpackPluginConfigs.push(config);
+        return this;
+    }
+
+    addConfig(config = {}) {
+        this.configs.push(config);
+        return this;
+    }
+
+    buildEntry() {
+        if (this.isWithTenant()) {
+            return [
+                ...this.entries,
+                path.resolve(__dirname, `./tenancy/${this.tenantName}/${this.tenantName}.module.js`),
+            ];
+        }
+
+        return [...this.entries];
+    }
+
+    buildTemplateParameters() {
+        return {
+            ngAppModule: this.isWithTenant() ? this.tenantName : 'index',
+        };
+    }
+
+    buildHtmlWebpackPluginConfig() {
+        const templateParameters = this.buildTemplateParameters();
+
+        return merge(
+            ...this.htmlWebpackPluginConfigs,
             {
-                [this.tenantName]: `./tenancy/${this.tenantName}/${this.tenantName}.module.js`,
+                templateParameters,
             },
         );
     }
 
-    templateParameters(templateParameterOptions) {
-        return _.assign(
-            {},
-            super.templateParameters(templateParameterOptions),
+    build(...appendConfigs) {
+        const entry = this.buildEntry();
+        const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
+
+        const finalConfig = merge(
+            ...this.configs,
             {
-                ngAppModule: this.tenantName,
+                entry,
+                plugins: [
+                    new HtmlWebpackPlugin(htmlWebpackPluginConfig),
+                ],
             },
+            ...appendConfigs,
         );
+
+        return finalConfig;
     }
 }
 
-module.exports = (env = {}) => {
-
-    const { tenant } = env;
-
-    const parametersDecorator = tenant
-        ? new ParametersDecoratorForTenantByName(tenant)
-        : new ParametersDecorator();
-
-    return {
-        entry: parametersDecorator.entry({
-            'babel-polyfill': '@babel/polyfill',
-            index: './src/index.module.js',
-        }),
+module.exports = (env = {}) => new WebpackConfigBuilder()
+    .withTenant(env.tenant)
+    .addEntry('@babel/polyfill')
+    .addEntry('./src/index.module.js')
+    .addHtmlWebpackPluginConfig({
+        template: './src/index.html',
+    })
+    .addConfig({
         output: {
             path: path.resolve(__dirname, 'dist'),
         },
-        plugins: [
-            new HtmlWebpackPlugin({
-                template: './src/index.html',
-                templateParameters: parametersDecorator.templateParameters({
-                    ngAppModule: 'index',
-                }),
-            }),
-            new BundleAnalyzerPlugin(),
-        ],
         optimization: {
             runtimeChunk: {
                 name: 'vendors',
@@ -83,6 +118,9 @@ module.exports = (env = {}) => {
                 },
             },
         },
+        plugins: [
+            new BundleAnalyzerPlugin(),
+        ],
         module: {
             rules: [
                 {
@@ -92,5 +130,4 @@ module.exports = (env = {}) => {
                 },
             ],
         },
-    };
-};
+    });

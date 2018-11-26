@@ -1,18 +1,16 @@
 const path = require('path');
 
-const merge = require('webpack-merge');
-
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const { HashedModuleIdsPlugin } = require('webpack');
 
 const common = require('./webpack.common');
 
-module.exports = env => merge(
-    common(env),
-    {
+module.exports = env => common(env)
+    .addConfig({
         mode: 'production',
         output: {
             chunkFilename: '[name].[hash].chunk.js',
@@ -20,6 +18,7 @@ module.exports = env => merge(
         },
         plugins: [
             new CleanWebpackPlugin(['dist']),
+            new HashedModuleIdsPlugin(),
             new FaviconsWebpackPlugin({
                 logo: './src/assets/favicon.png',
                 icons: {
@@ -27,7 +26,6 @@ module.exports = env => merge(
                     windows: true,
                 },
             }),
-            new HashedModuleIdsPlugin(),
             new MiniCssExtractPlugin({
                 chunkFilename: '[name].[hash].chunk.css',
                 filename: '[name].[hash].bundle.css',
@@ -82,5 +80,9 @@ module.exports = env => merge(
                 },
             ],
         },
-    },
-);
+    })
+    .build({
+        plugins: [
+            new CompressionPlugin(),
+        ],
+    });
