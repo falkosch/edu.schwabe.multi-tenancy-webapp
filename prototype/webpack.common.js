@@ -123,6 +123,7 @@ module.exports = (env = {}) => new WebpackConfigBuilder()
         template: './src/index.html',
     })
     .addConfig({
+        context: __dirname,
         output: {
             path: path.resolve(__dirname, 'dist'),
         },
