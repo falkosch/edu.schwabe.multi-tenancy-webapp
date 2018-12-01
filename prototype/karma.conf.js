@@ -1,23 +1,16 @@
-const _ = require('lodash');
 const testWebpackConfig = require('./webpack.test');
 
-module.exports = (config) => {
-    const testSuite = [
-        './src/index.karma.js',
-    ];
 
+module.exports = (config) => {
     config.set({
         frameworks: ['jasmine'],
-        files: testSuite,
-        preprocessors: _.reduce(
-            testSuite,
-            (accPreprocessors, value) => {
-                accPreprocessors[value] = ['webpack', 'sourcemap'];
-                return accPreprocessors;
+        files: [
+            './src/index.karma.js',
+        ],
+        preprocessors: {
+            './src/index.karma.js': ['webpack', 'sourcemap'],
             },
-            {},
-        ),
-        webpack: testWebpackConfig(),
+        webpack: testWebpackConfig(env),
         webpackMiddleware: {
             stats: 'minimal',
         },
