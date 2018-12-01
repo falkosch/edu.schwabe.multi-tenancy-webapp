@@ -25,6 +25,7 @@ module.exports = {
         {
             files: [
                 '{src,tenancy}/**/*.spec.js',
+                '{src,tenancy}/**/*.karma.js',
             ],
             env: {
                 jasmine: true,
