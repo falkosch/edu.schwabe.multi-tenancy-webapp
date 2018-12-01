@@ -2,14 +2,10 @@
 
 @mixin width-x($x) {
     width: $x;
-    max-width: $x;
-    min-width: $x;
 }
 
 @mixin height-x($x) {
     height: $x;
-    max-height: $x;
-    min-height: $x;
 }
 
 @mixin zindex-x($x) {
