@@ -11,7 +11,7 @@ module.exports = (config) => {
         ],
         preprocessors: {
             './src/index.karma.js': ['webpack', 'sourcemap'],
-            },
+        },
         webpack: testWebpackConfig(env),
         webpackMiddleware: {
             stats: 'minimal',
@@ -24,7 +24,10 @@ module.exports = (config) => {
         ],
         coverageReporter: {
             dir: 'coverage/',
-            reporters: [{ type: 'text' }],
+            reporters: [
+                { type: 'text' },
+                { type: 'lcov' },
+            ],
         },
 
         browsers: ['ChromeHeadless', 'PhantomJS'],
