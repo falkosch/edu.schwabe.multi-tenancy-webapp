@@ -1,5 +1,7 @@
 const testWebpackConfig = require('./webpack.test');
 
+const { env } = process;
+env.NODE_ENV = 'test';
 
 module.exports = (config) => {
     config.set({
