@@ -23,7 +23,8 @@ export class LoginController {
 
     login() {
         return this.globalSpinnerService.spinWhilePromise(
-            this.userStateService.login(this.username, this.password)
+            this.userStateService
+                .login(this.username, this.password)
                 .catch((e) => {
                     this._handleLoginError(e);
                 }),
@@ -38,7 +39,7 @@ export class LoginController {
                 .title('Login failed')
                 .textContent(e.message)
                 .ok('Ok')
-                .ariaLabel('Alert Dialog Demo'),
+                .ariaLabel('Login failed dialog'),
         );
     }
 }
