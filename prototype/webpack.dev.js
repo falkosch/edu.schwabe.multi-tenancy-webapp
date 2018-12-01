@@ -5,6 +5,7 @@ const { HotModuleReplacementPlugin } = require('webpack');
 const common = require('./webpack.common');
 
 module.exports = env => common(env)
+    .withBundleAnalyzer()
     .addConfig({
         mode: 'development',
         devtool: 'inline-source-map',
@@ -21,12 +22,11 @@ module.exports = env => common(env)
             new HotModuleReplacementPlugin(),
         ],
         optimization: {
+            runtimeChunk: 'single',
             splitChunks: {
                 cacheGroups: {
                     scss: {
                         test: /\.s?css/,
-                        name: 'scss',
-                        chunks: 'all',
                     },
                 },
             },

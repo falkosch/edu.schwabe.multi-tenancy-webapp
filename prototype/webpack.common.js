@@ -128,18 +128,8 @@ module.exports = (env = {}) => new WebpackConfigBuilder()
             path: path.resolve(__dirname, 'dist'),
         },
         optimization: {
-            runtimeChunk: {
-                name: 'vendors',
-            },
             splitChunks: {
                 chunks: 'all',
-                cacheGroups: {
-                    vendors: {
-                        chunks: 'all',
-                        name: 'vendors',
-                        test: /[\\/]node_modules[\\/]/,
-                    },
-                },
             },
         },
         plugins: [

@@ -4,12 +4,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
-
 const { HashedModuleIdsPlugin } = require('webpack');
 
 const common = require('./webpack.common');
 
 module.exports = env => common(env)
+    .withBundleAnalyzer()
     .addConfig({
         mode: 'production',
         output: {
@@ -39,6 +39,16 @@ module.exports = env => common(env)
                 filename: '[name].[hash].bundle.css',
             }),
         ],
+        optimization: {
+            runtimeChunk: {
+                name: 'main',
+            },
+            splitChunks: {
+                cacheGroups: {
+                    vendors: false,
+                },
+            },
+        },
         module: {
             rules: [
                 {
