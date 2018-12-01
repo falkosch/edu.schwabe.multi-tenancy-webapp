@@ -14,6 +14,7 @@ class WebpackConfigBuilder {
         this.entries = [];
         this.htmlWebpackPluginConfigs = [];
         this.tenant = '';
+        this.bundleAnalyzer = false;
     }
 
     static isNotEmptyString(value) {
@@ -26,6 +27,15 @@ class WebpackConfigBuilder {
 
     withTenant(tenant = '') {
         this.tenant = tenant;
+        return this;
+    }
+
+    isWithBundleAnalyzer() {
+        return this.bundleAnalyzer;
+    }
+
+    withBundleAnalyzer(value = true) {
+        this.bundleAnalyzer = value;
         return this;
     }
 
@@ -47,14 +57,11 @@ class WebpackConfigBuilder {
     }
 
     buildEntry() {
+        const builtEntries = [...this.entries];
         if (this.isWithTenant()) {
-            return [
-                ...this.entries,
-                path.resolve(__dirname, `./tenancy/${this.tenantName}/${this.tenantName}.module.js`),
-            ];
+            builtEntries.push(path.resolve(__dirname, `./tenancy/${this.tenantName}/${this.tenantName}.module.js`));
         }
-
-        return [...this.entries];
+        return builtEntries;
     }
 
     buildTemplateParameters() {
@@ -74,20 +81,32 @@ class WebpackConfigBuilder {
         );
     }
 
+    buildPlugins() {
+        const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
+
+        const plugins = [
+            new HtmlWebpackPlugin(htmlWebpackPluginConfig),
+            new ScriptExtHtmlWebpackPlugin({
+                defaultAttribute: 'defer',
+            }),
+        ];
+
+        if (this.isWithBundleAnalyzer()) {
+            plugins.push(new BundleAnalyzerPlugin());
+        }
+
+        return plugins;
+    }
+
     build(...appendConfigs) {
         const entry = this.buildEntry();
-        const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
+        const plugins = this.buildPlugins();
 
         const finalConfig = merge(
             ...this.configs,
             {
                 entry,
-                plugins: [
-                    new HtmlWebpackPlugin(htmlWebpackPluginConfig),
-                    new ScriptExtHtmlWebpackPlugin({
-                        defaultAttribute: 'defer',
-                    }),
-                ],
+                plugins,
             },
             ...appendConfigs,
         );
@@ -123,7 +142,6 @@ module.exports = (env = {}) => new WebpackConfigBuilder()
             },
         },
         plugins: [
-            new BundleAnalyzerPlugin(),
         ],
         module: {
             rules: [
