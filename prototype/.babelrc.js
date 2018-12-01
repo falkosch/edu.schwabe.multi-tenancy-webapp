@@ -1,5 +1,6 @@
 module.exports = (api) => {
-    api.cache(true);
+    // do not execute this config js every time a file is compiled
+    api.cache.forever();
 
     return {
         presets: [
