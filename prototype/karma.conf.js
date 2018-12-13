@@ -22,6 +22,9 @@ module.exports = (config) => {
             'coverage',
             'summary',
         ],
+        specReporter: {
+            suppressPassed: true,
+        },
         coverageReporter: {
             dir: 'coverage/',
             reporters: [
