@@ -14,8 +14,6 @@ import { CoreModule } from './core/core.module';
 import { indexHtml5Config } from './index-html5.config';
 import { indexRun } from './index.run';
 
-import './index.scss';
-
 export const IndexModule = angular
     .module('index', [
         angularAnimate,

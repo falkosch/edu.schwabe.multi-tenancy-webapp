@@ -17,7 +17,9 @@ module.exports = env => common(env)
             filename: '[name].[hash].bundle.js',
         },
         plugins: [
-            new CleanWebpackPlugin(['dist']),
+            new CleanWebpackPlugin([
+                'dist',
+            ]),
             new HashedModuleIdsPlugin(),
             new WebappWebpackPlugin({
                 logo: './src/assets/favicon.png',
@@ -75,9 +77,12 @@ module.exports = env => common(env)
                         MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
-                            options: { importLoaders: 1 },
+                            options: {
+                                importLoaders: 1,
+                            },
                         },
                         'postcss-loader',
+                        'resolve-url-loader',
                     ],
                 },
                 {
@@ -86,15 +91,26 @@ module.exports = env => common(env)
                         MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
-                            options: { importLoaders: 1 },
+                            options: {
+                                importLoaders: 1,
+                            },
                         },
                         'postcss-loader',
-                        'sass-loader',
+                        'resolve-url-loader',
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true, // required for resolve-url-loader, do not omit!
+                                sourceMapContents: false,
+                            },
+                        },
                     ],
                 },
                 {
                     test: /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
-                    use: ['file-loader'],
+                    use: [
+                        'file-loader',
+                    ],
                 },
             ],
         },

@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const merge = require('webpack-merge');
 const path = require('path');
 
@@ -7,26 +6,30 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-class WebpackConfigBuilder {
+const WithTenantConfigBuilder = require('./scripts/with-tenant-config-builder');
+
+class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
     constructor() {
-        this.configs = [];
+        super();
+        this.context = __dirname;
+        this.dist = './dist';
         this.entries = [];
         this.htmlWebpackPluginConfigs = [];
-        this.tenant = '';
         this.bundleAnalyzer = false;
     }
 
-    static isNotEmptyString(value) {
-        return _.isString(value) && !_.isEmpty(_.trim(value));
+    withContext(context) {
+        if (WebpackConfigBuilder.isNotEmptyString(context)) {
+            this.context = context;
+        }
+        return this;
     }
 
-    isWithTenant() {
-        return WebpackConfigBuilder.isNotEmptyString(this.tenant);
-    }
-
-    withTenant(tenant = '') {
-        this.tenant = tenant;
+    withDist(dist) {
+        if (WebpackConfigBuilder.isNotEmptyString(dist)) {
+            this.dist = dist;
+        }
         return this;
     }
 
@@ -51,22 +54,22 @@ class WebpackConfigBuilder {
         return this;
     }
 
-    addConfig(config = {}) {
-        this.configs.push(config);
-        return this;
-    }
-
     buildEntry() {
-        const builtEntries = [...this.entries];
+        const entries = [...this.entries];
+
+        let scssMainFile = './src/index.scss';
         if (this.isWithTenant()) {
-            builtEntries.push(path.resolve(__dirname, `./tenancy/${this.tenantName}/${this.tenantName}.module.js`));
+            scssMainFile = `./tenancy/${this.tenant}/${this.tenant}.scss`;
+            entries.push(`./tenancy/${this.tenant}/${this.tenant}.module.js`);
         }
-        return builtEntries;
+        entries.push(scssMainFile);
+
+        return entries;
     }
 
     buildTemplateParameters() {
         return {
-            ngAppModule: this.isWithTenant() ? this.tenantName : 'index',
+            ngAppModule: this.isWithTenant() ? this.tenant : 'index',
         };
     }
 
@@ -98,20 +101,36 @@ class WebpackConfigBuilder {
         return plugins;
     }
 
+    buildDist() {
+        const { dist } = this;
+        if (WithTenantConfigBuilder.isRelativeFile(dist)) {
+            return path.resolve(this.context, dist);
+        }
+        return dist;
+    }
+
+    buildOutput() {
+        const builtDist = this.buildDist();
+
+        return {
+            path: builtDist,
+        };
+    }
+
     build(...appendConfigs) {
         const entry = this.buildEntry();
         const plugins = this.buildPlugins();
+        const output = this.buildOutput();
 
-        const finalConfig = merge(
-            ...this.configs,
+        return super.build(
             {
+                context: this.context,
                 entry,
                 plugins,
+                output,
             },
             ...appendConfigs,
         );
-
-        return finalConfig;
     }
 }
 
@@ -123,17 +142,11 @@ module.exports = (env = {}) => new WebpackConfigBuilder()
         template: './src/index.html',
     })
     .addConfig({
-        context: __dirname,
-        output: {
-            path: path.resolve(__dirname, 'dist'),
-        },
         optimization: {
             splitChunks: {
                 chunks: 'all',
             },
         },
-        plugins: [
-        ],
         module: {
             rules: [
                 {

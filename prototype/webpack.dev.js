@@ -5,7 +5,6 @@ const { HotModuleReplacementPlugin } = require('webpack');
 const common = require('./webpack.common');
 
 module.exports = env => common(env)
-    .withBundleAnalyzer()
     .addConfig({
         mode: 'development',
         devtool: 'inline-source-map',
@@ -15,7 +14,6 @@ module.exports = env => common(env)
         },
         devServer: {
             historyApiFallback: true,
-            contentBase: './dist',
             hot: true,
         },
         plugins: [
@@ -52,8 +50,11 @@ module.exports = env => common(env)
                         'style-loader',
                         {
                             loader: 'css-loader',
-                            options: { sourceMap: true },
+                            options: {
+                                sourceMap: true,
+                            },
                         },
+                        'resolve-url-loader',
                     ],
                 },
                 {
@@ -62,17 +63,24 @@ module.exports = env => common(env)
                         'style-loader',
                         {
                             loader: 'css-loader',
-                            options: { sourceMap: true },
+                            options: {
+                                sourceMap: true,
+                            },
                         },
+                        'resolve-url-loader',
                         {
                             loader: 'sass-loader',
-                            options: { sourceMap: true },
+                            options: {
+                                sourceMap: true,
+                            },
                         },
                     ],
                 },
                 {
                     test: /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
-                    use: ['file-loader'],
+                    use: [
+                        'file-loader',
+                    ],
                 },
             ],
         },

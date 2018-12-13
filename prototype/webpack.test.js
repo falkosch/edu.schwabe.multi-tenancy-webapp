@@ -8,7 +8,6 @@ module.exports = env => common(env)
         devtool: 'cheap-module-eval-source-map',
         devServer: {
             historyApiFallback: true,
-            contentBase: './dist',
         },
         output: {
             chunkFilename: '[name].chunk.js',
@@ -35,5 +34,4 @@ module.exports = env => common(env)
                 },
             ],
         },
-    })
-    .build();
+    });

@@ -45,6 +45,7 @@ module.exports = {
                 'jsdoc.conf.js',
                 '.babelrc.js',
                 'webpack.*',
+                'scripts/**/*',
                 '{src,tenancy}/**/*.karma.js',
                 '{src,tenancy}/**/*.spec.js',
             ],
