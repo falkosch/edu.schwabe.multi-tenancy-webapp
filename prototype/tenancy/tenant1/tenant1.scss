@@ -1,1 +1,10 @@
+@import "./scss/abstracts/all";
 @import "../../src/index";
+
+h1, h3, h5 {
+    color: blue;
+}
+
+h2, h4, h6 {
+    color: green;
+}

@@ -1,11 +1,11 @@
 // have own app-wide variables for easy use in the app scss
 
 // for the baseline-grid of angular-material
-$app-baseline-grid: 8px;
+$app-baseline-grid: 8px !default;
 
-$app-layout-gutter-width: ($app-baseline-grid * 2);
+$app-layout-gutter-width: ($app-baseline-grid * 2) !default;
 
-$app-layout-breakpoint-xs: 600px;
-$app-layout-breakpoint-sm: 960px;
-$app-layout-breakpoint-md: 1280px;
-$app-layout-breakpoint-lg: 1920px;
+$app-layout-breakpoint-xs: 600px !default;
+$app-layout-breakpoint-sm: 960px !default;
+$app-layout-breakpoint-md: 1280px !default;
+$app-layout-breakpoint-lg: 1920px !default;

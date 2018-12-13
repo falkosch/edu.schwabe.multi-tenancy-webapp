@@ -6,9 +6,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
-const common = require('./webpack.common');
+const common = require('./scripts/webpack.common');
 
 module.exports = env => common(env)
+    .withContext(__dirname)
     .withBundleAnalyzer()
     .addConfig({
         mode: 'production',

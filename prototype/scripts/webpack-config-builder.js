@@ -6,9 +6,9 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const WithTenantConfigBuilder = require('./scripts/with-tenant-config-builder');
+const WithTenantConfigBuilder = require('./with-tenant-config-builder');
 
-class WebpackConfigBuilder extends WithTenantConfigBuilder {
+module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
     constructor() {
         super();
@@ -19,17 +19,8 @@ class WebpackConfigBuilder extends WithTenantConfigBuilder {
         this.bundleAnalyzer = false;
     }
 
-    withContext(context) {
-        if (WebpackConfigBuilder.isNotEmptyString(context)) {
-            this.context = context;
-        }
-        return this;
-    }
-
-    withDist(dist) {
-        if (WebpackConfigBuilder.isNotEmptyString(dist)) {
-            this.dist = dist;
-        }
+    withContext(value) {
+        this.context = value;
         return this;
     }
 
@@ -55,21 +46,27 @@ class WebpackConfigBuilder extends WithTenantConfigBuilder {
     }
 
     buildEntry() {
-        const entries = [...this.entries];
+        const tenantIndex = this.buildTenantIndex();
 
-        let scssMainFile = './src/index.scss';
+        return [
+            ...this.entries,
+            `${tenantIndex}.module.js`,
+            `${tenantIndex}.scss`,
+        ];
+    }
+
+    buildNgAppModule() {
         if (this.isWithTenant()) {
-            scssMainFile = `./tenancy/${this.tenant}/${this.tenant}.scss`;
-            entries.push(`./tenancy/${this.tenant}/${this.tenant}.module.js`);
+            return this.tenant;
         }
-        entries.push(scssMainFile);
-
-        return entries;
+        return this.defaultIndexModule;
     }
 
     buildTemplateParameters() {
+        const ngAppModule = this.buildNgAppModule();
+
         return {
-            ngAppModule: this.isWithTenant() ? this.tenant : 'index',
+            ngAppModule,
         };
     }
 
@@ -132,28 +129,4 @@ class WebpackConfigBuilder extends WithTenantConfigBuilder {
             ...appendConfigs,
         );
     }
-}
-
-module.exports = (env = {}) => new WebpackConfigBuilder()
-    .withTenant(env.tenant)
-    .addEntry('@babel/polyfill')
-    .addEntry('./src/index.module.js')
-    .addHtmlWebpackPluginConfig({
-        template: './src/index.html',
-    })
-    .addConfig({
-        optimization: {
-            splitChunks: {
-                chunks: 'all',
-            },
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    exclude: /[\\/]node_modules[\\/]/,
-                    use: ['babel-loader'],
-                },
-            ],
-        },
-    });
+};

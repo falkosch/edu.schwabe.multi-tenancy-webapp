@@ -1,11 +1,26 @@
 const path = require('path');
 
+const WebpackConfigBuilder = require('./webpack-config-builder');
+
 const common = require('./webpack.common');
 
-module.exports = env => common(env)
+class TestWebpackConfigBuilder extends WebpackConfigBuilder {
+
+    build(...appendConfigs) {
+        const builtConfig = super.build(...appendConfigs);
+
+        // karma-webpack must fill the entry-property
+        builtConfig.entry = undefined;
+
+        return builtConfig;
+    }
+}
+
+module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilder())
+    .withContext(context)
     .addConfig({
         mode: 'development',
-        devtool: 'cheap-module-eval-source-map',
+        devtool: 'inline-source-map',
         devServer: {
             historyApiFallback: true,
         },
@@ -21,7 +36,7 @@ module.exports = env => common(env)
                         {
                             loader: 'ngtemplate-loader',
                             options: {
-                                relativeTo: path.resolve(__dirname, './src'),
+                                relativeTo: path.resolve(context, './src'),
                                 requireAngular: true,
                             },
                         },

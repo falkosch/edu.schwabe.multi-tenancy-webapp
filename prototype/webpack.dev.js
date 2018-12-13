@@ -2,9 +2,10 @@ const path = require('path');
 
 const { HotModuleReplacementPlugin } = require('webpack');
 
-const common = require('./webpack.common');
+const common = require('./scripts/webpack.common');
 
 module.exports = env => common(env)
+    .withContext(__dirname)
     .addConfig({
         mode: 'development',
         devtool: 'inline-source-map',
