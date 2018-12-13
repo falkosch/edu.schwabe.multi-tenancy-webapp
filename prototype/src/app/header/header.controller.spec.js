@@ -1,4 +1,3 @@
-import { not } from '@uirouter/core';
 import { HeaderModule } from './header.module';
 import { HeaderName } from './header.component';
 import { HeaderController } from './header.controller';

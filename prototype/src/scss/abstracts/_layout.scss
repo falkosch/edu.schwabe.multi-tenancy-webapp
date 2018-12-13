@@ -76,15 +76,19 @@
     @include mq-xs() {
         @include width-x(calc(100% - #{$app-layout-gutter-width}));
     }
+
     @include mq-sm() {
         @include width-x($app-layout-breakpoint-xs - $app-layout-gutter-width);
     }
+
     @include mq-md() {
         @include width-x($app-layout-breakpoint-sm - $app-layout-gutter-width);
     }
+
     @include mq-lg() {
         @include width-x($app-layout-breakpoint-md - $app-layout-gutter-width);
     }
+
     @include mq-gt-lg() {
         @include width-x($app-layout-breakpoint-lg - $app-layout-gutter-width);
     }
