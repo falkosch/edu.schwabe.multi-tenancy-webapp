@@ -12,5 +12,7 @@ module.exports = {
             ignoreNamespaces: '/^app-?/',
             ignoreTypes: '/^app-?/',
         }],
+        'at-rule-no-unknown': null,
+        'scss/at-rule-no-unknown': true,
     },
 };
