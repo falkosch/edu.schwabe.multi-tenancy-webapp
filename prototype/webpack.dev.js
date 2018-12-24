@@ -52,6 +52,13 @@ module.exports = env => common(env)
                         {
                             loader: 'css-loader',
                             options: {
+                                importLoaders: 1,
+                                sourceMap: true,
+                            },
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
                                 sourceMap: true,
                             },
                         },
@@ -64,6 +71,13 @@ module.exports = env => common(env)
                         'style-loader',
                         {
                             loader: 'css-loader',
+                            options: {
+                                importLoaders: 1,
+                                sourceMap: true,
+                            },
+                        },
+                        {
+                            loader: 'postcss-loader',
                             options: {
                                 sourceMap: true,
                             },
