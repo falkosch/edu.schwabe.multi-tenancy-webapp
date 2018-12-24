@@ -78,18 +78,18 @@
     }
 
     @include mq-sm() {
-        @include width-x($app-layout-breakpoint-xs - $app-layout-gutter-width);
+        @include width-x($app-layout-breakpoint-xs - $app-layout-gutter-width * 2);
     }
 
     @include mq-md() {
-        @include width-x($app-layout-breakpoint-sm - $app-layout-gutter-width);
+        @include width-x($app-layout-breakpoint-sm - $app-layout-gutter-width * 3);
     }
 
     @include mq-lg() {
-        @include width-x($app-layout-breakpoint-md - $app-layout-gutter-width);
+        @include width-x($app-layout-breakpoint-md - $app-layout-gutter-width * 4);
     }
 
     @include mq-gt-lg() {
-        @include width-x($app-layout-breakpoint-lg - $app-layout-gutter-width);
+        @include width-x($app-layout-breakpoint-lg - $app-layout-gutter-width * 5);
     }
 }
