@@ -6,7 +6,7 @@ module.exports = {
     ],
     recurseDepth: 999,
     source: {
-        include: './src',
+        include: ['./src', './tenancy'],
     },
     opts: {
         encoding: 'utf8',
