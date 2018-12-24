@@ -4,11 +4,7 @@ module.exports = (api) => {
 
     return {
         presets: [
-            ['@babel/preset-env', {
-                targets: {
-                    browsers: '> 0.25%, not dead'
-                },
-            }],
+            '@babel/preset-env',
         ],
         plugins: [
             '@babel/plugin-transform-runtime',
