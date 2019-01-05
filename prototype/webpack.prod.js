@@ -73,7 +73,7 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.s?css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
@@ -89,15 +89,6 @@ module.exports = env => common(env)
                 {
                     test: /\.scss$/,
                     use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1,
-                            },
-                        },
-                        'postcss-loader',
-                        'resolve-url-loader',
                         {
                             loader: 'sass-loader',
                             options: {

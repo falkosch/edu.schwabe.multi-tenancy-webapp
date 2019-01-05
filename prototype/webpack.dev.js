@@ -46,7 +46,7 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.s?css$/,
                     use: [
                         'style-loader',
                         {
@@ -68,21 +68,6 @@ module.exports = env => common(env)
                 {
                     test: /\.scss$/,
                     use: [
-                        'style-loader',
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1,
-                                sourceMap: true,
-                            },
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                            },
-                        },
-                        'resolve-url-loader',
                         {
                             loader: 'sass-loader',
                             options: {
