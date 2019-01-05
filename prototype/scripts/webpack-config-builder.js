@@ -51,7 +51,6 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         return [
             ...this.entries,
             `${tenantIndex}.module.js`,
-            `${tenantIndex}.scss`,
         ];
     }
 
@@ -114,19 +113,50 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         };
     }
 
+    buildRules() {
+        const rules = [];
+
+        if (this.isWithTenant()) {
+            const tenantPath = this.buildTenantPath();
+
+            rules.push({
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            sourceMap: true,
+                            resources: [
+                                `${tenantPath}/scss/shared/**/*.scss`,
+                            ],
+                        },
+                    },
+                ],
+            });
+        }
+
+        return rules;
+    }
+
     build(...appendConfigs) {
         const entry = this.buildEntry();
         const plugins = this.buildPlugins();
         const output = this.buildOutput();
+        const rules = this.buildRules();
 
-        return super.build(
+        const finalConfig = super.build(
             {
                 context: this.context,
                 entry,
                 plugins,
                 output,
+                module: {
+                    rules,
+                },
             },
             ...appendConfigs,
         );
+
+        return finalConfig;
     }
 };

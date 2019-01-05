@@ -2,14 +2,15 @@ const _ = require('lodash');
 const merge = require('webpack-merge');
 
 const relativeFilePattern = /^\s*\.\//;
-const tenantIndexGenerator = tenant => `./tenancy/${tenant}/${tenant}`;
 
 module.exports = class WithTenantConfigBuilder {
 
     constructor() {
         this.configs = [];
         this.defaultIndexModule = 'index';
-        this.defaultIndex = './src/index';
+        this.defaultIndex = './index';
+        this.defaultPath = './src';
+        this.defaultTenancy = './tenancy';
         this.tenant = '';
     }
 
@@ -36,11 +37,19 @@ module.exports = class WithTenantConfigBuilder {
         return builtConfig;
     }
 
-    buildTenantIndex() {
+    buildTenantPath() {
         if (this.isWithTenant()) {
-            return tenantIndexGenerator(this.tenant);
+            return `${this.defaultTenancy}/${this.tenant}`;
         }
-        return this.defaultIndex;
+        return this.defaultPath;
+    }
+
+    buildTenantIndex() {
+        const tenantPath = this.buildTenantPath();
+        if (this.isWithTenant()) {
+            return `${tenantPath}/${this.tenant}`;
+        }
+        return `${tenantPath}/${this.defaultIndex}`;
     }
 
     static isNotEmptyString(value) {

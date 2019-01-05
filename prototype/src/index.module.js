@@ -5,6 +5,8 @@ import angularMessages from 'angular-messages';
 import angularMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
 
+import './index.scss';
+
 import { AppModule } from './app/app.module';
 import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
