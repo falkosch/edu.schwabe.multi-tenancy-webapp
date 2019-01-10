@@ -27,6 +27,12 @@ module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilde
         output: {
             chunkFilename: '[name].chunk.js',
             filename: '[name].bundle.js',
+            pathinfo: false,
+        },
+        optimization: {
+            removeAvailableModules: false,
+            removeEmptyChunks: false,
+            splitChunks: false,
         },
         module: {
             rules: [

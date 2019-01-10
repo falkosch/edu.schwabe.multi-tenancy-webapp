@@ -47,6 +47,7 @@ module.exports = env => common(env)
                 name: 'main',
             },
             splitChunks: {
+                chunks: 'all',
                 cacheGroups: {
                     vendors: false,
                 },

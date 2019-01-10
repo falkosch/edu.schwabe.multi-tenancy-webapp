@@ -12,23 +12,20 @@ module.exports = env => common(env)
         output: {
             chunkFilename: '[name].chunk.js',
             filename: '[name].bundle.js',
+            pathinfo: false,
         },
         devServer: {
             historyApiFallback: true,
             hot: true,
+            stats: 'minimal',
         },
         plugins: [
             new HotModuleReplacementPlugin(),
         ],
         optimization: {
-            runtimeChunk: 'single',
-            splitChunks: {
-                cacheGroups: {
-                    scss: {
-                        test: /\.s?css/,
-                    },
-                },
-            },
+            removeAvailableModules: false,
+            removeEmptyChunks: false,
+            splitChunks: false,
         },
         module: {
             rules: [

@@ -11,11 +11,6 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
         template: './src/index.html',
     })
     .addConfig({
-        optimization: {
-            splitChunks: {
-                chunks: 'all',
-            },
-        },
         module: {
             rules: [
                 {
@@ -24,5 +19,8 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
                     use: ['babel-loader'],
                 },
             ],
+        },
+        resolve: {
+            extensions: ['.js'],
         },
     });
