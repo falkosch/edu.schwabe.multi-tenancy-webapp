@@ -18,6 +18,7 @@ class TestWebpackConfigBuilder extends WebpackConfigBuilder {
 
 module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilder())
     .withContext(context)
+    .withResourcesToOverride(null)
     .addConfig({
         mode: 'development',
         devtool: 'inline-source-map',

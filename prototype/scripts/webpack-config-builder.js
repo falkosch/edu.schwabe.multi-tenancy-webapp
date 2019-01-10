@@ -1,9 +1,11 @@
+const _ = require('lodash');
 const merge = require('webpack-merge');
 const path = require('path');
+const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-
+const { NormalModuleReplacementPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const WithTenantConfigBuilder = require('./with-tenant-config-builder');
@@ -17,10 +19,20 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         this.entries = [];
         this.htmlWebpackPluginConfigs = [];
         this.bundleAnalyzer = false;
+        this.resourcesToOverride = /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/;
     }
 
     withContext(value) {
         this.context = value;
+        return this;
+    }
+
+    isWithResourcesToOverride() {
+        return !_.isNil(this.resourcesToOverride);
+    }
+
+    withResourcesToOverride(value) {
+        this.resourcesToOverride = value;
         return this;
     }
 
@@ -80,6 +92,38 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         );
     }
 
+    buildResourcesOverridePlugin() {
+        if (!this.isWithResourcesToOverride()) {
+            return undefined;
+        }
+
+        const tenantPath = this.buildTenantPath();
+
+        return new NormalModuleReplacementPlugin(
+            this.resourcesToOverride,
+            (resource) => {
+                const { context, request } = resource;
+
+                const originalFilePath = path.resolve(context, request);
+                const relativeToDefaultPath = path.relative(this.defaultPath, originalFilePath);
+
+                if (!relativeToDefaultPath.startsWith('..')) {
+                    const absoluteTenantPath = path.resolve(tenantPath, relativeToDefaultPath);
+                    const tenantPathRelativeToContext = path.relative(
+                        context,
+                        absoluteTenantPath,
+                    );
+
+                    if (fs.existsSync(absoluteTenantPath)) {
+                        // override resource request
+                        resource.request = tenantPathRelativeToContext;
+                    }
+                }
+
+            },
+        );
+    }
+
     buildPlugins() {
         const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
 
@@ -92,6 +136,13 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
         if (this.isWithBundleAnalyzer()) {
             plugins.push(new BundleAnalyzerPlugin());
+        }
+
+        if (this.isWithTenant()) {
+            const resourcesOverridePlugin = this.buildResourcesOverridePlugin();
+            if (resourcesOverridePlugin) {
+                plugins.push(resourcesOverridePlugin);
+            }
         }
 
         return plugins;
