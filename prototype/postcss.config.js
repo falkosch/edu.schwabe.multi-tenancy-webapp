@@ -3,6 +3,9 @@ module.exports = {
         'postcss-import': {},
         'postcss-preset-env': {},
         'postcss-normalize': {},
-        cssnano: {},
     },
 };
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.plugins.cssnano = {};
+}

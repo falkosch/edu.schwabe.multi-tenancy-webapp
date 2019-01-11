@@ -4,6 +4,8 @@ const { HotModuleReplacementPlugin } = require('webpack');
 
 const common = require('./scripts/webpack.common');
 
+process.env.NODE_ENV = 'develop';
+
 module.exports = env => common(env)
     .withContext(__dirname)
     .addConfig({
@@ -43,7 +45,7 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.s?css$/,
+                    test: /\.scss$/,
                     use: [
                         'style-loader',
                         {
@@ -60,11 +62,6 @@ module.exports = env => common(env)
                             },
                         },
                         'resolve-url-loader',
-                    ],
-                },
-                {
-                    test: /\.scss$/,
-                    use: [
                         {
                             loader: 'sass-loader',
                             options: {

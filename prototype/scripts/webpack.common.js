@@ -16,7 +16,15 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
                 {
                     test: /\.js$/,
                     exclude: /[\\/]node_modules[\\/]/,
-                    use: ['babel-loader'],
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                cacheDirectory: true,
+                                cacheCompression: false,
+                            },
+                        },
+                    ],
                 },
             ],
         },

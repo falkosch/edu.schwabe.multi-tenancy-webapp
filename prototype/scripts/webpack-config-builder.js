@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const { NormalModuleReplacementPlugin } = require('webpack');
+const { ProgressPlugin, NormalModuleReplacementPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const WithTenantConfigBuilder = require('./with-tenant-config-builder');
@@ -128,6 +128,7 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
 
         const plugins = [
+            new ProgressPlugin(),
             new HtmlWebpackPlugin(htmlWebpackPluginConfig),
             new ScriptExtHtmlWebpackPlugin({
                 defaultAttribute: 'defer',

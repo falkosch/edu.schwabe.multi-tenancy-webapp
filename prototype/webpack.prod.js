@@ -1,12 +1,16 @@
 const path = require('path');
 
+const ArchiverPlugin = require('archiver-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
 const common = require('./scripts/webpack.common');
+
+process.env.NODE_ENV = 'production';
 
 module.exports = env => common(env)
     .withContext(__dirname)
@@ -43,6 +47,12 @@ module.exports = env => common(env)
             }),
         ],
         optimization: {
+            minimizer: [
+                new TerserPlugin({
+                    cache: true,
+                    parallel: true,
+                }),
+            ],
             runtimeChunk: {
                 name: 'main',
             },
@@ -74,7 +84,7 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.s?css$/,
+                    test: /\.scss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
@@ -85,11 +95,6 @@ module.exports = env => common(env)
                         },
                         'postcss-loader',
                         'resolve-url-loader',
-                    ],
-                },
-                {
-                    test: /\.scss$/,
-                    use: [
                         {
                             loader: 'sass-loader',
                             options: {
@@ -111,5 +116,8 @@ module.exports = env => common(env)
     .build({
         plugins: [
             new CompressionPlugin(),
+            new ArchiverPlugin({
+                format: 'zip',
+            }),
         ],
     });

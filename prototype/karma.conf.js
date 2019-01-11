@@ -40,6 +40,7 @@ module.exports = (config) => {
                     'jasmine',
                 ],
                 reporters: [
+                    'progress',
                     'spec',
                     'coverage',
                     'summary',
