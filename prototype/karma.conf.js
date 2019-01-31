@@ -27,7 +27,6 @@ module.exports = (config) => {
             .addConfig({
                 browsers: [
                     'ChromeHeadless',
-                    'PhantomJS',
                 ],
                 coverageReporter: {
                     dir: 'coverage/',
