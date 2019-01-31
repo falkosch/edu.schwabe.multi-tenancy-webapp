@@ -1,8 +1,8 @@
 const path = require('path');
 
-const ArchiverPlugin = require('archiver-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
@@ -24,6 +24,7 @@ module.exports = env => common(env)
         plugins: [
             new CleanWebpackPlugin([
                 'dist',
+                'deploy',
             ]),
             new HashedModuleIdsPlugin(),
             new WebappWebpackPlugin({
@@ -58,9 +59,6 @@ module.exports = env => common(env)
             },
             splitChunks: {
                 chunks: 'all',
-                cacheGroups: {
-                    vendors: false,
-                },
             },
         },
         module: {
@@ -116,8 +114,15 @@ module.exports = env => common(env)
     .build({
         plugins: [
             new CompressionPlugin(),
-            new ArchiverPlugin({
-                format: 'zip',
+            new FileManagerPlugin({
+                onEnd: {
+                    mkdir: [
+                        './deploy',
+                    ],
+                    archive: [
+                        { source: './dist', destination: './deploy/prototype.zip' },
+                    ],
+                },
             }),
         ],
     });
