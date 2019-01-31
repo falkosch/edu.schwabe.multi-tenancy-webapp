@@ -1,3 +1,4 @@
+const { ContextReplacementPlugin } = require('webpack');
 const WebpackConfigBuilder = require('./webpack-config-builder');
 
 function defaultBuilderFactory() {
@@ -11,6 +12,12 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
         template: './src/index.html',
     })
     .addConfig({
+        plugins: [
+            new ContextReplacementPlugin(
+                /moment[/\\]locale$/,
+                /de|en/,
+            ),
+        ],
         module: {
             rules: [
                 {
