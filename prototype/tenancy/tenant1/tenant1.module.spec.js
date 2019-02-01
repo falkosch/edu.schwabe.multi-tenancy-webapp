@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { Tenant1Module } from './tenant1.module';
 
 describe(`${Tenant1Module} run`, () => {

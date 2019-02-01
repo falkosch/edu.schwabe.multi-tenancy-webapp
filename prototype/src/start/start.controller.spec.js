@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { StartModule } from './start.module';
 import { StartController } from './start.controller';
 import { StartName } from './start.component';

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { EventEmitterServiceName, EventEmitterService } from './event-emitter.service';
 import { EventEmitterModule } from './event-emitter.module';
 

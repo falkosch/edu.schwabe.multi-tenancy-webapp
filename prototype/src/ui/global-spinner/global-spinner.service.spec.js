@@ -1,4 +1,3 @@
-
 import angular from 'angular';
 
 import { GlobalSpinnerModule } from './global-spinner.module';

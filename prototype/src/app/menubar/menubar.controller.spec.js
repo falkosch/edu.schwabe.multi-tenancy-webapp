@@ -1,3 +1,4 @@
+import angular from 'angular';
 import _ from 'lodash';
 
 import { MenubarModule } from './menubar.module';

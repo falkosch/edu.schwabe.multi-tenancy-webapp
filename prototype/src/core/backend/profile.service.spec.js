@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { BackendModule } from './backend.module';
 import { BackendErrors } from './backend-errors';
 

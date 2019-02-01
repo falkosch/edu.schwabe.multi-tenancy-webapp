@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { LoginModule } from './login.module';
 import { LoginName } from './login.component';
 import { LoginController } from './login.controller';

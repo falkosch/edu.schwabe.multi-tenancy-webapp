@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { HeaderModule } from './header.module';
 import { HeaderName } from './header.component';
 import { HeaderController } from './header.controller';

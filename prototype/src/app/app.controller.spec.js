@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { AppModule } from './app.module';
 import { AppName } from './app.component';
 import { AppController } from './app.controller';

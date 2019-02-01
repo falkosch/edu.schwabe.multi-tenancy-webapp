@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { ProfileModule } from './profile.module';
 import { ProfileStateId } from './profile.route';
 import { NavigationServiceName } from '../core/navigation/navigation.service';

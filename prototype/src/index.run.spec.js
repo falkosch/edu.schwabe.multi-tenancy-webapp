@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { IndexModule } from './index.module';
 import { StartStateId } from './start/start.route';
 

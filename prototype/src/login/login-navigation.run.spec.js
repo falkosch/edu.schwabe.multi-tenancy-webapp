@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { LoginModule } from './login.module';
 import { LoginStateId } from './login.route';
 import { NavigationServiceName } from '../core/navigation/navigation.service';

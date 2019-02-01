@@ -1,3 +1,4 @@
+import angular from 'angular';
 import _ from 'lodash';
 
 import { PromiseTrackerServiceName, PromiseTrackerService } from './promise-tracker.service';

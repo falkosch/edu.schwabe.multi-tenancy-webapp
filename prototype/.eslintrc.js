@@ -37,7 +37,6 @@ module.exports = {
                 jasmine: true,
             },
             globals: {
-                angular: true,
                 inject: true,
             },
             rules: {

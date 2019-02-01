@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { GlobalSpinnerModule } from './global-spinner.module';
 import { GlobalSpinnerServiceName } from './global-spinner.service';
 

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import _ from 'lodash';
 
 import { MockAuthenticationServiceName, MockAuthenticationService } from './mock-authentication.service';

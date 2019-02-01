@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { UiModule } from '../ui.module';
 import { BusySpinnerController } from './busy-spinner.controller';
 import { BusySpinnerName } from './busy-spinner.component';

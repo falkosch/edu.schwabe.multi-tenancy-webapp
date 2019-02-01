@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { NavigationServiceName, NavigationService } from './navigation.service';
 import { NavigationModule } from './navigation.module';
 

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { StartModule } from './start.module';
 import { StartStateId } from './start.route';
 import { NavigationServiceName } from '../core/navigation/navigation.service';

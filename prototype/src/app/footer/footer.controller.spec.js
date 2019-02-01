@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { FooterModule } from './footer.module';
 import { FooterName } from './footer.component';
 import { FooterController } from './footer.controller';

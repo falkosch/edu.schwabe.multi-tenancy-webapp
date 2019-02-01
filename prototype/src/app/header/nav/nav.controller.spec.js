@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { NavModule } from './nav.module';
 import { NavController } from './nav.controller';
 import { NavName } from './nav.component';

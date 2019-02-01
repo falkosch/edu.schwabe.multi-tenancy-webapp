@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { MockBackendModule } from './mock-backend.module';
 
 import { MockProfileServiceName, MockProfileService } from './mock-profile.service';
@@ -159,7 +161,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName}`, () => {
                     "location": {
                         "street": "1158 strand road",
                         "city": "gorey",
-                        "state": "dún laoghaire–rathdown",
+                        "state": "dï¿½n laoghaireï¿½rathdown",
                         "postcode": 44191,
                         "coordinates": {
                             "latitude": "-73.1917",

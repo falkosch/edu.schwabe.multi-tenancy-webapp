@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { UserStateServiceName, UserStateService } from './user-state.service';
 import { UserStateModule } from './user-state.module';
 

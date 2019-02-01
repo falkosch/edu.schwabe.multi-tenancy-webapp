@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import { ProfileModule } from './profile.module';
 import { ProfileController } from './profile.controller';
 import { ProfileName } from './profile.component';
