@@ -10,6 +10,7 @@ module.exports = {
     },
     parser: 'babel-eslint',
     plugins: [
+        'angular',
         'compat',
         'jasmine',
         'lodash',
@@ -35,9 +36,7 @@ module.exports = {
             ],
             env: {
                 jasmine: true,
-            },
-            globals: {
-                inject: true,
+                'angular/mocks': true,
             },
             rules: {
                 'jasmine/no-spec-dupes': 'off',
