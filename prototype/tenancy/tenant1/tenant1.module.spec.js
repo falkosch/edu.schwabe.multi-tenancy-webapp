@@ -2,7 +2,7 @@ import angular from 'angular';
 
 import { Tenant1Module } from './tenant1.module';
 
-describe(`${Tenant1Module} run`, () => {
+describe(`${Tenant1Module} module`, () => {
 
     it('should be loaded', () => {
 
