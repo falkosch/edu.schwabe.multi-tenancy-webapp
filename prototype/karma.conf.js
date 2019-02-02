@@ -39,13 +39,12 @@ module.exports = (config) => {
                     'jasmine',
                 ],
                 reporters: [
-                    'progress',
                     'spec',
                     'coverage',
                     'summary',
                 ],
                 specReporter: {
-                    suppressPassed: true,
+                    showSpecTiming: true,
                 },
                 webpackMiddleware: {
                     stats: 'minimal',
