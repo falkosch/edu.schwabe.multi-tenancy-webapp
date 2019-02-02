@@ -43,7 +43,6 @@
     "angular-mocks": "^1.7.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
-    "babel-plugin-angularjs-annotate": "git+https://github.com/vend/babel-plugin-angularjs-annotate.git#eb77775",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-lodash": "^3.3.4",
     "clean-webpack-plugin": "^1.0.0",

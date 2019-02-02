@@ -10,7 +10,6 @@ module.exports = (api) => {
             '@babel/plugin-transform-runtime',
             '@babel/plugin-proposal-class-properties',
             'lodash',
-            'angularjs-annotate',
         ],
         env: {
             test: {
