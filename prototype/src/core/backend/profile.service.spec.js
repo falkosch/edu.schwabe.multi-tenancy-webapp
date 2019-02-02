@@ -10,6 +10,25 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
     let profileService;
     let $rootScope;
 
+    function testErrorIsNotImplementedError(error) {
+        expect(error)
+            .toEqual(jasmine.any(Error));
+
+        expect(error.message)
+            .toEqual(BackendErrors.notImplemented().message);
+    }
+
+    function testMemberToBeNotImplemented(done, asyncInvokable) {
+        asyncInvokable()
+            .then(() => done(new Error('test failed')))
+            .catch((e) => {
+                testErrorIsNotImplementedError(e);
+                done();
+            });
+
+        $rootScope.$digest();
+    }
+
     beforeEach(() => {
 
         angular.mock.module(BackendModule);
@@ -30,22 +49,12 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
     describe('.getProfile', () => {
 
-        it('should be a not implemented function returning a reject promise', (done) => {
+        it('should mock getProfile with a not implemented function returning a reject promise', (done) => {
 
-            profileService
-                .getProfile()
-                .catch((e) => {
-
-                    expect(e)
-                        .toEqual(jasmine.any(Error));
-
-                    expect(e.message)
-                        .toEqual(BackendErrors.notImplemented().message);
-
-                    done();
-                });
-
-            $rootScope.$digest();
+            testMemberToBeNotImplemented(
+                done,
+                () => profileService.getProfile(),
+            );
 
         });
 
@@ -53,22 +62,12 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
     describe('.updateProfile', () => {
 
-        it('should be a not implemented function returning a reject promise', (done) => {
+        it('should mock updateProfile with a not implemented function returning a reject promise', (done) => {
 
-            profileService
-                .updateProfile()
-                .catch((e) => {
-
-                    expect(e)
-                        .toEqual(jasmine.any(Error));
-
-                    expect(e.message)
-                        .toEqual(BackendErrors.notImplemented().message);
-
-                    done();
-                });
-
-            $rootScope.$digest();
+            testMemberToBeNotImplemented(
+                done,
+                () => profileService.updateProfile(),
+            );
 
         });
 

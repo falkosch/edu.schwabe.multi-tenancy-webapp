@@ -28,10 +28,12 @@ module.exports = class KarmaConfigBuilder extends WithTenantConfigBuilder {
 
         const builtPreprocessors = _.reduce(
             files,
-            (accPreprocessors, file) => {
-                accPreprocessors[file] = [...this.preprocessors];
-                return accPreprocessors;
-            },
+            (accPreprocessors, file) => (
+                {
+                    ...accPreprocessors,
+                    [file]: [...this.preprocessors],
+                }
+            ),
             {},
         );
 
@@ -44,7 +46,7 @@ module.exports = class KarmaConfigBuilder extends WithTenantConfigBuilder {
     build(...appendConfigs) {
         const { files, preprocessors } = this.buildFilesAndPreprocessors();
 
-        const builtConfig = super.build(
+        return super.build(
             {
                 files,
                 preprocessors,
@@ -52,7 +54,5 @@ module.exports = class KarmaConfigBuilder extends WithTenantConfigBuilder {
             },
             ...appendConfigs,
         );
-
-        return builtConfig;
     }
 };

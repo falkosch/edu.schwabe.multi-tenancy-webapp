@@ -1,74 +1,92 @@
 module.exports = {
+    root: true,
     extends: [
+        'eslint:recommended',
+        'problems',
         'airbnb-base',
         'plugin:jasmine/recommended',
-        'plugin:lodash/canonical',
+        'plugin:lodash/recommended',
         'plugin:compat/recommended',
+        'plugin:sonarjs/recommended',
     ],
     env: {
+        'angular/mocks': false,
         browser: true,
+        es6: true,
+        jasmine: false,
+        node: false,
     },
     parser: 'babel-eslint',
     plugins: [
         'angular',
         'compat',
+        'html',
         'jasmine',
+        'json',
         'lodash',
+        'markdown',
+        'sonarjs',
     ],
     rules: {
-        'compat/compat': 'error',
+        'class-methods-use-this': 'off',
         'indent': ['error', 4],
         'linebreak-style': 'off',
-        'import/prefer-default-export': 'off',
+        //'no-param-reassign': 'off',
+        'no-underscore-dangle': 'off',
         'no-use-before-define': 'off',
         'padded-blocks': 'off',
-        'class-methods-use-this': 'off',
+
+        'compat/compat': 'error',
+
+        'import/prefer-default-export': 'off',
+
+        'lodash/import-scope': 'off',
         'lodash/prefer-constant': 'off',
-        'lodash/prefer-lodash-method': 'off',
-        'no-param-reassign': 'off',
-        'no-underscore-dangle': 'off',
     },
     overrides: [
         {
             files: [
-                '{src,tenancy}/**/*.spec.js',
-                '{src,tenancy}/**/*.karma.js',
+                '{src,tenancy}/**/*.module.js',
             ],
+            rules: {
+                'lodash/prefer-lodash-method': 'off',
+            },
+        },
+        {
             env: {
                 jasmine: true,
                 'angular/mocks': true,
             },
-            rules: {
-                'jasmine/no-spec-dupes': 'off',
-            },
-        },
-        {
             files: [
-                'karma.conf.js',
-                'stylelint.config.js',
-                'jsdoc.conf.js',
-                '.babelrc.js',
-                'webpack.*',
-                'scripts/**/*',
-                '{src,tenancy}/**/*.karma.js',
                 '{src,tenancy}/**/*.spec.js',
+                '{src,tenancy}/**/*.karma.js',
             ],
+            globals: {
+                require: true,
+            },
             rules: {
-                'import/no-extraneous-dependencies': 'off'
+                'import/no-extraneous-dependencies': 'off',
+                //'jasmine/no-spec-dupes': 'off',
             },
         },
         {
-            files: [
-                'karma.conf.js',
-                'stylelint.config.js',
-                'jsdoc.conf.js',
-                '.babelrc.js',
-                'webpack.*',
-                'scripts/**/*',
-            ],
             env: {
                 browser: false,
                 node: true,
+            },
+            files: [
+                '.babelrc.js',
+                'jsdoc.conf.js',
+                'karma.conf.js',
+                'package-lock.json',
+                'package.json',
+                'postcss.config.js',
+                'stylelint.config.js',
+                'webpack.*.js',
+                'scripts/**/*',
+            ],
+            rules: {
+                'import/no-extraneous-dependencies': 'off'
             },
         },
     ],

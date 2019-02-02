@@ -46,37 +46,18 @@ export class AccessControlService {
 
         return _.reduce(
             this.guards,
-            (promise, guard, guardId) => this._nextGuard(
-                iteratee,
-                guardId,
-                intermediates,
-                promise,
-                guard,
-            ),
-            this.$q.when(true),
+            (promise, guard, guardId) => {
+                const guardService = this.$injector.get(guard.serviceName);
+                return iteratee(promise, guardService)
+                    .then((intermediate) => {
+                        intermediates[guardId] = _.cloneDeep(intermediate);
+                        return intermediate;
+                    });
+            },
+            this.$q.resolve(true),
         ).finally(
             () => this.$log.debug(intermediates),
         );
-    }
-
-    _nextGuard(iteratee, guardId, intermediates, promise, guard) {
-        const guardService = this._getGuardService(guard);
-        const nextPromise = iteratee(promise, guardService);
-
-        return nextPromise
-            .then((intermediate) => {
-                intermediates[guardId] = _.cloneDeep(intermediate);
-                return intermediate;
-            });
-    }
-
-    _getGuardService(guard) {
-        if (_.isObject(guard.$cachedService)) {
-            return guard.$cachedService;
-        }
-
-        guard.$cachedService = this.$injector.get(guard.serviceName);
-        return guard.$cachedService;
     }
 
 }

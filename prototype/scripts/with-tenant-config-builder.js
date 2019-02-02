@@ -29,12 +29,10 @@ module.exports = class WithTenantConfigBuilder {
     }
 
     build(...appendConfigs) {
-        const builtConfig = merge(
+        return merge(
             ...this.configs,
             ...appendConfigs,
         );
-
-        return builtConfig;
     }
 
     buildTenantPath() {

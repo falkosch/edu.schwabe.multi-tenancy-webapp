@@ -107,15 +107,17 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
                 const originalFilePath = path.resolve(context, request);
                 const relativeToDefaultPath = path.relative(this.defaultPath, originalFilePath);
 
-                if (!relativeToDefaultPath.startsWith('..')) {
+                if (!_.startsWith(relativeToDefaultPath, '..')) {
                     const absoluteTenantPath = path.resolve(tenantPath, relativeToDefaultPath);
                     const tenantPathRelativeToContext = path.relative(
                         context,
                         absoluteTenantPath,
                     );
 
+                    // when we have a file in tenant directory, we override the resource request
+                    // in base app
                     if (fs.existsSync(absoluteTenantPath)) {
-                        // override resource request
+                        // eslint-disable-next-line no-param-reassign
                         resource.request = tenantPathRelativeToContext;
                     }
                 }
@@ -196,7 +198,7 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
         const output = this.buildOutput();
         const rules = this.buildRules();
 
-        const finalConfig = super.build(
+        return super.build(
             {
                 context: this.context,
                 entry,
@@ -208,7 +210,5 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
             },
             ...appendConfigs,
         );
-
-        return finalConfig;
     }
 };
