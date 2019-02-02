@@ -29,9 +29,8 @@ module.exports = {
     ],
     rules: {
         'class-methods-use-this': 'off',
-        'indent': ['error', 4],
+        indent: ['error', 4],
         'linebreak-style': 'off',
-        //'no-param-reassign': 'off',
         'no-underscore-dangle': 'off',
         'no-use-before-define': 'off',
         'padded-blocks': 'off',
@@ -66,7 +65,6 @@ module.exports = {
             },
             rules: {
                 'import/no-extraneous-dependencies': 'off',
-                //'jasmine/no-spec-dupes': 'off',
             },
         },
         {
@@ -86,7 +84,7 @@ module.exports = {
                 'scripts/**/*',
             ],
             rules: {
-                'import/no-extraneous-dependencies': 'off'
+                'import/no-extraneous-dependencies': 'off',
             },
         },
     ],
