@@ -45,6 +45,8 @@ module.exports = (config) => {
                 ],
                 specReporter: {
                     showSpecTiming: true,
+                    suppressErrorSummary: false,
+                    suppressSkipped: true,
                 },
                 webpackMiddleware: {
                     stats: 'minimal',
