@@ -14,7 +14,9 @@
             </md-button>
             <md-menu-content ng-mouseleave="$mdMenu.close()">
                 <md-menu-item>
-                    <md-button ng-click="$ctrl.logout()">Logout</md-button>
+                    <md-button ng-click="$ctrl.logout()">
+                        <span translate="actions.logout"></span>
+                    </md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>

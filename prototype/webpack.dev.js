@@ -45,6 +45,18 @@ module.exports = env => common(env)
                     ],
                 },
                 {
+                    type: 'javascript/auto',
+                    test: /[/\\]i18n[/\\]([A-Z]{2}|[a-z]{2})([-_]([A-Z]{2}|[a-z]{2}))?\.json$/,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: '[path][name].[ext]',
+                            },
+                        },
+                    ],
+                },
+                {
                     test: /\.scss$/,
                     use: [
                         'style-loader',

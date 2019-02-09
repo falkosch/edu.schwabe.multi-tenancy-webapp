@@ -7,6 +7,7 @@ import { PromiseTrackerModule } from './promise-tracker/promise-tracker.module';
 import { UserStateModule } from './user-state/user-state.module';
 import { EventEmitterModule } from './event-emitter/event-emitter.module';
 import { AccessControlModule } from './access-control/access-control.module';
+import { LanguageModule } from './language/language.module';
 import { NavigationModule } from './navigation/navigation.module';
 
 export const CoreModule = angular
@@ -18,6 +19,7 @@ export const CoreModule = angular
         PromiseTrackerModule,
         EventEmitterModule,
         UserStateModule,
+        LanguageModule,
         NavigationModule,
     ])
     .name;

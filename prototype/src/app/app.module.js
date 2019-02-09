@@ -8,11 +8,13 @@ import { MenubarModule } from './menubar/menubar.module';
 
 import { AppComponent, AppName } from './app.component';
 import { appRoute } from './app.route';
+import { LanguageModule } from '../core/language/language.module';
 
 export const AppModule = angular
     .module('app', [
         uiRouter,
 
+        LanguageModule,
         UiModule,
         HeaderModule,
         FooterModule,

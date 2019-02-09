@@ -2,8 +2,10 @@ import angular from 'angular';
 import angularAnimate from 'angular-animate';
 import angularAria from 'angular-aria';
 import angularMessages from 'angular-messages';
-import angularMaterial from 'angular-material';
+import angularSanitize from 'angular-sanitize';
 import uiRouter from '@uirouter/angularjs';
+
+import angularMaterial from 'angular-material';
 
 import './index.scss';
 
@@ -21,8 +23,10 @@ export const IndexModule = angular
         angularAnimate,
         angularAria,
         angularMessages,
-        angularMaterial,
+        angularSanitize,
         uiRouter,
+
+        angularMaterial,
 
         AppModule,
         StartModule,

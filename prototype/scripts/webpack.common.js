@@ -1,5 +1,11 @@
-const { ContextReplacementPlugin } = require('webpack');
+const _ = require('lodash');
+const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const WebpackConfigBuilder = require('./webpack-config-builder');
+const projectPackage = require('../package.json');
+
+const { language } = projectPackage['edu.schwabe.webapp-prototypes'];
+
+const [firstLanguage, ...restLanguages] = language.availableLanguages;
 
 function defaultBuilderFactory() {
     return new WebpackConfigBuilder();
@@ -12,10 +18,27 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
         template: './src/index.html',
     })
     .addConfig({
+        output: {
+            hashSalt: '8007831555',
+        },
+        node: {
+            __filename: true,
+            __dirname: true,
+        },
         plugins: [
+            new DefinePlugin({
+                __VERSION__: JSON.stringify(projectPackage.version),
+            }),
             new ContextReplacementPlugin(
                 /moment[/\\]locale$/,
-                /de|en/,
+                // /de|en/,
+                new RegExp(
+                    _.reduce(
+                        restLanguages,
+                        (languageExpression, currentRestLanguage) => `${languageExpression}|${currentRestLanguage}`,
+                        firstLanguage,
+                    ),
+                ),
             ),
         ],
         module: {

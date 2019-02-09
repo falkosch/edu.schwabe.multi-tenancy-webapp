@@ -45,6 +45,16 @@ module.exports = {
     overrides: [
         {
             files: [
+                '{src,tenancy}/**/*.js',
+            ],
+            globals: {
+                '__dirname': true,
+                '__filename': true,
+                '__VERSION__': true,
+            },
+        },
+        {
+            files: [
                 '{src,tenancy}/**/*.module.js',
             ],
             rules: {

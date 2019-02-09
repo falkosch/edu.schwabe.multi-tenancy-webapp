@@ -1,4 +1,5 @@
 import { AppName } from './app.component';
+import { LanguageServiceName } from '../core/language/language.service';
 
 appRoute.$inject = ['$stateProvider'];
 
@@ -15,6 +16,9 @@ export function appRoute(
             component: AppName,
             accessControl: {
                 public: true,
+            },
+            resolve: {
+                languageReady: [LanguageServiceName, languageService => languageService.onReady()],
             },
         });
 }

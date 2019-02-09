@@ -6,6 +6,17 @@
   "author": {
     "name": "Falko Schwabe"
   },
+  "edu.schwabe.webapp-prototypes": {
+    "language": {
+      "availableLanguages": [
+        "de",
+        "en"
+      ],
+      "fallbackLanguage": "en",
+      "defaultLanguage": "en",
+      "partialsUrlTemplate": "{part}/i18n/{lang}.json"
+    }
+  },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "build:serve": "http-server --gzip --cors ./dist",
@@ -27,9 +38,17 @@
     "angular-material": "^1.1.10",
     "angular-messages": "^1.7.5",
     "jslinq": "^1.0.21",
+    "angular-sanitize": "^1.7.7",
+    "angular-translate": "^2.18.1",
+    "angular-translate-handler-log": "^2.18.1",
+    "angular-translate-interpolation-messageformat": "^2.18.1",
+    "angular-translate-loader-partial": "^2.18.1",
+    "angular-translate-loader-static-files": "^2.18.1",
+    "angular-translate-loader-url": "^2.18.1",
     "lodash": "^4.17.11",
     "material-icons": "^0.3.0",
     "moment": "^2.22.2",
+    "messageformat": "^2.0.5",
     "rx-angular": "^1.1.3",
     "uuid-browser": "^3.1.0"
   },

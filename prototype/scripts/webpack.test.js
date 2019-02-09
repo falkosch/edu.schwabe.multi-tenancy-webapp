@@ -51,6 +51,13 @@ module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilde
                     ],
                 },
                 {
+                    type: 'javascript/auto',
+                    test: /[/\\]i18n[/\\]([A-Z]{2}|[a-z]{2})([-_]([A-Z]{2}|[a-z]{2}))?\.json$/,
+                    use: [
+                        'ignore-loader',
+                    ],
+                },
+                {
                     test: /\.(s?css|png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
                     use: 'ignore-loader',
                 },
