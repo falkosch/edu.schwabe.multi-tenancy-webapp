@@ -33,6 +33,7 @@ describe(`${BackendModule}.${AuthenticationServiceName}`, () => {
 
             authenticationService
                 .authenticate()
+                .then(() => done.fail('test failed'))
                 .catch((e) => {
 
                     expect(e)

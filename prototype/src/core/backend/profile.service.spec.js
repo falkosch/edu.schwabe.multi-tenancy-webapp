@@ -20,7 +20,7 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
     function testMemberToBeNotImplemented(done, asyncInvokable) {
         asyncInvokable()
-            .then(() => done(new Error('test failed')))
+            .then(() => done.fail('test failed'))
             .catch((e) => {
                 testErrorIsNotImplementedError(e);
                 done();

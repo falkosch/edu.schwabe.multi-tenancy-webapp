@@ -80,7 +80,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
                     $q.when(),
                 ))
                 .then(() => done())
-                .catch(e => done(e));
+                .catch(e => done.fail(e));
 
             $timeout.flush();
 
@@ -126,7 +126,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
                     done();
 
                 })
-                .catch(e => done(e));
+                .catch(e => done.fail(e));
 
             $rootScope.$digest();
             $timeout.flush();
