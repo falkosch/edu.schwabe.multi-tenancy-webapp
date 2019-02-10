@@ -29,18 +29,6 @@ module.exports = env => common(env)
             new HashedModuleIdsPlugin(),
             new WebappWebpackPlugin({
                 logo: './src/assets/favicon.png',
-                favicons: {
-                    icons: {
-                        android: false,
-                        appleIcon: false,
-                        appleStartup: false,
-                        coast: false,
-                        favicons: true,
-                        firefox: false,
-                        windows: false,
-                        yandex: false,
-                    },
-                },
             }),
             new MiniCssExtractPlugin({
                 chunkFilename: '[name].[hash].chunk.css',
