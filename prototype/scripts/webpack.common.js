@@ -14,6 +14,7 @@ function defaultBuilderFactory() {
 module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFactory()
     .withTenant(env.tenant)
     .addEntry('@babel/polyfill')
+    .addEntry('default-passive-events')
     .addHtmlWebpackPluginConfig({
         template: './src/index.html',
     })
