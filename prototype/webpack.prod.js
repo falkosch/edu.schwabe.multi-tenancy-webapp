@@ -103,9 +103,55 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
+                    test: /\.(woff2?|eot|ttf|otf)$/,
                     use: [
                         'file-loader',
+                    ],
+                },
+                {
+                    test: /\.(png|jpe?g|gif|webp)$/,
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 8192,
+                            },
+                        },
+                        {
+                            loader: 'image-webpack-loader',
+                            options: {
+                                // https://github.com/tcoopman/image-webpack-loader
+                                mozjpeg: {
+                                    // https://github.com/imagemin/imagemin-mozjpeg#options
+                                },
+                                optipng: {
+                                    // https://github.com/imagemin/imagemin-optipng#options
+                                },
+                                pngquant: {
+                                    // https://github.com/imagemin/imagemin-pngquant#options
+                                },
+                                gifsicle: {
+                                    // https://github.com/imagemin/imagemin-gifsicle
+                                },
+                                webp: {
+                                    // https://github.com/imagemin/imagemin-webp
+                                },
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.svg$/,
+                    use: [
+                        'file-loader',
+                        {
+                            loader: 'image-webpack-loader',
+                            options: {
+                                svgo: {
+                                    // https://github.com/imagemin/imagemin-svgo#options
+                                },
+                            },
+                        },
                     ],
                 },
             ],

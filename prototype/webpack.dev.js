@@ -83,7 +83,7 @@ module.exports = env => common(env)
                     ],
                 },
                 {
-                    test: /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
+                    test: /\.(png|jpe?g|gif|webp|svg|woff2?|eot|ttf|otf)$/,
                     use: [
                         'file-loader',
                     ],

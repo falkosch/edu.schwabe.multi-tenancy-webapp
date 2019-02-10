@@ -1,5 +1,4 @@
 <div class="layout-container" layout-padding>
-    <img src="../assets/favicon.png">
     <section>
         <h1>What this project is about</h1>
         <p>In this learning project, I test various technologies, which help me build a rather complex webapp
@@ -25,5 +24,33 @@
             <li>AngularJS, UI-Router and AngularJS Material as the base of the ui,</li>
             <li>a multi-tenant environment that separates each tenant at build time,</li>
         </ul>
+    </section>
+    <section>
+        <h2>Test area for many images</h2>
+        <div layout-xs="column" layout-gt-xs="row" layout-wrap>
+            <md-card flex-xs flex-gt-xs="33" ng-repeat="image in $ctrl.allImages track by image.source">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" ng-bind="image.headline"></span>
+                        <span class="md-subhead"><span translate="words.image" translate-default="Image"></span> <span
+                                  ng-bind="$index + 1"></span></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content layout="row" layout-align="space-between">
+                    <div class="card-media">
+                        <img ng-alt="{{image.headline}}" ng-src="{{image.source}}">
+                    </div>
+                    <md-card-actions layout="column">
+                        <md-button class="md-icon-button" aria-label="Favorite">
+                            <md-icon class="material-icons">favorite</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="Share">
+                            <md-icon class="material-icons">share</md-icon>
+                        </md-button>
+                    </md-card-actions>
+                </md-card-content>
+            </md-card>
+        </div>
+
     </section>
 </div>

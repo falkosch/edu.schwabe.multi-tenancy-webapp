@@ -16,3 +16,12 @@ body {
 .layout-container {
     @extend %layout-container;
 }
+
+.card-media {
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}

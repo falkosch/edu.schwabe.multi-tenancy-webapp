@@ -1,0 +1,35 @@
+@import "../abstracts/all";
+
+.material-icons {
+    &.app-icon-16 {
+        font-size: 16px;
+    }
+
+    &.app-icon-18 {
+        font-size: 18px;
+    }
+
+    &.app-icon-24 {
+        font-size: 24px;
+    }
+
+    &.app-icon-32 {
+        font-size: 32px;
+    }
+
+    &.app-icon-36 {
+        font-size: 36px;
+    }
+
+    &.app-icon-48 {
+        font-size: 48px;
+    }
+
+    &.app-icon-64 {
+        font-size: 64px;
+    }
+
+    &.app-icon-128 {
+        font-size: 128px;
+    }
+}
