@@ -3,6 +3,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
@@ -28,8 +29,10 @@ module.exports = env => common(env)
             ]),
             new HashedModuleIdsPlugin(),
             new WebappWebpackPlugin({
+                cache: true,
                 logo: './src/assets/favicon.png',
             }),
+            new ImageminPlugin({}),
             new MiniCssExtractPlugin({
                 chunkFilename: '[name].[hash].chunk.css',
                 filename: '[name].[hash].bundle.css',
@@ -127,9 +130,6 @@ module.exports = env => common(env)
                                 optipng: {
                                     // https://github.com/imagemin/imagemin-optipng#options
                                 },
-                                pngquant: {
-                                    // https://github.com/imagemin/imagemin-pngquant#options
-                                },
                                 gifsicle: {
                                     // https://github.com/imagemin/imagemin-gifsicle
                                 },
@@ -147,6 +147,7 @@ module.exports = env => common(env)
                         {
                             loader: 'image-webpack-loader',
                             options: {
+                                // https://github.com/tcoopman/image-webpack-loader
                                 svgo: {
                                     // https://github.com/imagemin/imagemin-svgo#options
                                 },

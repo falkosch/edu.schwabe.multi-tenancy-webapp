@@ -59,7 +59,7 @@ module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilde
                     ],
                 },
                 {
-                    test: /\.(s?css|png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/,
+                    test: /\.(s?css|png|svg|jpe?g|gif|svg|webp|woff2?|eot|ttf|otf)$/,
                     use: 'ignore-loader',
                 },
             ],
