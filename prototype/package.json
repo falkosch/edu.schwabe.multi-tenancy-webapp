@@ -1,19 +1,20 @@
 {
-  "name": "prototype",
+  "name": "@edu.schwabe.webapp-prototypes/angularjs-prototype",
+  "description": "An AngularJS web app prototype, build with webpack and babel and tested with karma and jasmine.",
   "version": "0.0.1",
-  "description": "A prototype build with webpack and babel and tested with karma and jasmine.",
-  "private": true,
   "author": {
-    "name": "Falko Schwabe"
+    "name": "Falko Schwabe",
+    "url": "https://bitbucket.org/falko_schwabe/edu.schwabe.webapp-prototypes"
   },
-  "edu.schwabe.webapp-prototypes": {
+  "private": true,
+  "@edu.schwabe.webapp-prototypes/angularjs-prototype": {
     "language": {
-      "availableLanguages": [
+      "allAvailable": [
         "de",
         "en"
       ],
-      "fallbackLanguage": "en",
-      "defaultLanguage": "en",
+      "fallback": "en",
+      "default": "en",
       "partialsUrlTemplate": "{part}/i18n/{lang}.json"
     }
   },

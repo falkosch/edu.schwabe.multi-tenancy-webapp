@@ -3,9 +3,9 @@ const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const WebpackConfigBuilder = require('./webpack-config-builder');
 const projectPackage = require('../package.json');
 
-const { language } = projectPackage['edu.schwabe.webapp-prototypes'];
+const { language } = projectPackage[projectPackage.name];
 
-const [firstLanguage, ...restLanguages] = language.availableLanguages;
+const [firstLanguage, ...restLanguages] = language.allAvailable;
 
 function defaultBuilderFactory() {
     return new WebpackConfigBuilder();
@@ -31,11 +31,10 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
             }),
             new ContextReplacementPlugin(
                 /moment[/\\]locale$/,
-                // /de|en/,
                 new RegExp(
                     _.reduce(
                         restLanguages,
-                        (languageExpression, currentRestLanguage) => `${languageExpression}|${currentRestLanguage}`,
+                        (expression, nextLanguage) => `${expression}|${nextLanguage}`,
                         firstLanguage,
                     ),
                 ),

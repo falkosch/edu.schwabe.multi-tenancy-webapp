@@ -1,10 +1,12 @@
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
-import angularTranslate from 'angular-translate';
 
-import { UserStateModule } from '../../core/user-state/user-state.module';
-import { GlobalSpinnerModule } from '../../ui/global-spinner/global-spinner.module';
 import { BackendModule } from '../../core/backend/backend.module';
+import { GlobalSpinnerModule } from '../../ui/global-spinner/global-spinner.module';
+import { LanguageModule } from '../../core/language/language.module';
+import { UserStateModule } from '../../core/user-state/user-state.module';
+
+import { menubarConfig } from './menubar.config';
 
 import { MenubarComponent, MenubarName } from './menubar.component';
 
@@ -14,14 +16,12 @@ import './i18n/de.json';
 export const MenubarModule = angular
     .module('app.menubar', [
         uiRouter,
-        angularTranslate,
+
         BackendModule,
-        UserStateModule,
         GlobalSpinnerModule,
+        LanguageModule,
+        UserStateModule,
     ])
-    .config([
-        '$translatePartialLoaderProvider',
-        ($translatePartialLoaderProvider) => { $translatePartialLoaderProvider.addPart(__dirname); },
-    ])
+    .config(menubarConfig)
     .component(MenubarName, MenubarComponent)
     .name;

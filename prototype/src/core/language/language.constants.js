@@ -1,5 +1,5 @@
 import projectPackage from '../../../package.json';
 
-const { language } = projectPackage['edu.schwabe.webapp-prototypes'];
+const { language } = projectPackage[projectPackage.name];
 
 export const LanguageConstants = Object.freeze(language);

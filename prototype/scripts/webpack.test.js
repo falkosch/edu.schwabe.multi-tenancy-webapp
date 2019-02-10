@@ -31,6 +31,7 @@ module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilde
             pathinfo: false,
         },
         optimization: {
+            nodeEnv: 'test',
             removeAvailableModules: false,
             removeEmptyChunks: false,
             splitChunks: false,

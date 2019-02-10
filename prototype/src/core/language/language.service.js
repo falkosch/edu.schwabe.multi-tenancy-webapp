@@ -23,7 +23,7 @@ export class LanguageService {
     }
 
     _initialize() {
-        this.$translate.use(LanguageConstants.defaultLanguage);
+        this.$translate.use(LanguageConstants.default);
 
         this.on$translatePartialLoaderStructureChangedDisposal = this.$rootScope
             .$on(
@@ -46,12 +46,12 @@ export class LanguageService {
         return moment.locale(code);
     }
 
-    get availableLanguages() {
-        return LanguageConstants.availableLanguages;
+    get allAvailableLanguages() {
+        return LanguageConstants.allAvailable;
     }
 
     changeLanguage(code) {
-        if (!_.includes(this.availableLanguages, code)) {
+        if (!_.includes(this.allAvailableLanguages, code)) {
             return this.$q.reject('language not available');
         }
 

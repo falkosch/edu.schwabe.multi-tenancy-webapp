@@ -2,13 +2,14 @@ const _ = require('lodash');
 const merge = require('webpack-merge');
 const path = require('path');
 const fs = require('fs');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const { ProgressPlugin, NormalModuleReplacementPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const WithTenantConfigBuilder = require('./with-tenant-config-builder');
+
+const projectPackage = require('../package.json');
 
 module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
@@ -78,6 +79,11 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
         return {
             ngAppModule,
+            pkg: {
+                title: projectPackage.name,
+                description: projectPackage.description,
+                language: projectPackage[projectPackage.name].language,
+            },
         };
     }
 

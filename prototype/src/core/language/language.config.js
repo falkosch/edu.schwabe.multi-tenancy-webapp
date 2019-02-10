@@ -7,11 +7,16 @@ languageConfig.$inject = [
 export function languageConfig(
     $translateProvider,
 ) {
-    $translateProvider.useLoader('$translatePartialLoader', {
-        urlTemplate: `${LanguageConstants.partialsUrlTemplate}?v=${__VERSION__}`,
-    });
-    $translateProvider.determinePreferredLanguage();
-    $translateProvider.fallbackLanguage(LanguageConstants.fallbackLanguage);
-    $translateProvider.useMissingTranslationHandlerLog();
-    $translateProvider.useSanitizeValueStrategy('sanitize');
+    if (process.env.NODE_ENV !== 'test') {
+        $translateProvider
+            .useLoader('$translatePartialLoader', {
+                urlTemplate: `${LanguageConstants.partialsUrlTemplate}?v=${__VERSION__}`,
+            });
+    }
+
+    $translateProvider
+        .determinePreferredLanguage()
+        .fallbackLanguage(LanguageConstants.fallback)
+        .useMissingTranslationHandlerLog()
+        .useSanitizeValueStrategy('sanitize');
 }

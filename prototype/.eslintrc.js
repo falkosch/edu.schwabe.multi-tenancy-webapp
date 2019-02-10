@@ -48,6 +48,7 @@ module.exports = {
                 '{src,tenancy}/**/*.js',
             ],
             globals: {
+                'process': true,
                 '__dirname': true,
                 '__filename': true,
                 '__VERSION__': true,
