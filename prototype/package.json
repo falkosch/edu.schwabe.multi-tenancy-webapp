@@ -8,6 +8,7 @@
   },
   "private": true,
   "@edu.schwabe.webapp-prototypes/angularjs-prototype": {
+    "shortName": "ngPrototype",
     "language": {
       "allAvailable": [
         "de",

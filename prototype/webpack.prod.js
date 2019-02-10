@@ -11,6 +11,8 @@ const { HashedModuleIdsPlugin } = require('webpack');
 
 const common = require('./scripts/webpack.common');
 
+const projectPackage = require('./package.json');
+
 process.env.NODE_ENV = 'production';
 
 module.exports = env => common(env)
@@ -31,6 +33,9 @@ module.exports = env => common(env)
             new WebappWebpackPlugin({
                 cache: true,
                 logo: './src/assets/favicon.png',
+                favicons: {
+                    appShortName: projectPackage[projectPackage.name].shortName,
+                },
             }),
             new ImageminPlugin({}),
             new MiniCssExtractPlugin({
