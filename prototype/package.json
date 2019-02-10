@@ -30,7 +30,6 @@
     "lint:scss": "stylelint . --fix"
   },
   "dependencies": {
-    "jslinq": "^1.0.21",
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.1",
     "@uirouter/angularjs": "^1.0.22",
@@ -47,6 +46,7 @@
     "angular-translate-loader-static-files": "^2.18.1",
     "angular-translate-loader-url": "^2.18.1",
     "default-passive-events": "^1.0.10",
+    "jslinq": "^1.0.21",
     "lodash": "^4.17.11",
     "material-icons": "^0.3.0",
     "messageformat": "^2.0.5",
