@@ -158,6 +158,7 @@ describe(`${ProfileModule} route config`, () => {
                     injectByStaticInjectionNames: jasmine.createSpy()
                         .and
                         .callFake((instance) => {
+                            // eslint-disable-next-line no-param-reassign
                             instance.eventEmitterService = {
                                 of: jasmine.createSpy(),
                             };

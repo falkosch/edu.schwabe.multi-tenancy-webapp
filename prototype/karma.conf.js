@@ -1,10 +1,12 @@
 const merge = require('webpack-merge');
+const puppeteer = require('puppeteer');
 
 const KarmaConfigBuilder = require('./scripts/karma-config-builder');
 
 const testWebpackConfigBuilderFactory = require('./scripts/webpack.test');
 
 process.env.NODE_ENV = 'test';
+process.env.CHROME_BIN = puppeteer.executablePath();
 
 module.exports = (config) => {
 

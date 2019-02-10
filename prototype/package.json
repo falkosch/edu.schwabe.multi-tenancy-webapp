@@ -103,6 +103,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^7.0.1",
     "postcss-preset-env": "^6.4.0",
+    "puppeteer": "^1.12.2",
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",

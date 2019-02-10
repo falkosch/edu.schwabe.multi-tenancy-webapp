@@ -3,9 +3,12 @@ import _ from 'lodash';
 import '../../src/index.karma';
 
 // require all modules ending in ".spec.js" from the current directory and all subdirectories
-const testsContext = require.context('.', true, /\.spec\.js$/);
-_.forEach(testsContext.keys(), (key) => {
-    describe(key, () => {
-        testsContext(key);
-    });
-});
+(
+    (testsContext) => {
+        _.forEach(testsContext.keys(), (key) => {
+            describe(key, () => {
+                testsContext(key);
+            });
+        });
+    }
+)(require.context('.', true, /\.spec\.js$/));
