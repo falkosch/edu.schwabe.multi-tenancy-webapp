@@ -39,6 +39,7 @@ module.exports = env => common(env)
             }),
         ],
         optimization: {
+            mangleWasmImports: true,
             minimizer: [
                 new TerserPlugin({
                     cache: true,
