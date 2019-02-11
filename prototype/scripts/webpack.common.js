@@ -1,5 +1,6 @@
 const _ = require('lodash');
-const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
+const { ContextReplacementPlugin, DefinePlugin, ProgressPlugin } = require('webpack');
+
 const WebpackConfigBuilder = require('./webpack-config-builder');
 const projectPackage = require('../package.json');
 
@@ -27,6 +28,7 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
             __dirname: true,
         },
         plugins: [
+            new ProgressPlugin(),
             new DefinePlugin({
                 __VERSION__: JSON.stringify(projectPackage.version),
             }),

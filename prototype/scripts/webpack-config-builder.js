@@ -4,8 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const { ProgressPlugin, NormalModuleReplacementPlugin } = require('webpack');
+const { NormalModuleReplacementPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const WithTenantConfigBuilder = require('./with-tenant-config-builder');
 
@@ -133,13 +134,16 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
     }
 
     buildPlugins() {
+        const tenantIndex = this.buildTenantIndex();
         const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
 
         const plugins = [
-            new ProgressPlugin(),
             new HtmlWebpackPlugin(htmlWebpackPluginConfig),
             new ScriptExtHtmlWebpackPlugin({
                 defaultAttribute: 'defer',
+            }),
+            new ServiceWorkerWebpackPlugin({
+                entry: `${tenantIndex}.sw.js`,
             }),
         ];
 

@@ -12,6 +12,7 @@ module.exports = {
     env: {
         'angular/mocks': false,
         browser: true,
+        commonjs: true,
         es6: true,
         jasmine: false,
         node: false,
@@ -43,6 +44,17 @@ module.exports = {
         'lodash/prefer-constant': 'off',
     },
     overrides: [
+        {
+            files: [
+                'src/index.sw.js',
+                'tenancy/*/*.sw.js',
+            ],
+            env: {
+                serviceworker: true,
+            },
+            globals: {
+            },
+        },
         {
             files: [
                 '{src,tenancy}/**/*.js',
@@ -81,6 +93,7 @@ module.exports = {
         {
             env: {
                 browser: false,
+                commonjs: false,
                 node: true,
             },
             files: [
