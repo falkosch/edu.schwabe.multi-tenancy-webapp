@@ -16,7 +16,6 @@ import { ProfileModule } from './profile/profile.module';
 import { CoreModule } from './core/core.module';
 
 import { indexHtml5Config } from './index-html5.config';
-import { indexRun } from './index.run';
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     import('serviceworker-webpack-plugin/lib/runtime')
@@ -42,5 +41,4 @@ export const IndexModule = angular
         CoreModule,
     ])
     .config(indexHtml5Config)
-    .run(indexRun)
     .name;
