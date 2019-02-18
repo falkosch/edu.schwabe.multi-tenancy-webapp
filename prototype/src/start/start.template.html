@@ -1,41 +1,39 @@
 <div class="layout-container" layout-padding>
     <section>
-        <h1>What this project is about</h1>
-        <p>In this learning project, I test various technologies, which help me build a rather complex webapp
-            prototype. The webapp is based on AngularJS (for now).</p>
+        <h1 translate="start.sections.1.headline"></h1>
+        <p translate="start.sections.1.paragraph"></p>
     </section>
     <section>
-        <h2>Basic Ideas of this Webapp Prototype</h2>
+        <h2 translate="start.sections.2.headline"></h2>
         <ul>
-            <li>Reuse as much as possible instead of reinventing.</li>
-            <li>Be lean by reusing what is available and apply basic patterns and practices.</li>
-            <li>Do not just use a technology to be cool - use it the right way.</li>
-            <li>Learn from mistakes and do it better next time.</li>
+            <li translate="start.sections.2.bullets.1"></li>
+            <li translate="start.sections.2.bullets.2"></li>
+            <li translate="start.sections.2.bullets.3"></li>
+            <li translate="start.sections.2.bullets.4"></li>
         </ul>
     </section>
     <section>
-        <h2>Solutions in this Webapp Prototype</h2>
-        <p>Though, the content of the webapp itself will not crave your attention, the setup of it will. It uses</p>
+        <h2 translate="start.sections.3.headline"></h2>
+        <p translate="start.sections.3.paragraph"></p>
         <ul>
-            <li>a lean but stable ES6+ modularized project setup,</li>
-            <li>Webpack as a bundler,</li>
-            <li>Babel as a JavaScript "compiler",</li>
-            <li>Karma and Jasmine for a unit test environment,</li>
-            <li>AngularJS, UI-Router and AngularJS Material as the base of the ui,</li>
-            <li>a multi-tenant environment that separates each tenant at build time,</li>
+            <li translate="start.sections.3.bullets.1"></li>
+            <li translate="start.sections.3.bullets.2"></li>
+            <li translate="start.sections.3.bullets.3"></li>
+            <li translate="start.sections.3.bullets.4"></li>
+            <li translate="start.sections.3.bullets.5"></li>
+            <li translate="start.sections.3.bullets.6"></li>
         </ul>
     </section>
     <section>
-        <h2>Test area for many images</h2>
+        <h2 translate="start.images.headline"></h2>
         <div layout="row" layout-xs="column" layout-wrap layout-align="space-between stretch">
             <div flex flex-gt-xs="50" layout="column" ng-repeat="image in $ctrl.allImages track by image.source">
                 <md-card>
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline" ng-bind="image.headline"></span>
-                            <span class="md-subhead">
-                                <span translate="words.image" translate-default="Image"></span>
-                                <span ng-bind="$index + 1"></span>
+                            <span class="md-subhead" translate="start.images.generic-subhead"
+                                  translate-values="{ number: $index + 1 }">
                             </span>
                         </md-card-title-text>
                     </md-card-title>

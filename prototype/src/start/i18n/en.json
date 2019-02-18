@@ -1,0 +1,35 @@
+{
+    "start": {
+        "sections": {
+            "1": {
+                "headline": "What this project is about",
+                "paragraph": "In this learning project, I test various technologies, which help me build a rather complex webapp prototype. The webapp is based on AngularJS (for now)."
+            },
+            "2": {
+                "headline": "Basic Ideas of this Webapp Prototype",
+                "bullets": {
+                    "1": "Reuse as much as possible instead of reinventing.",
+                    "2": "Be lean by reusing what is available and apply basic patterns and practices.",
+                    "3": "Do not just use a technology to be cool - use it the right way.",
+                    "4": "Learn from mistakes and do it better next time."
+                }
+            },
+            "3": {
+                "headline": "Solutions in this Webapp Prototype",
+                "paragraph": "Though, the content of the webapp itself will not crave your attention, the setup of it will. It uses:",
+                "bullets": {
+                    "1": "a lean but stable ES6+ modularized project setup,",
+                    "2": "Webpack as a bundler,",
+                    "3": "Babel as a JavaScript \"compiler\",",
+                    "4": "Karma and Jasmine for the unit test environment,",
+                    "5": "AngularJS, UI-Router and AngularJS Material as the base of the UI,",
+                    "6": "a multi-tenant environment that separates each tenant at build time,"
+                }
+            }
+        },
+        "images": {
+            "headline": "Test area for many images",
+            "generic-subhead": "Image {{number}}"
+        }
+    }
+}
