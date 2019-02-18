@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-
 import angular from 'angular';
 import angularAnimate from 'angular-animate';
 import angularAria from 'angular-aria';
@@ -21,8 +18,11 @@ import { CoreModule } from './core/core.module';
 import { indexHtml5Config } from './index-html5.config';
 import { indexRun } from './index.run';
 
-if ('serviceWorker' in navigator) {
-    runtime.register();
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+    import('serviceworker-webpack-plugin/lib/runtime')
+        .then(({ default: runtime }) => {
+            runtime.register();
+        });
 }
 
 export const IndexModule = angular
