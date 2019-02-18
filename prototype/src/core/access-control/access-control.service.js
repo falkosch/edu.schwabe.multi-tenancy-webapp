@@ -55,8 +55,6 @@ export class AccessControlService {
                     });
             },
             this.$q.resolve(true),
-        ).finally(
-            () => this.$log.debug(intermediates),
         );
     }
 

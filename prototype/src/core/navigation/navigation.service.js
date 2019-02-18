@@ -9,10 +9,13 @@ export class NavigationService {
      * @param {string} state ui-sref target
      */
     forState(text, state) {
-        this.entries.push({
-            text,
-            state,
-        });
+        this.entries = [
+            ...this.entries,
+            {
+                text,
+                state,
+            },
+        ];
 
         return this;
     }

@@ -6,7 +6,7 @@ import { GlobalSpinnerModule } from '../../ui/global-spinner/global-spinner.modu
 import { LanguageModule } from '../../core/language/language.module';
 import { UserStateModule } from '../../core/user-state/user-state.module';
 
-import { menubarConfig } from './menubar.config';
+import { menubarI18NConfig } from './menubar-i18n.config';
 
 import { MenubarComponent, MenubarName } from './menubar.component';
 
@@ -22,6 +22,6 @@ export const MenubarModule = angular
         LanguageModule,
         UserStateModule,
     ])
-    .config(menubarConfig)
+    .config(menubarI18NConfig)
     .component(MenubarName, MenubarComponent)
     .name;

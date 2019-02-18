@@ -19,7 +19,10 @@ export class ProfileController {
     }
 
     enableControl(controlName) {
-        this.enabled.push(controlName);
+        this.enabled = [
+            ...this.enabled,
+            controlName,
+        ];
     }
 
     submit() {

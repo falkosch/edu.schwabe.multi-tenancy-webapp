@@ -22,7 +22,6 @@ export class GlobalSpinnerService {
         return this.promiseTrackerService.track(promise);
     }
 
-
     spinWhileTransition(transition) {
         return this.spinWhilePromise(transition.promise);
     }
