@@ -1,3 +1,5 @@
+export const NG_HIDE = 'ng-hide';
+
 export class BusySpinnerController {
 
     static $inject = ['$element'];
@@ -13,8 +15,7 @@ export class BusySpinnerController {
         this.setVisibility(this.busy);
     }
 
-    $onChanges(changesObj) {
-        const { busy } = changesObj;
+    $onChanges({ busy }) {
         if (busy) {
             const { currentValue, previousValue } = busy;
             if (currentValue !== previousValue) {
@@ -25,9 +26,9 @@ export class BusySpinnerController {
 
     setVisibility(visible) {
         if (visible) {
-            this.$element.removeClass('ng-hide');
+            this.$element.removeClass(NG_HIDE);
         } else {
-            this.$element.addClass('ng-hide');
+            this.$element.addClass(NG_HIDE);
         }
     }
 }

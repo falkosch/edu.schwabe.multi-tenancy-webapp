@@ -4,7 +4,7 @@ import uiRouter from '@uirouter/angularjs';
 import { LanguageModule } from '../core/language/language.module';
 import { NavigationModule } from '../core/navigation/navigation.module';
 
-import { StartName, StartComponent } from './start.component';
+import { StartComponentName, StartComponent } from './start.component';
 import { startRoute } from './start.route';
 import { startI18NConfig } from './start-i18n.config';
 import { startNavigationRun } from './start-navigation.run';
@@ -17,7 +17,7 @@ export const StartModule = angular
         LanguageModule,
         NavigationModule,
     ])
-    .component(StartName, StartComponent)
+    .component(StartComponentName, StartComponent)
     .config(startRoute)
     .config(startI18NConfig)
     .run(startNavigationRun)

@@ -1,12 +1,15 @@
+import _ from 'lodash';
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 
 import { StartModule } from './start.module';
-import { StartStateId } from './start.route';
+import { StartStateId, startRoute } from './start.route';
 
 describe(`${StartModule} route config`, () => {
 
     let $stateProviderMock;
+
+    let $injector;
 
     beforeEach(() => {
 
@@ -17,7 +20,24 @@ describe(`${StartModule} route config`, () => {
 
         angular.mock.module(StartModule);
 
-        inject();
+        inject((_$injector_) => {
+            $injector = _$injector_;
+        });
+
+    });
+
+    describe('given architecture', () => {
+
+        const expectedInjects = [
+            '$stateProvider',
+        ];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+
+            expect(_.sortBy($injector.annotate(startRoute)))
+                .toEqual(_.sortBy(expectedInjects));
+
+        });
 
     });
 

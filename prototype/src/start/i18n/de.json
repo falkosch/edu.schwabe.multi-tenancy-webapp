@@ -1,5 +1,7 @@
 {
     "start": {
+        "navigation-entry": "Start",
+        "title": "Alles hat einen Anfang...",
         "sections": {
             "1": {
                 "headline": "Über dieses Projekt",

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { GlobalSpinnerModule } from './global-spinner.module';
@@ -6,12 +7,13 @@ import { PromiseTrackerServiceName } from '../../core/promise-tracker/promise-tr
 
 describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
 
-    let mockIsBusy;
+    let testUnit;
 
+    let mockIsBusy;
     let promiseTrackerServiceMock;
 
+    let $injector;
     let $q;
-    let globalSpinnerService;
 
     beforeEach(() => {
 
@@ -25,21 +27,34 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
                 .and.callFake(promise => promise),
         };
 
-        angular.mock.module(GlobalSpinnerModule, ($provide) => {
-            $provide.value(PromiseTrackerServiceName, promiseTrackerServiceMock);
+        angular.mock.module(GlobalSpinnerModule, {
+            [PromiseTrackerServiceName]: promiseTrackerServiceMock,
         });
 
-        inject((_$q_, _globalSpinnerService_) => {
+        inject((_$injector_, _$q_) => {
+            $injector = _$injector_;
             $q = _$q_;
-            globalSpinnerService = _globalSpinnerService_;
+
+            testUnit = $injector.get(GlobalSpinnerServiceName);
         });
 
     });
 
-    it(`should be an instanceof ${GlobalSpinnerServiceName}`, () => {
+    describe('given architecture', () => {
 
-        expect(globalSpinnerService)
-            .toEqual(jasmine.any(GlobalSpinnerService));
+        const expectedInjects = [
+            PromiseTrackerServiceName,
+        ];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(GlobalSpinnerService)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
+
+        it(`should be an instanceof ${GlobalSpinnerService.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(GlobalSpinnerService));
+        });
 
     });
 
@@ -49,12 +64,12 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
 
             mockIsBusy = true;
 
-            expect(globalSpinnerService.isBusy)
+            expect(testUnit.isBusy)
                 .toEqual(true);
 
             mockIsBusy = false;
 
-            expect(globalSpinnerService.isBusy)
+            expect(testUnit.isBusy)
                 .toEqual(false);
 
         });
@@ -67,7 +82,7 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
 
             const promise = $q.when();
 
-            expect(globalSpinnerService.spinWhilePromise(promise))
+            expect(testUnit.spinWhilePromise(promise))
                 .toBe(promise);
 
             expect(promiseTrackerServiceMock.track)
@@ -85,7 +100,7 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
                 promise: $q.when(),
             };
 
-            expect(globalSpinnerService.spinWhileTransition(transition))
+            expect(testUnit.spinWhileTransition(transition))
                 .toBe(transition.promise);
 
             expect(promiseTrackerServiceMock.track)

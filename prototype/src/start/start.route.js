@@ -1,4 +1,4 @@
-import { StartName } from './start.component';
+import { StartComponentName } from './start.component';
 
 startRoute.$inject = ['$stateProvider'];
 
@@ -9,11 +9,11 @@ export function startRoute($stateProvider) {
         .state({
             name: StartStateId,
             data: {
-                title: 'Everything has a start',
+                title: 'start.title',
             },
             url: '/',
             views: {
-                main: StartName,
+                main: StartComponentName,
             },
         });
 }
