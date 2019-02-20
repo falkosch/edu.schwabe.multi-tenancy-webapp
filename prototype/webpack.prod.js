@@ -49,6 +49,12 @@ module.exports = env => common(env)
                 new TerserPlugin({
                     cache: true,
                     parallel: true,
+                    terserOptions: {
+                        compress: {
+                            drop_console: true,
+                            warnings: true,
+                        },
+                    },
                 }),
             ],
             runtimeChunk: {

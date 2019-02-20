@@ -52,7 +52,8 @@ module.exports = {
             env: {
                 serviceworker: true,
             },
-            globals: {
+            rules: {
+                'no-console': 'off',
             },
         },
         {
@@ -105,10 +106,24 @@ module.exports = {
                 'postcss.config.js',
                 'stylelint.config.js',
                 'webpack.*.js',
-                'scripts/**/*',
+                'scripts/*',
             ],
             rules: {
                 'import/no-extraneous-dependencies': 'off',
+            },
+        },
+        {
+            env: {
+                browser: false,
+                commonjs: false,
+                node: true,
+            },
+            files: [
+                'webpack.*.js',
+                'scripts/webpack.common.js',
+            ],
+            rules: {
+                'sonarjs/no-duplicate-string': 'off',
             },
         },
     ],
