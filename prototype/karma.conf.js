@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
 
@@ -40,11 +41,11 @@ module.exports = (config) => {
                 frameworks: [
                     'jasmine',
                 ],
-                reporters: [
-                    'spec',
-                    'coverage',
-                    'summary',
-                ],
+                reporters: _.concat(
+                    testEnv.noSpec ? [] : ['spec'],
+                    testEnv.noCoverage ? [] : ['coverage'],
+                    ['summary'],
+                ),
                 specReporter: {
                     showSpecTiming: true,
                     suppressErrorSummary: false,
