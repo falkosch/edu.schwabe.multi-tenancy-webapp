@@ -171,33 +171,31 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
                     .returnValue($q.reject(testError));
             });
 
-            it('should catch the rejected promise and return it as resolved', (done) => {
+            function testFailedLogin(done, thenHook = _.noop) {
                 testUnit.login()
                     .then(() => {
+                        thenHook();
                         done();
                     })
                     .catch((e) => {
                         done.fail(e);
                     });
+            }
+
+            it('should catch the rejected promise and return it as resolved', (done) => {
+                testFailedLogin(done);
 
                 $rootScope.$digest();
             });
 
             it('should notify the user about the failed login', (done) => {
-                testUnit.login()
-                    .then(() => {
+                testFailedLogin(done, () => {
+                    expect($mdDialogMock.show)
+                        .toHaveBeenCalledWith(alertDialogMock);
 
-                        expect($mdDialogMock.show)
-                            .toHaveBeenCalledWith(alertDialogMock);
-
-                        expect($mdDialogMock.alert)
-                            .toHaveBeenCalledBefore($mdDialogMock.show);
-
-                        done();
-                    })
-                    .catch((e) => {
-                        done.fail(e);
-                    });
+                    expect($mdDialogMock.alert)
+                        .toHaveBeenCalledBefore($mdDialogMock.show);
+                });
 
                 $rootScope.$digest();
             });
