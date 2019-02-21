@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import angular from 'angular';
 
-import { Tenant1Module } from './tenant1.module';
+import { Tenant2Module } from './tenant2.module';
 import { IndexModule } from '../../src/index.module';
 
-describe(`${Tenant1Module} architecture`, () => {
+describe(`${Tenant2Module} architecture`, () => {
 
     it(`should depend on ${IndexModule}`, () => {
         expect(
-            _.includes(angular.module(Tenant1Module).requires, IndexModule),
+            _.includes(angular.module(Tenant2Module).requires, IndexModule),
         ).toBe(true);
     });
 
@@ -17,7 +17,7 @@ describe(`${Tenant1Module} architecture`, () => {
         let passedProvidingPhase = false;
         let passedRunPhase = false;
 
-        angular.mock.module(Tenant1Module, () => {
+        angular.mock.module(Tenant2Module, () => {
             passedProvidingPhase = true;
         });
 
