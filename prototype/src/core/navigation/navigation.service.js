@@ -5,14 +5,14 @@ export class NavigationService {
     entries = [];
 
     /**
-     * @param {string} text human-readable text for the link
+     * @param {string} translationKey translation key of a human-readable text for the link
      * @param {string} state ui-sref target
      */
-    forState(text, state) {
+    forState(translationKey, state) {
         this.entries = [
             ...this.entries,
             {
-                text,
+                translationKey,
                 state,
             },
         ];

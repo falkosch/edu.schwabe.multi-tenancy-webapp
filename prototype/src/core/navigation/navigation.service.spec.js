@@ -17,7 +17,7 @@ describe(`${NavigationModule}.${NavigationServiceName}`, () => {
 
     });
 
-    it(`should be an instanceof ${NavigationServiceName}`, () => {
+    it(`should be an instanceof ${NavigationService.name}`, () => {
 
         expect(navigationService)
             .toEqual(jasmine.any(NavigationService));
@@ -38,20 +38,20 @@ describe(`${NavigationModule}.${NavigationServiceName}`, () => {
     describe('.forState()', () => {
 
         const data = {
-            text: 'test',
+            translationKey: 'test',
             state: 'Test',
         };
 
         it('should be chainable', () => {
 
-            expect(navigationService.forState(data.text, data.state))
+            expect(navigationService.forState(data.translationKey, data.state))
                 .toBe(navigationService);
 
         });
 
         it('should add an object with the "text" and "state" to .entries', () => {
 
-            expect(navigationService.forState(data.text, data.state).entries)
+            expect(navigationService.forState(data.translationKey, data.state).entries)
                 .toEqual(jasmine.arrayContaining([
                     jasmine.objectContaining(data),
                 ]));
@@ -63,10 +63,10 @@ describe(`${NavigationModule}.${NavigationServiceName}`, () => {
             expect(navigationService.entries.length)
                 .toEqual(0);
 
-            expect(navigationService.forState(data.text, data.state).entries.length)
+            expect(navigationService.forState(data.translationKey, data.state).entries.length)
                 .toEqual(1);
 
-            expect(navigationService.forState(data.text, data.state).entries.length)
+            expect(navigationService.forState(data.translationKey, data.state).entries.length)
                 .toEqual(2);
 
         });

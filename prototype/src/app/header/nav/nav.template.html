@@ -2,7 +2,7 @@
     <li ng-repeat="entry in $ctrl.entries">
         <div ui-sref-active="active">
             <span class="material-icons"></span>
-            <a ui-state="entry.state" ng-bind="entry.text" ng-click="$ctrl.onClickNavLink()"></a>
+            <a ui-state="entry.state" ng-bind="entry.translationKey | translate" ng-click="$ctrl.onClickNavLink()"></a>
         </div>
     </li>
 </ol>
