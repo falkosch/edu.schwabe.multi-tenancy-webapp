@@ -1,18 +1,21 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { AppModule } from './app.module';
-import { AppName } from './app.component';
+import { AppComponentName } from './app.component';
 import { AppController } from './app.controller';
 import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
 
-describe(`${AppModule}.${AppName} component controller`, () => {
+describe(`${AppModule}.${AppComponentName} controller`, () => {
 
     let mockIsBusy;
+
+    let testUnit;
 
     let toggleSpy;
     let $mdSidenavMock;
 
-    let appController;
+    let $injector;
 
     beforeEach(() => {
 
@@ -21,12 +24,15 @@ describe(`${AppModule}.${AppName} component controller`, () => {
         toggleSpy = jasmine.createSpy('toggle');
 
         $mdSidenavMock = jasmine.createSpy('$mdSidenav')
-            .and.returnValue({ toggle: toggleSpy });
+            .and
+            .returnValue({ toggle: toggleSpy });
 
         angular.mock.module(AppModule);
 
-        inject(($componentController) => {
-            appController = $componentController(AppName, {
+        inject(($componentController, _$injector_) => {
+            $injector = _$injector_;
+
+            testUnit = $componentController(AppComponentName, {
                 $mdSidenav: $mdSidenavMock,
                 [GlobalSpinnerServiceName]: {
                     get isBusy() {
@@ -38,10 +44,22 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
     });
 
-    it(`should be an instanceof ${AppName} component controller`, () => {
+    describe('given architecture', () => {
 
-        expect(appController)
-            .toEqual(jasmine.any(AppController));
+        const expectedInjects = [
+            '$mdSidenav',
+            GlobalSpinnerServiceName,
+        ];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(AppController)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
+
+        it(`should be an instanceof ${AppController.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(AppController));
+        });
 
     });
 
@@ -51,12 +69,12 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
             mockIsBusy = true;
 
-            expect(appController.isBusy)
+            expect(testUnit.isBusy)
                 .toEqual(true);
 
             mockIsBusy = false;
 
-            expect(appController.isBusy)
+            expect(testUnit.isBusy)
                 .toEqual(false);
 
         });
@@ -67,14 +85,14 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
         it('should be a string', () => {
 
-            expect(appController.sideNavId)
+            expect(testUnit.sideNavId)
                 .toEqual(jasmine.any(String));
 
         });
 
         it('should be a non empty string', () => {
 
-            expect(appController.sideNavId.length)
+            expect(testUnit.sideNavId.length)
                 .toBeGreaterThan(0);
 
         });
@@ -83,12 +101,12 @@ describe(`${AppModule}.${AppName} component controller`, () => {
 
     describe('.toggleSideNav', () => {
 
-        it(`should invoke $mdSidenav with ${AppName}.sideNavId and then call .toggle() of the returned object`, () => {
+        it('should invoke $mdSidenav with the .sideNavId and then call .toggle() of the returned object', () => {
 
-            appController.toggleSideNav();
+            testUnit.toggleSideNav();
 
             expect($mdSidenavMock)
-                .toHaveBeenCalledWith(appController.sideNavId);
+                .toHaveBeenCalledWith(testUnit.sideNavId);
 
             expect(toggleSpy)
                 .toHaveBeenCalledTimes(1);

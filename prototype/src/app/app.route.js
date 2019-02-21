@@ -1,4 +1,4 @@
-import { AppName } from './app.component';
+import { AppComponentName } from './app.component';
 import { LanguageServiceName } from '../core/language/language.service';
 
 appRoute.$inject = ['$stateProvider'];
@@ -13,7 +13,7 @@ export function appRoute(
             name: AppStateId,
             url: '',
             abstract: true,
-            component: AppName,
+            component: AppComponentName,
             accessControl: {
                 public: true,
             },

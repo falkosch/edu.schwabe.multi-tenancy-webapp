@@ -6,7 +6,7 @@ import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { MenubarModule } from './menubar/menubar.module';
 
-import { AppComponent, AppName } from './app.component';
+import { AppComponent, AppComponentName } from './app.component';
 import { appRoute } from './app.route';
 import { LanguageModule } from '../core/language/language.module';
 
@@ -20,6 +20,6 @@ export const AppModule = angular
         FooterModule,
         MenubarModule,
     ])
-    .component(AppName, AppComponent)
+    .component(AppComponentName, AppComponent)
     .config(appRoute)
     .name;
