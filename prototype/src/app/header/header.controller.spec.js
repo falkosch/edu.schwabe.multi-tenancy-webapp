@@ -1,31 +1,31 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { HeaderModule } from './header.module';
-import { HeaderName } from './header.component';
+import { HeaderComponentName } from './header.component';
 import { HeaderController } from './header.controller';
 import { UserStateServiceName } from '../../core/user-state/user-state.service';
 import { ProfileServiceName } from '../../core/backend/profile.service';
 import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
 
-describe(`${HeaderModule}.${HeaderName} component controller`, () => {
+describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
 
     const testProfile = {
         name: {},
     };
 
-    const mockEvent = {};
+    let testUnit;
 
-    let headerController;
+    const mockEvent = {};
     let userStateServiceMock;
     let profileServiceMock;
     let globalSpinnerServiceMock;
 
+    let $injector;
     let $rootScope;
     let $q;
 
     beforeEach(() => {
-
-        angular.mock.module(HeaderModule);
 
         userStateServiceMock = {
             isLoggedIn: false,
@@ -50,13 +50,15 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
                 .callFake(() => $q.resolve(testProfile)),
         };
 
-        inject((_$rootScope_, _$q_, $componentController) => {
+        angular.mock.module(HeaderModule);
 
+        inject((_$injector_, _$rootScope_, _$q_, $componentController) => {
+            $injector = _$injector_;
             $rootScope = _$rootScope_;
             $q = _$q_;
 
-            headerController = $componentController(
-                HeaderName,
+            testUnit = $componentController(
+                HeaderComponentName,
                 {
                     [UserStateServiceName]: userStateServiceMock,
                     [ProfileServiceName]: profileServiceMock,
@@ -67,63 +69,118 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
 
     });
 
-    it(`should be an instanceof ${HeaderName} component controller`, () => {
+    describe('given architecture', () => {
 
-        expect(headerController)
-            .toEqual(jasmine.any(HeaderController));
+        const expectedInjects = [
+            UserStateServiceName,
+            ProfileServiceName,
+            GlobalSpinnerServiceName,
+        ];
 
-    });
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(HeaderController)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
 
-    it('should subscribe the login events', () => {
-
-        const loginDisposeMock = {
-            dispose: jasmine.createSpy('dispose'),
-        };
-        const logoutDisposeMock = {
-            dispose: jasmine.createSpy('dispose'),
-        };
-
-        userStateServiceMock.onLogin.subscribe.and.callFake(() => loginDisposeMock);
-        userStateServiceMock.onLogout.subscribe.and.callFake(() => logoutDisposeMock);
-
-        headerController.$onInit();
-
-        expect(userStateServiceMock.onLogin.subscribe)
-            .toHaveBeenCalledWith(jasmine.any(Function));
-
-        expect(userStateServiceMock.onLogout.subscribe)
-            .toHaveBeenCalledWith(jasmine.any(Function));
-
-        headerController.$onDestroy();
-
-        expect(loginDisposeMock.dispose)
-            .toHaveBeenCalledTimes(1);
-
-        expect(logoutDisposeMock.dispose)
-            .toHaveBeenCalledTimes(1);
+        it(`should be an instanceof ${HeaderController.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(HeaderController));
+        });
 
     });
 
-    it('should not set an initial authentication when user is not logged in', () => {
+    describe('when the component is initialized', () => {
 
-        userStateServiceMock.isLoggedIn = false;
+        let loginDisposeMock;
 
-        headerController.$onInit();
+        let logoutDisposeMock;
 
-        expect(headerController.authentication)
-            .not
-            .toBe(userStateServiceMock.authentication);
+        beforeEach(() => {
+            userStateServiceMock.onLogin.subscribe
+                .and
+                .callFake(() => loginDisposeMock);
+
+            userStateServiceMock.onLogout.subscribe
+                .and
+                .callFake(() => logoutDisposeMock);
+        });
+
+        it('should subscribe the login events', () => {
+            testUnit.$onInit();
+
+            expect(userStateServiceMock.onLogin.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
+
+            expect(userStateServiceMock.onLogout.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
+        });
+
+        describe('when the component is destroyed again', () => {
+
+            beforeEach(() => {
+                loginDisposeMock = {
+                    dispose: jasmine.createSpy('dispose'),
+                };
+
+                logoutDisposeMock = {
+                    dispose: jasmine.createSpy('dispose'),
+                };
+            });
+
+            it('should dispose the login and logout subscriptions', () => {
+                testUnit.$onInit();
+                testUnit.$onDestroy();
+
+                expect(loginDisposeMock.dispose)
+                    .toHaveBeenCalledTimes(1);
+
+                expect(logoutDisposeMock.dispose)
+                    .toHaveBeenCalledTimes(1);
+
+            });
+
+        });
 
     });
 
-    it('should set an initial authentication when user is logged in', () => {
+    describe('when the component is destroyed before subscribing login and logout events', () => {
 
-        userStateServiceMock.isLoggedIn = true;
+        it('should not throw', () => {
+            expect(() => testUnit.$onDestroy())
+                .not
+                .toThrow();
+        });
 
-        headerController.$onInit();
+    });
 
-        expect(headerController.authentication)
-            .toBe(userStateServiceMock.authentication);
+    describe('when user is not logged in on intialization', () => {
+
+        beforeEach(() => {
+            userStateServiceMock.isLoggedIn = false;
+        });
+
+        it('should not set an initial authentication', () => {
+            testUnit.$onInit();
+
+            expect(testUnit.authentication)
+                .not
+                .toBe(userStateServiceMock.authentication);
+        });
+
+    });
+
+    describe('when user is logged in on intialization', () => {
+
+        beforeEach(() => {
+            userStateServiceMock.isLoggedIn = true;
+        });
+
+        it('should set an initial authentication', () => {
+            testUnit.$onInit();
+
+            expect(testUnit.authentication)
+                .toBe(userStateServiceMock.authentication);
+        });
 
     });
 
@@ -140,23 +197,23 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
             },
         );
 
-        headerController.$onInit();
+        testUnit.$onInit();
 
         $rootScope.$digest();
 
-        expect(headerController.authentication)
+        expect(testUnit.authentication)
             .toBe(userStateServiceMock.authentication);
 
-        expect(headerController.profile)
+        expect(testUnit.profile)
             .toBe(testProfile);
 
         logoutSubscriber();
 
-        expect(headerController.authentication)
+        expect(testUnit.authentication)
             .not
             .toBe(userStateServiceMock.authentication);
 
-        expect(headerController.profile)
+        expect(testUnit.profile)
             .not
             .toBe(testProfile);
 
@@ -170,7 +227,7 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
 
                 userStateServiceMock.isLoggedIn = loggedIn;
 
-                expect(headerController.isLoggedIn)
+                expect(testUnit.isLoggedIn)
                     .toEqual(loggedIn);
 
             }
@@ -184,30 +241,59 @@ describe(`${HeaderModule}.${HeaderName} component controller`, () => {
 
     describe('.profileName', () => {
 
-        it('should return an empty stub for the user\'s profile name when profile is not set yet', () => {
+        describe('when user is not logged in and profile will not be set', () => {
 
-            expect(headerController.profile)
-                .toBeUndefined();
+            beforeEach(() => {
+                userStateServiceMock.onLogin.subscribe
+                    .and
+                    .stub();
+            });
 
-            expect(headerController.profileName)
-                .toEqual({});
+            it('should return an empty stub for the user\'s profile name', () => {
+
+                testUnit.$onInit();
+
+                $rootScope.$digest();
+
+                expect(profileServiceMock.getProfile)
+                    .toHaveBeenCalledTimes(0);
+
+                expect(testUnit.profile)
+                    .toBeUndefined();
+
+                expect(testUnit.profileName)
+                    .toEqual({});
+
+            });
 
         });
 
-        it('should return the user\'s profile name when profile is set', () => {
+        describe('when user is logged in and profile will be set', () => {
 
-            userStateServiceMock.onLogin.subscribe
-                .and
-                .callFake(
-                    subscriber => subscriber(mockEvent, userStateServiceMock.authentication),
-                );
+            beforeEach(() => {
+                userStateServiceMock.onLogin.subscribe
+                    .and
+                    .callFake(
+                        subscriber => subscriber(mockEvent, userStateServiceMock.authentication),
+                    );
+            });
 
-            headerController.$onInit();
+            it('should return the user\'s profile name', () => {
 
-            $rootScope.$digest();
+                testUnit.$onInit();
 
-            expect(headerController.profileName)
-                .toBe(testProfile.name);
+                $rootScope.$digest();
+
+                expect(profileServiceMock.getProfile)
+                    .toHaveBeenCalledWith(userStateServiceMock.authentication.id);
+
+                expect(testUnit.profile)
+                    .toBe(testProfile);
+
+                expect(testUnit.profileName)
+                    .toBe(testProfile.name);
+
+            });
 
         });
 

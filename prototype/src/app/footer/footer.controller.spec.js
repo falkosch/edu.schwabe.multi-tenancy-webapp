@@ -1,27 +1,41 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { FooterModule } from './footer.module';
-import { FooterName } from './footer.component';
+import { FooterComponentName } from './footer.component';
 import { FooterController } from './footer.controller';
 
-describe(`${FooterModule}.${FooterName} component controller`, () => {
+describe(`${FooterModule}.${FooterComponentName} controller`, () => {
 
-    let footerController;
+    let testUnit;
+
+    let $injector;
 
     beforeEach(() => {
 
         angular.mock.module(FooterModule);
 
-        inject(($componentController) => {
-            footerController = $componentController(FooterName);
+        inject(($componentController, _$injector_) => {
+            $injector = _$injector_;
+
+            testUnit = $componentController(FooterComponentName);
         });
 
     });
 
-    it(`should be an instanceof ${FooterName} component controller`, () => {
+    describe('given architecture', () => {
 
-        expect(footerController)
-            .toEqual(jasmine.any(FooterController));
+        const expectedInjects = [];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(FooterController)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
+
+        it(`should be an instanceof ${FooterController.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(FooterController));
+        });
 
     });
 

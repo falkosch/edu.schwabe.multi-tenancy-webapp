@@ -1,8 +1,8 @@
 import angular from 'angular';
 
-import { FooterComponent, FooterName } from './footer.component';
+import { FooterComponent, FooterComponentName } from './footer.component';
 
 export const FooterModule = angular
     .module('app.footer', [])
-    .component(FooterName, FooterComponent)
+    .component(FooterComponentName, FooterComponent)
     .name;

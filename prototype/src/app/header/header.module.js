@@ -4,7 +4,7 @@ import { NavModule } from './nav/nav.module';
 import { UserStateModule } from '../../core/user-state/user-state.module';
 import { GlobalSpinnerModule } from '../../ui/global-spinner/global-spinner.module';
 
-import { HeaderComponent, HeaderName } from './header.component';
+import { HeaderComponent, HeaderComponentName } from './header.component';
 
 export const HeaderModule = angular
     .module('app.header', [
@@ -12,5 +12,5 @@ export const HeaderModule = angular
         UserStateModule,
         GlobalSpinnerModule,
     ])
-    .component(HeaderName, HeaderComponent)
+    .component(HeaderComponentName, HeaderComponent)
     .name;
