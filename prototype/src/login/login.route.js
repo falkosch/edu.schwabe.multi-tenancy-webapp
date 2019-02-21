@@ -1,4 +1,4 @@
-import { LoginName } from './login.component';
+import { LoginComponentName } from './login.component';
 
 loginRoute.$inject = ['$stateProvider'];
 
@@ -17,7 +17,7 @@ export function loginRoute($stateProvider) {
             resolve: {},
             url: '/login',
             views: {
-                main: LoginName,
+                main: LoginComponentName,
             },
         });
 }

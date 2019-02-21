@@ -1,12 +1,15 @@
+import _ from 'lodash';
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 
 import { LoginModule } from './login.module';
-import { LoginStateId } from './login.route';
+import { LoginStateId, loginRoute } from './login.route';
 
 describe(`${LoginModule} route config`, () => {
 
     let $stateProviderMock;
+
+    let $injector;
 
     beforeEach(() => {
 
@@ -17,7 +20,24 @@ describe(`${LoginModule} route config`, () => {
 
         angular.mock.module(LoginModule);
 
-        inject();
+        inject((_$injector_) => {
+            $injector = _$injector_;
+        });
+
+    });
+
+    describe('given architecture', () => {
+
+        const expectedInjects = [
+            '$stateProvider',
+        ];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+
+            expect(_.sortBy($injector.annotate(loginRoute)))
+                .toEqual(_.sortBy(expectedInjects));
+
+        });
 
     });
 

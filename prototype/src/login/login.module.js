@@ -6,7 +6,7 @@ import { NavModule } from '../app/header/nav/nav.module';
 import { UserStateModule } from '../core/user-state/user-state.module';
 import { GlobalSpinnerModule } from '../ui/global-spinner/global-spinner.module';
 
-import { LoginName, LoginComponent } from './login.component';
+import { LoginComponentName, LoginComponent } from './login.component';
 import { loginRoute } from './login.route';
 import { loginNavigationRun } from './login-navigation.run';
 
@@ -18,7 +18,7 @@ export const LoginModule = angular
         UserStateModule,
         GlobalSpinnerModule,
     ])
-    .component(LoginName, LoginComponent)
+    .component(LoginComponentName, LoginComponent)
     .config(loginRoute)
     .run(loginNavigationRun)
     .name;
