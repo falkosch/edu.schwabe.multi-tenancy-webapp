@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { ProfileName } from './profile.component';
+import { ProfileComponentName } from './profile.component';
 import { UserStateServiceName } from '../core/user-state/user-state.service';
 import { ProfileServiceName } from '../core/backend/profile.service';
 import { InjectionServiceName } from '../core/annotations/injection.service';
@@ -46,7 +46,7 @@ export function profileRoute($stateProvider) {
             },
             url: '/profile',
             views: {
-                main: ProfileName,
+                main: ProfileComponentName,
             },
         });
 }

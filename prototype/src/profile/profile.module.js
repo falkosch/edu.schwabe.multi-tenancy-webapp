@@ -6,7 +6,7 @@ import { UserStateModule } from '../core/user-state/user-state.module';
 import { NavigationModule } from '../core/navigation/navigation.module';
 import { GlobalSpinnerModule } from '../ui/global-spinner/global-spinner.module';
 
-import { ProfileName, ProfileComponent } from './profile.component';
+import { ProfileComponentName, ProfileComponent } from './profile.component';
 import { profileRoute } from './profile.route';
 import { profileNavigationRun } from './profile-navigation.run';
 import { ProfileUnsetValueFilterName, ProfileUnsetValueFilter } from './profile-unset-value.filter';
@@ -21,7 +21,7 @@ export const ProfileModule = angular
         UserStateModule,
         GlobalSpinnerModule,
     ])
-    .component(ProfileName, ProfileComponent)
+    .component(ProfileComponentName, ProfileComponent)
     .filter(ProfileUnsetValueFilterName, ProfileUnsetValueFilter)
     .directive(ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective)
     .directive(ProfileUnsetValueParserName, ProfileUnsetValueParserDirective)

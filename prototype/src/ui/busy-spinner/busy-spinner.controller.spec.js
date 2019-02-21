@@ -5,7 +5,7 @@ import { UiModule } from '../ui.module';
 import { NG_HIDE, BusySpinnerController } from './busy-spinner.controller';
 import { BusySpinnerComponentName } from './busy-spinner.component';
 
-describe(`${UiModule}.${BusySpinnerComponentName} component controller`, () => {
+describe(`${UiModule}.${BusySpinnerComponentName} controller`, () => {
 
     let busySpinnerController;
     let mocks;

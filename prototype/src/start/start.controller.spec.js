@@ -5,7 +5,7 @@ import { StartModule } from './start.module';
 import { StartController } from './start.controller';
 import { StartComponentName } from './start.component';
 
-describe(`${StartModule}.${StartComponentName}`, () => {
+describe(`${StartModule}.${StartComponentName} controller`, () => {
 
     let testUnit;
 
