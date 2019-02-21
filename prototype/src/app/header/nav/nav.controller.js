@@ -9,14 +9,14 @@ export class NavController {
 
     sideNav;
 
-    constructor($scope, navService) {
+    constructor($scope, navigationService) {
         this.$scope = $scope;
-        this.navService = navService;
+        this.navigationService = navigationService;
     }
 
     $onInit() {
         this.$scope.$watchCollection(
-            () => this.navService.entries,
+            () => this.navigationService.entries,
             (v) => { this.entries = v; },
         );
     }
