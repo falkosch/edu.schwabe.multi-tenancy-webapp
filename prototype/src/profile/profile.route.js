@@ -18,7 +18,7 @@ export function profileRoute($stateProvider) {
                 public: true,
             },
             data: {
-                title: 'Profile',
+                title: 'profile.navigation-entry',
             },
             resolve: {
                 authentication: [

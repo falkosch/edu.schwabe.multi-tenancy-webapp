@@ -10,13 +10,14 @@
         </div>
         <md-menu>
             <md-button aria-label="User menu" class="md-icon-button" ng-click="$mdMenu.open()">
-                <img class="avatar" md-menu-origin ng-attr-alt="{{$ctrl.profileName.title}} {{$ctrl.profileName.first}} {{$ctrl.profileName.last}}" ng-src="{{$ctrl.profile.picture.thumbnail}}">
+                <img class="avatar" md-menu-origin
+                     ng-attr-alt="{{$ctrl.profileName.title}} {{$ctrl.profileName.first}} {{$ctrl.profileName.last}}"
+                     ng-src="{{$ctrl.profile.picture.thumbnail}}">
             </md-button>
             <md-menu-content ng-mouseleave="$mdMenu.close()">
                 <md-menu-item>
-                    <md-button ng-click="$ctrl.logout()">
-                        <span translate="actions.logout"></span>
-                    </md-button>
+                    <md-button ng-click="$ctrl.logout()" ng-attr-aria-label="{{'actions.logout' | translate}}"
+                               translate="actions.logout"></md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>

@@ -1,11 +1,12 @@
 <div class="welcome" layout="row" layout-align="center" layout-margin>
-    <h1 class="md-display-1">Welcome</h1>
-    <div><md-icon class="app-icon-36 material-icons">thumb_up</span></div>
+    <h1 class="md-display-1" translate="header.title"></h1>
+    <div>
+        <md-icon class="app-icon-36 material-icons">thumb_up</span>
+    </div>
 </div>
 <div layout="row" layout-align="center">
-    <div ng-if="$ctrl.profile">
-        <span ng-bind="$ctrl.authentication.ident.name"></span>
-        (<span ng-bind="$ctrl.profileName.first"></span> <span ng-bind="$ctrl.profileName.last"></span>)
+    <div ng-if="$ctrl.profile" translate="header.username-tag"
+         translate-values="{tag: $ctrl.authentication.ident.name, first: $ctrl.profileName.first, last: $ctrl.profileName.last}">
     </div>
 </div>
 <md-content>

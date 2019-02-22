@@ -1,0 +1,6 @@
+{
+    "header": {
+        "title": "Willkommen",
+        "username-tag": "{{tag}} ({{first}} {{last}})"
+    }
+}

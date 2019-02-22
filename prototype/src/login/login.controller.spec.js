@@ -55,11 +55,14 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
                 .returnValue(alertDialogMock),
         };
 
-        angular.mock.module(LoginModule, {
-            [UserStateServiceName]: userStateServiceMock,
-            [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
-            $mdDialog: $mdDialogMock,
-        });
+        angular.mock.module(
+            LoginModule,
+            {
+                [UserStateServiceName]: userStateServiceMock,
+                [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
+                $mdDialog: $mdDialogMock,
+            },
+        );
 
         inject(($componentController, _$injector_, _$rootScope_, _$q_) => {
             $injector = _$injector_;
@@ -76,6 +79,7 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
             UserStateServiceName,
             GlobalSpinnerServiceName,
             '$mdDialog',
+            '$translate',
         ];
 
         it(`should only depend on ${expectedInjects.join(',')}`, () => {

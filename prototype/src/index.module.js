@@ -14,8 +14,10 @@ import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
 import { CoreModule } from './core/core.module';
+import { LanguageModule } from './core/language/language.module';
 
 import { indexHtml5Config } from './index-html5.config';
+import { indexI18NConfig } from './index-i18n.config';
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     import('serviceworker-webpack-plugin/lib/runtime')
@@ -39,6 +41,9 @@ export const IndexModule = angular
         LoginModule,
         ProfileModule,
         CoreModule,
+
+        LanguageModule,
     ])
     .config(indexHtml5Config)
+    .config(indexI18NConfig)
     .name;

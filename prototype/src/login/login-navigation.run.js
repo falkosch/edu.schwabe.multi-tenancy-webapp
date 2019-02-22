@@ -5,5 +5,5 @@ import { LoginStateId } from './login.route';
 loginNavigationRun.$inject = [NavigationServiceName];
 
 export function loginNavigationRun(navigationService) {
-    navigationService.forState('Login', LoginStateId);
+    navigationService.forState('login.navigation-entry', LoginStateId);
 }

@@ -1,0 +1,15 @@
+{
+    "footer": {
+        "sections": {
+            "1": {
+                "text": "Implemented with ..."
+            },
+            "2": {
+                "text": "Bundled with ..."
+            },
+            "3": {
+                "text": "And several other amazing projects are all listed in the <em>package.json</em>."
+            }
+        }
+    }
+}

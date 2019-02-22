@@ -1,0 +1,14 @@
+{
+    "login": {
+        "navigation-entry": "Login",
+        "errors": {
+            "username": {
+                "required": "Please enter a username.",
+                "maxlength": "The username cannot be longer than 255 characters."
+            },
+            "password": {
+                "maxlength": "The password cannot be longer than 255 characters."
+            }
+        }
+    }
+}

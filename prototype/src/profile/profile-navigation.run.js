@@ -5,5 +5,5 @@ import { ProfileStateId } from './profile.route';
 profileNavigationRun.$inject = [NavigationServiceName];
 
 export function profileNavigationRun(navigationService) {
-    navigationService.forState('Profile', ProfileStateId);
+    navigationService.forState('profile.navigation-entry', ProfileStateId);
 }

@@ -1,0 +1,10 @@
+{
+    "actions": {
+        "submit": "Absenden",
+        "logout": "Ausloggen"
+    },
+    "labels": {
+        "username": "Benutzername",
+        "password": "Passwort"
+    }
+}

@@ -10,7 +10,7 @@
             "2": {
                 "headline": "Grundlegende Idee",
                 "bullets": {
-                    "1": "Soviel wiederverwenden statt neuentwickeln wie möglich.",
+                    "1": "Soviel wie möglich wiederverwenden statt neuentwickeln.",
                     "2": "Schlanker Code durch Anwendung von allgemeinen Software-Entwurfsmustern, um Wiederverwendung von häufig wiederkehrenden Teilen der Webapp zu vereinfachen.",
                     "3": "Technologien sinnvoll und richtig einsetzen.",
                     "4": "Von Fehlern lernen and es beim nächsten Mal besser machen."
@@ -24,8 +24,8 @@
                     "2": "Webpack als Bundler,",
                     "3": "Babel als JavaScript \"Compiler\",",
                     "4": "Karma und Jasmine für die Unit-Test-Umgebung,",
-                    "5": "AngularJS, UI-Router und AngularJS Material als Basis für die UI,",
-                    "6": "eine Multi-Tenant-Umgebung, welches Tenants zur Build-Zeit erstellt,"
+                    "5": "AngularJS, UI-Router und AngularJS Material als Basis für die UI und",
+                    "6": "eine Multi-Tenant-Umgebung, die Tenants zur Build-Zeit erstellt."
                 }
             }
         },

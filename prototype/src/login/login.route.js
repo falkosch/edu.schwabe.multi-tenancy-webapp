@@ -12,7 +12,7 @@ export function loginRoute($stateProvider) {
                 public: true,
             },
             data: {
-                title: 'Login',
+                title: 'login.navigation-entry',
             },
             resolve: {},
             url: '/login',
