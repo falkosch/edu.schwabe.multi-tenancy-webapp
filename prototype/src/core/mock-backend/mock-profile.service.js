@@ -7,7 +7,9 @@ export const MockProfileServiceName = ProfileServiceName;
 
 export class AnonymousProfile {
 
-    login = {};
+    login = {
+        uuid: undefined,
+    };
 
     constructor(userId) {
         this.login.uuid = userId;
@@ -45,7 +47,7 @@ export class MockProfileService extends ProfileService {
     }
 
     getProfile(userId) {
-        return this.$q.when(this.initializePromise)
+        return this.initializePromise
             .then((profiles) => {
                 const profile = _.find(profiles, ['login.uuid', userId]);
 
