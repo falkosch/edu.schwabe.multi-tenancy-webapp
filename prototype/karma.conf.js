@@ -51,6 +51,9 @@ module.exports = (config) => {
                     suppressErrorSummary: false,
                     suppressSkipped: true,
                 },
+                summaryReporter: {
+                    specLength: 70,
+                },
                 webpackMiddleware: {
                     stats: 'minimal',
                 },
