@@ -1,5 +1,5 @@
-import angular from 'angular';
 import _ from 'lodash';
+import angular from 'angular';
 
 import { MenubarModule } from './menubar.module';
 import { MenubarName } from './menubar.component';
@@ -7,101 +7,198 @@ import { MenubarController } from './menubar.controller';
 import { UserStateServiceName } from '../../core/user-state/user-state.service';
 import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
 import { ProfileServiceName } from '../../core/backend/profile.service';
+import { AnonymousProfile } from '../../core/mock-backend/mock-profile.service';
+import {
+    Authentication,
+    AnonymousAuthorization,
+    Ident,
+    PermissionsWithDefault,
+} from '../../core/backend/authentication.service';
 
-describe(`${MenubarModule}.${MenubarName} component controller`, () => {
+describe(`${MenubarModule}.${MenubarName} controller`, () => {
 
-    const $stateMockWithTitle = {
-        current: {
-            data: {
-                title: 'mocked',
-            },
-            name: 'mockedName',
+    const testAnonymousId = 'ANONYMOUS';
+    const testAnonymousProfile = new AnonymousProfile(testAnonymousId);
+    const testAnonymousAuthentication = new Authentication()
+        .setAuthorization(new AnonymousAuthorization())
+        .setIdent(new Ident().setId(testAnonymousId))
+        .setPermissions(new PermissionsWithDefault().setDefault(testAnonymousId));
+
+    const testId = 'TEST';
+    const testProfile = {
+        ...new AnonymousProfile(testId),
+        name: {
+            first: 'test',
         },
     };
+    const testAuthentication = new Authentication()
+        .setAuthorization(new AnonymousAuthorization())
+        .setIdent(new Ident().setId(testId))
+        .setPermissions(new PermissionsWithDefault().setDefault(testId));
 
-    const $stateMockWithOnlyName = {
-        current: {
-            name: 'mockedOnlyName',
-        },
-    };
+    let testUnit;
 
-    let menubarController;
+    let $stateMockWithName;
+    let $stateMockWithNameAndTitle;
+    let allMocks;
+    let globalSpinnerServiceMock;
+    let profileServiceMock;
+    let userStateServiceMock;
+    let onLoginDisposalMock;
+    let onLogoutDisposalMock;
+    let eventMock;
+
+    let $componentController;
+    let $injector;
+    let $rootScope;
+    let $q;
 
     beforeEach(() => {
 
+        $stateMockWithName = {
+            current: {
+                name: 'mockedName',
+            },
+        };
+
+        $stateMockWithNameAndTitle = {
+            current: {
+                ...$stateMockWithName.current,
+                data: {
+                    title: 'mockedTitle',
+                },
+            },
+        };
+
+        eventMock = {};
+
+        globalSpinnerServiceMock = {
+            spinWhilePromise: jasmine.createSpy()
+                .and
+                .callFake(v => v),
+        };
+
+        profileServiceMock = {
+            getProfile: jasmine.createSpy('getProfile'),
+        };
+
+        onLoginDisposalMock = {
+            dispose: jasmine.createSpy('dispose'),
+        };
+
+        onLogoutDisposalMock = {
+            dispose: jasmine.createSpy('dispose'),
+        };
+
+        userStateServiceMock = {
+            authentication: testAnonymousAuthentication,
+            isLoggedIn: false,
+            logout: jasmine.createSpy(),
+            onLogin: {
+                subscribe: jasmine.createSpy('subscribe')
+                    .and
+                    .returnValue(onLoginDisposalMock),
+            },
+            onLogout: {
+                subscribe: jasmine.createSpy('subscribe')
+                    .and
+                    .returnValue(onLogoutDisposalMock),
+            },
+        };
+
+        allMocks = {
+            $state: $stateMockWithName,
+            [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
+            [ProfileServiceName]: profileServiceMock,
+            [UserStateServiceName]: userStateServiceMock,
+        };
+
         angular.mock.module(MenubarModule);
+
+        inject((_$componentController_, _$injector_, _$rootScope_, _$q_) => {
+            $componentController = _$componentController_;
+            $injector = _$injector_;
+            $rootScope = _$rootScope_;
+            $q = _$q_;
+
+            testUnit = $componentController(MenubarName, allMocks);
+        });
 
     });
 
-    it(`should be an instanceof ${MenubarName} component controller`, () => {
+    describe('given architecture', () => {
 
-        inject(($componentController) => {
+        const expectedInjects = [
+            '$state',
+            UserStateServiceName,
+            ProfileServiceName,
+            GlobalSpinnerServiceName,
+        ];
 
-            menubarController = $componentController(MenubarName, {
-                $state: $stateMockWithTitle,
-            });
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(MenubarController)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
 
-            expect(menubarController)
+        it(`should be an instanceof ${MenubarController.name}`, () => {
+            expect(testUnit)
                 .toEqual(jasmine.any(MenubarController));
-
         });
 
     });
 
     describe('.currentStateTitle', () => {
 
-        it('should return a string of a current state title', () => {
+        it('should return a string', () => {
 
-            inject(($componentController) => {
+            expect(testUnit.currentStateTitle)
+                .toEqual(jasmine.any(String));
 
-                menubarController = $componentController(MenubarName, {
-                    $state: $stateMockWithTitle,
+        });
+
+        describe('when current state has "data.title" set', () => {
+
+            beforeEach(() => {
+
+                testUnit = $componentController(MenubarName, {
+                    ...allMocks,
+                    $state: $stateMockWithNameAndTitle,
                 });
 
-                expect(menubarController.currentStateTitle)
-                    .toEqual(jasmine.any(String));
+            });
+
+            it('should return that state title', () => {
+
+                expect(testUnit.currentStateTitle)
+                    .toEqual($stateMockWithNameAndTitle.current.data.title);
+
+                expect(testUnit.currentStateTitle)
+                    .not
+                    .toEqual($stateMockWithNameAndTitle.current.name);
 
             });
 
         });
 
-        it('should not return the state name when there is a "data.title" set', () => {
+        describe('when current state has NOT "data.title" set', () => {
 
-            inject(($componentController) => {
+            beforeEach(() => {
 
-                menubarController = $componentController(MenubarName, {
-                    $state: $stateMockWithTitle,
+                testUnit = $componentController(MenubarName, {
+                    ...allMocks,
+                    $state: $stateMockWithName,
                 });
-
-                expect(menubarController.currentStateTitle)
-                    .toEqual($stateMockWithTitle.current.data.title);
-
-                expect(menubarController.currentStateTitle)
-                    .not.toEqual($stateMockWithTitle.current.name);
-
-                expect(menubarController.currentStateTitle)
-                    .not.toEqual($stateMockWithOnlyName.current.name);
 
             });
 
-        });
+            it('should return the state name', () => {
 
-        it('should return the state name when there is no "data.title" set', () => {
+                expect(testUnit.currentStateTitle)
+                    .toEqual($stateMockWithName.current.name);
 
-            inject(($componentController) => {
-
-                menubarController = $componentController(MenubarName, {
-                    $state: $stateMockWithOnlyName,
-                });
-
-                expect(menubarController.currentStateTitle)
-                    .toEqual($stateMockWithOnlyName.current.name);
-
-                expect(menubarController.currentStateTitle)
-                    .not.toEqual($stateMockWithTitle.current.data.title);
-
-                expect(menubarController.currentStateTitle)
-                    .not.toEqual($stateMockWithTitle.current.name);
+                expect(testUnit.currentStateTitle)
+                    .not
+                    .toEqual($stateMockWithNameAndTitle.current.data.title);
 
             });
 
@@ -111,27 +208,53 @@ describe(`${MenubarModule}.${MenubarName} component controller`, () => {
 
     describe('.profileName', () => {
 
-        it('should return the name part of the profile', () => {
+        beforeEach(() => {
 
-            inject(($componentController) => {
+            userStateServiceMock.isLoggedIn = true;
 
-                const profileMock = {
-                    name: {
-                        first: 'test',
-                    },
-                };
+        });
 
-                menubarController = $componentController(MenubarName, {}, {
-                    // bindings
-                    profile: profileMock,
-                });
+        it('should return an object', () => {
+            expect(testUnit.profileName)
+                .toEqual(jasmine.any(Object));
+        });
 
-                expect(menubarController.profile)
-                    .toBe(profileMock);
+        describe('when profile binding has a name set', () => {
 
-                expect(menubarController.profileName)
-                    .toBe(profileMock.name);
+            beforeEach(() => {
 
+                profileServiceMock.getProfile
+                    .and
+                    .returnValue($q.resolve(testProfile));
+
+                testUnit.$onInit();
+                $rootScope.$digest();
+
+            });
+
+            it('should return the name part of the profile', () => {
+                expect(testUnit.profileName)
+                    .toBe(testProfile.name);
+            });
+
+        });
+
+        describe('when profile binding has NOT a name set', () => {
+
+            beforeEach(() => {
+
+                profileServiceMock.getProfile
+                    .and
+                    .returnValue($q.resolve(undefined));
+
+                testUnit.$onInit();
+                $rootScope.$digest();
+
+            });
+
+            it('should return an empty object instead', () => {
+                expect(testUnit.profileName)
+                    .toEqual({});
             });
 
         });
@@ -140,69 +263,65 @@ describe(`${MenubarModule}.${MenubarName} component controller`, () => {
 
     describe('.$onInit()', () => {
 
-        it(`should subscribe to ${UserStateServiceName}.onLogin and ${UserStateServiceName}.onLogout and initially call ${ProfileServiceName}.getProfile()`, () => {
+        it(`should subscribe to ${UserStateServiceName}.onLogin`, () => {
 
-            inject(($componentController) => {
+            testUnit.$onInit();
 
-                const userStateServiceMock = {
-                    onLogin: {
-                        subscribe: jasmine.createSpy('subscribe'),
-                    },
-                    onLogout: {
-                        subscribe: jasmine.createSpy('subscribe'),
-                    },
-                };
+            expect(userStateServiceMock.onLogin.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
 
-                menubarController = $componentController(MenubarName, {
-                    [UserStateServiceName]: userStateServiceMock,
-                });
+        });
 
-                menubarController.$onInit();
+        it(`should subscribe to ${UserStateServiceName}.onLogout`, () => {
 
-                expect(userStateServiceMock.onLogin.subscribe)
-                    .toHaveBeenCalledWith(jasmine.any(Function));
+            testUnit.$onInit();
 
-                expect(userStateServiceMock.onLogout.subscribe)
-                    .toHaveBeenCalledWith(jasmine.any(Function));
+            expect(userStateServiceMock.onLogout.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
+
+        });
+
+        describe('when user is NOT logged in', () => {
+
+            beforeEach(() => {
+                userStateServiceMock.isLoggedIn = false;
+            });
+
+            it('should NOT get a profile of any user', () => {
+
+                testUnit.$onInit();
+
+                expect(profileServiceMock.getProfile)
+                    .toHaveBeenCalledTimes(0);
 
             });
 
         });
 
-        it(`should initially call ${ProfileServiceName}.getProfile() when user is logged in`, () => {
+        describe('when user is logged in', () => {
 
-            inject(($rootScope, $q, $componentController) => {
+            beforeEach(() => {
 
-                const profileMock = {};
+                userStateServiceMock.isLoggedIn = true;
+                userStateServiceMock.authentication = testAuthentication;
 
-                const profilePromise = $q.when(profileMock);
+                profileServiceMock.getProfile
+                    .and
+                    .returnValue($q.resolve(testProfile));
 
-                const userStateServiceMock = {
-                    isLoggedIn: true,
-                    authentication: {
-                        id: 'test',
-                    },
-                    onLogin: {
-                        subscribe: _.noop,
-                    },
-                    onLogout: {
-                        subscribe: _.noop,
-                    },
-                };
+            });
 
-                const profileServiceMock = {
-                    getProfile: jasmine.createSpy('getProfile')
-                        .and.returnValue(profilePromise),
-                };
+            it('should get the profile and authentication of the user', () => {
 
-                menubarController = $componentController(MenubarName, {
-                    [UserStateServiceName]: userStateServiceMock,
-                    [ProfileServiceName]: profileServiceMock,
-                });
-
-                menubarController.$onInit();
+                testUnit.$onInit();
 
                 $rootScope.$digest();
+
+                expect(testUnit.profile)
+                    .toBe(testProfile);
+
+                expect(testUnit.authentication)
+                    .toBe(testAuthentication);
 
                 expect(profileServiceMock.getProfile)
                     .toHaveBeenCalledWith(userStateServiceMock.authentication.id);
@@ -215,40 +334,38 @@ describe(`${MenubarModule}.${MenubarName} component controller`, () => {
 
     describe('.$onDestroy()', () => {
 
-        it('should dispose the onLogin and onLogout subscription', () => {
+        describe('when it is NOT subscribed to login and logout events', () => {
 
-            inject(($componentController) => {
+            it('should NOT dispose any subscription and NOT throw', () => {
 
-                const onLoginDisposal = {
-                    dispose: jasmine.createSpy('dispose'),
-                };
+                expect(() => testUnit.$onDestroy())
+                    .not
+                    .toThrow();
 
-                const onLogoutDisposal = {
-                    dispose: jasmine.createSpy('dispose'),
-                };
+                expect(onLoginDisposalMock.dispose)
+                    .toHaveBeenCalledTimes(0);
 
-                const userStateServiceMock = {
-                    onLogin: {
-                        subscribe: jasmine.createSpy('subscribe')
-                            .and.returnValue(onLoginDisposal),
-                    },
-                    onLogout: {
-                        subscribe: jasmine.createSpy('subscribe')
-                            .and.returnValue(onLogoutDisposal),
-                    },
-                };
+                expect(onLogoutDisposalMock.dispose)
+                    .toHaveBeenCalledTimes(0);
 
-                menubarController = $componentController(MenubarName, {
-                    [UserStateServiceName]: userStateServiceMock,
-                });
+            });
 
-                menubarController.$onInit();
-                menubarController.$onDestroy();
+        });
 
-                expect(onLoginDisposal.dispose)
+        describe('when it is subscribed to login and logout events', () => {
+
+            beforeEach(() => {
+                testUnit.$onInit();
+            });
+
+            it('should dispose the onLogin and onLogout subscription', () => {
+
+                testUnit.$onDestroy();
+
+                expect(onLoginDisposalMock.dispose)
                     .toHaveBeenCalledTimes(1);
 
-                expect(onLogoutDisposal.dispose)
+                expect(onLogoutDisposalMock.dispose)
                     .toHaveBeenCalledTimes(1);
 
             });
@@ -259,31 +376,124 @@ describe(`${MenubarModule}.${MenubarName} component controller`, () => {
 
     describe('.logout()', () => {
 
-        it(`should call ${UserStateServiceName}.logout() and return the promise of it`, () => {
+        beforeEach(() => {
 
-            inject(($q, $componentController) => {
+            userStateServiceMock.logout
+                .and
+                .returnValue($q.resolve());
 
-                const logoutPromise = $q.when({});
+        });
 
-                const globalSpinnerServiceMock = {
-                    spinWhilePromise: promise => promise,
-                };
+        it(`should return promise of call ${UserStateServiceName}.logout()`, (done) => {
 
-                const userStateServiceMock = {
-                    logout: jasmine.createSpy('logout')
-                        .and.returnValue(logoutPromise),
-                };
+            testUnit.logout()
+                .then(() => {
 
-                menubarController = $componentController(MenubarName, {
-                    [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
-                    [UserStateServiceName]: userStateServiceMock,
+                    expect(userStateServiceMock.logout)
+                        .toHaveBeenCalledTimes(1);
+
+                    done();
+                })
+                .catch((e) => {
+                    done.fail(e);
                 });
 
-                expect(menubarController.logout())
-                    .toBe(logoutPromise);
+            $rootScope.$digest();
 
-                expect(userStateServiceMock.logout)
-                    .toHaveBeenCalledTimes(1);
+        });
+
+    });
+
+    describe('onLogin and onLogout subscriptions', () => {
+
+        let loginSubscriber;
+        let logoutSubscriber;
+
+        beforeEach(() => {
+
+            userStateServiceMock.onLogin.subscribe
+                .and
+                .callFake((subscriber) => { loginSubscriber = subscriber; });
+
+            userStateServiceMock.onLogout.subscribe
+                .and
+                .callFake((subscriber) => { logoutSubscriber = subscriber; });
+
+        });
+
+        it('should noop on initialization', () => {
+
+            testUnit.$onInit();
+
+            expect(testUnit.authentication)
+                .toBeUndefined();
+
+            expect(testUnit.profile)
+                .toBeUndefined();
+
+            expect(profileServiceMock.getProfile)
+                .toHaveBeenCalledTimes(0);
+
+        });
+
+        describe('when the user gets logged in', () => {
+
+            beforeEach(() => {
+
+                testUnit.$onInit();
+
+                userStateServiceMock.isLoggedIn = true;
+                userStateServiceMock.authentication = testAuthentication;
+
+                profileServiceMock.getProfile
+                    .and
+                    .returnValue($q.resolve(testProfile));
+
+            });
+
+            it('should apply authentication and profile', (done) => {
+
+                loginSubscriber(eventMock, testAuthentication)
+                    .then(() => {
+
+                        expect(testUnit.authentication)
+                            .toBe(testAuthentication);
+
+                        expect(testUnit.profile)
+                            .toBe(testProfile);
+
+                        expect(profileServiceMock.getProfile)
+                            .toHaveBeenCalledWith(testId);
+
+                        done();
+                    })
+                    .catch((e) => {
+                        done.fail(e);
+                    });
+
+                $rootScope.$digest();
+
+            });
+
+        });
+
+        describe('when the user gets logged out', () => {
+
+            beforeEach(() => {
+
+                testUnit.$onInit();
+
+            });
+
+            it('should unset authentication and profile', () => {
+
+                logoutSubscriber();
+
+                expect(testUnit.authentication)
+                    .toBeUndefined();
+
+                expect(testUnit.profile)
+                    .toBeUndefined();
 
             });
 
