@@ -18,7 +18,6 @@ import {
 describe(`${MenubarModule}.${MenubarName} controller`, () => {
 
     const testAnonymousId = 'ANONYMOUS';
-    const testAnonymousProfile = new AnonymousProfile(testAnonymousId);
     const testAnonymousAuthentication = new Authentication()
         .setAuthorization(new AnonymousAuthorization())
         .setIdent(new Ident().setId(testAnonymousId))
