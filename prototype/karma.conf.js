@@ -35,7 +35,7 @@ module.exports = (config) => {
                     dir: 'coverage/',
                     reporters: [
                         { type: 'text' },
-                        { type: 'lcov' },
+                        // { type: 'lcov' },
                     ],
                 },
                 frameworks: [
