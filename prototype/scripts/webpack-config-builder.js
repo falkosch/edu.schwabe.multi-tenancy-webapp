@@ -48,7 +48,7 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
     }
 
     addEntry(entry) {
-        if (WebpackConfigBuilder.isNotEmptyString(entry)) {
+        if (WebpackConfigBuilder.isNonEmptyString(entry)) {
             this.entries.push(entry);
         }
         return this;

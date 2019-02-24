@@ -15,7 +15,7 @@ module.exports = class WithTenantConfigBuilder {
     }
 
     isWithTenant() {
-        return WithTenantConfigBuilder.isNotEmptyString(this.tenant);
+        return WithTenantConfigBuilder.isNonEmptyString(this.tenant);
     }
 
     withTenant(tenant = '') {
@@ -50,12 +50,12 @@ module.exports = class WithTenantConfigBuilder {
         return `${tenantPath}/${this.defaultIndex}`;
     }
 
-    static isNotEmptyString(value) {
+    static isNonEmptyString(value) {
         return _.isString(value) && !_.isEmpty(_.trim(value));
     }
 
     static isRelativeFile(file) {
-        return WithTenantConfigBuilder.isNotEmptyString(file) && relativeFilePattern.test(file);
+        return WithTenantConfigBuilder.isNonEmptyString(file) && relativeFilePattern.test(file);
     }
 
 };
