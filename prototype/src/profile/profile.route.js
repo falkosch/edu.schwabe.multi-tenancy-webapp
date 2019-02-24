@@ -15,7 +15,7 @@ export function profileRoute($stateProvider) {
         .state({
             name: ProfileStateId,
             accessControl: {
-                public: true,
+                requiresLogin: true,
             },
             data: {
                 title: 'profile.navigation-entry',

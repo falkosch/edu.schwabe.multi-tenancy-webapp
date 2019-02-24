@@ -3,7 +3,7 @@ import angular from 'angular';
 import { BackendModule } from './backend/backend.module';
 import { MockBackendModule } from './mock-backend/mock-backend.module';
 
-import { AccessControlModule } from './access-control/access-control.module';
+import { StateAccessControlModule } from './state-access-control/state-access-control.module';
 import { EventEmitterModule } from './event-emitter/event-emitter.module';
 import { LanguageModule } from './language/language.module';
 import { NavigationModule } from './navigation/navigation.module';
@@ -15,7 +15,7 @@ export const CoreModule = angular
         BackendModule,
         MockBackendModule,
 
-        AccessControlModule,
+        StateAccessControlModule,
         EventEmitterModule,
         LanguageModule,
         NavigationModule,
