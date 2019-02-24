@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import { RequiresLoginStateAccessGuardServiceName } from './requires-login-state-access-guard/requires-login-state-access-guard.service';
-import { StateAccessControlProperty, stateAccessControlDecorator } from './state-access-control-decorator.config';
+import { stateAccessControlDecorator } from './state-access-control-decorator.config';
 
 export const StateAccessControlServiceName = 'accessControlService';
 
