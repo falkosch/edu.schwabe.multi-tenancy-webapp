@@ -7,8 +7,6 @@ import uiRouter from '@uirouter/angularjs';
 
 import angularMaterial from 'angular-material';
 
-import './index.scss';
-
 import { AppModule } from './app/app.module';
 import { StartModule } from './start/start.module';
 import { LoginModule } from './login/login.module';
@@ -18,6 +16,10 @@ import { LanguageModule } from './core/language/language.module';
 
 import { indexHtml5Config } from './index-html5.config';
 import { indexI18NConfig } from './index-i18n.config';
+
+import './index.scss';
+import './i18n/de.json';
+import './i18n/en.json';
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     import('serviceworker-webpack-plugin/lib/runtime')

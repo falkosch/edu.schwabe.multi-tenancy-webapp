@@ -9,6 +9,7 @@ import { startRoute } from './start.route';
 import { startI18NConfig } from './start-i18n.config';
 import { startNavigationRun } from './start-navigation.run';
 
+import './i18n/de.json';
 import './i18n/en.json';
 
 export const StartModule = angular

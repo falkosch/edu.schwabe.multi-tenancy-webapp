@@ -12,6 +12,9 @@ import { loginRoute } from './login.route';
 import { loginNavigationRun } from './login-navigation.run';
 import { loginI18NConfig } from './login-i18n.config';
 
+import './i18n/de.json';
+import './i18n/en.json';
+
 export const LoginModule = angular
     .module('app.login', [
         uiRouter,

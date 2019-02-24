@@ -15,6 +15,9 @@ import { ProfileUnsetValueFilterName, ProfileUnsetValueFilter } from './profile-
 import { ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective } from './profile-unset-value.formatter';
 import { ProfileUnsetValueParserName, ProfileUnsetValueParserDirective } from './profile-unset-value.parser';
 
+import './i18n/de.json';
+import './i18n/en.json';
+
 export const ProfileModule = angular
     .module('app.profile', [
         uiRouter,
