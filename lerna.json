@@ -6,7 +6,10 @@
   "command": {
     "publish": {
       "message": "chore(release): publish"
-    },
-    "bootstrap": {}
-  }
+    }
+  },
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ]
 }
