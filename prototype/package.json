@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./deploy && rimraf ./coverage",
+    "clean": "rimraf ./dist && rimraf ./deploy && rimraf ./coverage && rimraf ./docs",
     "build": "webpack --config webpack.prod.js",
     "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer=true",
     "build:serve": "http-server --gzip --cors ./dist",
