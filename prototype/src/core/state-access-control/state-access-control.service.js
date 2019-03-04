@@ -65,7 +65,7 @@ export class StateAccessControlService {
             });
     }
 
-    _routeOnNotAuthorized(guardService) {
+    _routeOnNotAuthorized() {
     }
 
 }
