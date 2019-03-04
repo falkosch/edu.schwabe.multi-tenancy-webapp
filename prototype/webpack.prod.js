@@ -15,9 +15,9 @@ const projectPackage = require('./package.json');
 
 process.env.NODE_ENV = 'production';
 
-module.exports = env => common(env)
+module.exports = (env = {}) => common(env)
     .withContext(__dirname)
-    .withBundleAnalyzer()
+    .withBundleAnalyzer(!env.noBundleAnalyzer)
     .addConfig({
         mode: 'production',
         output: {

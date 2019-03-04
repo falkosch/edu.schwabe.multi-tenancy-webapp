@@ -6,7 +6,7 @@ const common = require('./scripts/webpack.common');
 
 process.env.NODE_ENV = 'develop';
 
-module.exports = env => common(env)
+module.exports = (env = {}) => common(env)
     .withContext(__dirname)
     .addConfig({
         mode: 'development',

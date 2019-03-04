@@ -16,7 +16,7 @@ class TestWebpackConfigBuilder extends WebpackConfigBuilder {
     }
 }
 
-module.exports = (env, context) => common(env, () => new TestWebpackConfigBuilder())
+module.exports = (env = {}, context) => common(env, () => new TestWebpackConfigBuilder())
     .withContext(context)
     .withResourcesToOverride(null)
     .addConfig({
