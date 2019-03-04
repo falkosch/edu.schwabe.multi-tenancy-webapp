@@ -1,0 +1,7 @@
+{
+  "name": "@edu.schwabe.webapp-prototypes/webapp-prototypes",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.13.1"
+  }
+}
