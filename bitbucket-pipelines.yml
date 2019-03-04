@@ -3,9 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image:
-  name: atlassianlabs/docker-node-jdk-chrome-firefox:latest
-  run-as-user: 1000
+image: atlassianlabs/docker-node-jdk-chrome-firefox:latest
 
 pipelines:
   default:
