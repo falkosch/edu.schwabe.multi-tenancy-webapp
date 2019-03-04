@@ -16,6 +16,6 @@ pipelines:
           - npx lerna bootstrap
           - npx lerna run clean
           - npx lerna run lint:ci
+          - npx lerna run test:ci
           - npx lerna run build:ci
           - npx lerna run docs
-          - npx lerna run test:ci
