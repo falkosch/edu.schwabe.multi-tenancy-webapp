@@ -56,7 +56,7 @@ describe(`${GlobalSpinnerModule} ui-router transitions run`, () => {
     it(`should register an onBefore for all ui-router transitions and delegate the transition event to ${GlobalSpinnerServiceName}`, () => {
 
         expect($transitionsMock.onBefore)
-            .toHaveBeenCalledWith(jasmine.objectContaining({}), jasmine.any(Function));
+            .toHaveBeenCalledWith(jasmine.any(Object), jasmine.any(Function));
 
         expect(globalSpinnerServiceMock.spinWhileTransition)
             .toHaveBeenCalledWith($transitionsMock);
