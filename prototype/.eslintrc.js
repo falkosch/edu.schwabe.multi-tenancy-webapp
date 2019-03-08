@@ -89,6 +89,9 @@ module.exports = {
             },
             rules: {
                 'import/no-extraneous-dependencies': 'off',
+                'jasmine/no-spec-dupes': ['warn', 'branch'],
+                'jasmine/no-suite-dupes': ['warn', 'branch'],
+                'sonarjs/no-duplicate-string': 'off',
             },
         },
         {
