@@ -5,15 +5,13 @@ import _ from 'lodash';
 import { MockAuthenticationServiceName, MockAuthenticationService } from './mock-authentication.service';
 import { MockBackendModule } from './mock-backend.module';
 import { BackendModule } from '../backend/backend.module';
-import {
-    AuthenticationServiceName,
-    Permissions,
-    Authorization,
-    Authentication,
-    Ident,
-} from '../backend/authentication.service';
+import { AuthenticationServiceName } from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
 import { ProfileServiceName } from '../backend/profile.service';
+import { Authentication } from '../backend/models/authentication.model';
+import { Authorization } from '../backend/models/authorization.model';
+import { Ident } from '../backend/models/ident.model';
+import { Permissions } from '../backend/models/permissions.model';
 
 describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${BackendModule}.${AuthenticationServiceName}`, () => {
 

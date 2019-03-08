@@ -2,16 +2,13 @@ import uuidV4 from 'uuid-browser/v4';
 import moment from 'moment';
 import _ from 'lodash';
 
-import {
-    AuthenticationServiceName,
-    AuthenticationService,
-    Authentication,
-    BasicAuthorization,
-    IdentWithProfile,
-    PermissionsWithDefault,
-} from '../backend/authentication.service';
+import { AuthenticationServiceName, AuthenticationService } from '../backend/authentication.service';
 import { BackendErrors } from '../backend/backend-errors';
 import { ProfileServiceName } from '../backend/profile.service';
+import { Authentication } from '../backend/models/authentication.model';
+import { BasicAuthorization } from '../backend/models/basic-authorization.model';
+import { IdentWithProfile } from '../backend/models/ident-with-profile.model';
+import { PermissionsWithDefault } from '../backend/models/permissions-with-default.model';
 
 export const MockAuthenticationServiceName = AuthenticationServiceName;
 
