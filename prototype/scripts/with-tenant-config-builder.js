@@ -50,6 +50,14 @@ module.exports = class WithTenantConfigBuilder {
         return `${tenantPath}/${this.defaultIndex}`;
     }
 
+    static isTruthy(value) {
+        return _.includes([true, 1, -1, 'true', 'TRUE', 'True'], value);
+    }
+
+    static isFalsy(value) {
+        return _.includes([false, 0, 'false', 'FALSE', 'False', undefined, null], value);
+    }
+
     static isNonEmptyString(value) {
         return _.isString(value) && !_.isEmpty(_.trim(value));
     }

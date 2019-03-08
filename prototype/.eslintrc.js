@@ -103,7 +103,7 @@ module.exports = {
             files: [
                 '.babelrc.js',
                 'jsdoc.conf.js',
-                'karma.conf.js',
+                'karma*.conf.js',
                 'package-lock.json',
                 'package.json',
                 'postcss.config.js',

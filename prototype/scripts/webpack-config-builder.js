@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const { NormalModuleReplacementPlugin } = require('webpack');
+const { NormalModuleReplacementPlugin, ProgressPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
@@ -16,12 +16,22 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
 
     constructor() {
         super();
+        this.progress = true;
         this.context = __dirname;
         this.dist = './dist';
         this.entries = [];
         this.htmlWebpackPluginConfigs = [];
         this.bundleAnalyzer = false;
         this.resourcesToOverride = /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/;
+    }
+
+    isWithProgress() {
+        return WithTenantConfigBuilder.isTruthy(this.progress);
+    }
+
+    withProgress(value) {
+        this.progress = value;
+        return this;
     }
 
     withContext(value) {
@@ -39,7 +49,7 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
     }
 
     isWithBundleAnalyzer() {
-        return this.bundleAnalyzer;
+        return WithTenantConfigBuilder.isTruthy(this.bundleAnalyzer);
     }
 
     withBundleAnalyzer(value = true) {
@@ -146,6 +156,10 @@ module.exports = class WebpackConfigBuilder extends WithTenantConfigBuilder {
                 entry: `${tenantIndex}.sw.js`,
             }),
         ];
+
+        if (this.isWithProgress()) {
+            plugins.unshift(new ProgressPlugin());
+        }
 
         if (this.isWithBundleAnalyzer()) {
             plugins.push(new BundleAnalyzerPlugin());

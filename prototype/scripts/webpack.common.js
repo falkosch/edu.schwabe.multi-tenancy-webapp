@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const { ContextReplacementPlugin, DefinePlugin, ProgressPlugin } = require('webpack');
+const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 
+const WithTenantConfigBuilder = require('./with-tenant-config-builder');
 const WebpackConfigBuilder = require('./webpack-config-builder');
 const projectPackage = require('../package.json');
 
@@ -14,6 +15,7 @@ function defaultBuilderFactory() {
 
 module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFactory()
     .withTenant(env.tenant)
+    .withProgress(WithTenantConfigBuilder.isFalsy(env.noProgress))
     .addEntry('@babel/polyfill')
     .addEntry('default-passive-events')
     .addHtmlWebpackPluginConfig({
@@ -28,7 +30,6 @@ module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFa
             __dirname: true,
         },
         plugins: [
-            new ProgressPlugin(),
             new DefinePlugin({
                 __VERSION__: JSON.stringify(projectPackage.version),
             }),

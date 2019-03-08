@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
 
@@ -11,9 +10,6 @@ process.env.CHROME_BIN = puppeteer.executablePath();
 
 module.exports = (config) => {
 
-    // pass env.* args in "karma start -- --env.*=?" and process.env into an env-object
-    // so that f.e. tenant parameters are easily retrievable
-
     const testEnv = merge(
         process.env,
         config.env,
@@ -25,28 +21,34 @@ module.exports = (config) => {
             .withTenant(testEnv.tenant)
             .withWebpackConfig(
                 testWebpackConfigBuilderFactory(testEnv, __dirname)
+                    .withProgress(false)
                     .build(),
             )
             .addConfig({
-                browsers: ['ChromeHeadless'],
+                autoWatch: false,
+                browsers: ['ChromeHeadlessNoSandbox'],
+                customLaunchers: {
+                    ChromeHeadlessNoSandbox: {
+                        base: 'ChromeHeadless',
+                        flags: ['--no-sandbox'],
+                    },
+                },
                 coverageReporter: {
+                    dir: 'coverage/',
                     reporters: [
                         { type: 'text' },
+                        { type: 'lcov' },
                     ],
                 },
                 frameworks: [
                     'jasmine',
                 ],
-                reporters: _.concat(
-                    testEnv.noSpec ? [] : ['spec'],
-                    testEnv.noCoverage ? [] : ['coverage'],
-                    ['summary'],
-                ),
-                specReporter: {
-                    showSpecTiming: true,
-                    suppressErrorSummary: false,
-                    suppressSkipped: true,
+                junitReporter: {
+                    // results will be saved as $outputDir/$browserName.xml
+                    outputDir: 'test-reports',
                 },
+                reporters: ['junit', 'coverage', 'summary'],
+                singleRun: true,
                 summaryReporter: {
                     specLength: 80,
                 },
