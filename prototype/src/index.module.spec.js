@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import { IndexModule } from './index.module';
+import { IndexModule, registerAppServiceWorkerRuntime } from './index.module';
 
 describe(`${IndexModule} architecture`, () => {
 
@@ -23,6 +23,19 @@ describe(`${IndexModule} architecture`, () => {
         expect(passedRunPhase)
             .toBe(true);
 
+    });
+
+    it('should be able to register a runtime for the app\'s service worker', () => {
+        const runtimeImportMock = {
+            default: {
+                register: jasmine.createSpy('register'),
+            },
+        };
+
+        registerAppServiceWorkerRuntime(runtimeImportMock);
+
+        expect(runtimeImportMock.default.register)
+            .toHaveBeenCalledWith();
     });
 
 });
