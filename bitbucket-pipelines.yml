@@ -1,20 +1,38 @@
-# This is a sample build configuration for JavaScript.
 # Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
+
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassianlabs/docker-node-jdk-chrome-firefox:latest
+
+options:
+  max-time: 5 # minutes
 
 pipelines:
   default:
     - step:
+        name: Prepare
         caches:
           - node
-        script: # Modify the commands below to build your repository.
+        script:
           - npm install
           - npx lerna bootstrap
           - npx lerna run clean
-          - npx lerna run lint:ci
-          - npx lerna run test:ci
-          - npx lerna run build:ci
-          - npx lerna run docs
+    - parallel:
+        - step:
+            name: Lint
+            script:
+              - npx lerna run lint:ci
+        - step:
+            name: Test
+            caches:
+              - node
+            script:
+              - npx lerna run test:ci
+    - parallel:
+        - step:
+            name: Build Artifact
+            script:
+              - npx lerna run build:ci
+        - step:
+            name: Generate Documentation
+            script:
+              - npx lerna run docs
