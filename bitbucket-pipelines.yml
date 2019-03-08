@@ -9,30 +9,13 @@ options:
 pipelines:
   default:
     - step:
-        name: Prepare
+        name: Lint, Test and Build
         caches:
           - node
         script:
           - npm install
           - npx lerna bootstrap
-          - npx lerna run clean
-    - parallel:
-        - step:
-            name: Lint
-            script:
-              - npx lerna run lint:ci
-        - step:
-            name: Test
-            caches:
-              - node
-            script:
-              - npx lerna run test:ci
-    - parallel:
-        - step:
-            name: Build Artifact
-            script:
-              - npx lerna run build:ci
-        - step:
-            name: Generate Documentation
-            script:
-              - npx lerna run docs
+          - npx lerna run lint:ci
+          - npx lerna run test:ci
+          - npx lerna run build:ci
+          - npx lerna run docs
