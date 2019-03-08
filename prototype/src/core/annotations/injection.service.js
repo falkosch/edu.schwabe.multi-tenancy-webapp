@@ -12,42 +12,50 @@ export class InjectionService {
 
     /**
      * @param {Object} instance
+     * @return {Object} the given instance
      */
     injectByInjectionNames(instance) {
-        if (!_.isObject(instance)) {
-            return;
+        if (!_.isObject(instance) || _.isArray(instance)) {
+            return instance;
         }
 
-        const { $inject } = instance;
-
-        this._inject(instance, $inject);
+        return this._inject(instance, instance.$inject);
     }
 
     /**
      * @param {Object} instance
+     * @return {Object} the given instance
      */
     injectByStaticInjectionNames(instance) {
-        if (!_.isObject(instance)) {
-            return;
+        if (!_.isObject(instance) || _.isArray(instance)) {
+            return instance;
         }
 
-        const prototype = Object.getPrototypeOf(instance);
-        const { constructor: { $inject } } = prototype;
+        const { constructor } = instance;
+        const injects = this.$injector.annotate(constructor);
 
-        this._inject(instance, $inject);
+        return this._inject(instance, injects);
     }
 
-    _inject(instance, $inject) {
-        /* eslint-disable no-param-reassign */
-        if (_.isArray($inject) || _.isObject($inject)) {
+    /**
+     * @param {Object} instance
+     * @param {*} injects
+     * @return {Object} the given instance
+     */
+    _inject(instance, injects) {
+        if (_.isArray(injects) || _.isObject(injects)) {
             _.forEach(
-                $inject,
+                injects,
                 (injectName, injectProperty) => {
                     const remapInject = _.isString(injectProperty);
                     const typeProperty = remapInject ? injectProperty : injectName;
+
+                    /* eslint-disable-next-line no-param-reassign */
                     instance[typeProperty] = this.$injector.get(injectName);
                 },
             );
         }
+
+        return instance;
     }
 }
