@@ -15,7 +15,7 @@ export class LanguageServiceProvider {
         (...injectables) => new LanguageService(...injectables),
     );
 
-    constructor($translatePartialLoaderProvider, $injector) {
+    constructor($translatePartialLoaderProvider) {
         this.$translatePartialLoaderProvider = $translatePartialLoaderProvider;
     }
 
