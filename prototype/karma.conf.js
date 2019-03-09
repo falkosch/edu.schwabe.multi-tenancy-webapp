@@ -51,7 +51,9 @@ module.exports = (config) => {
                 specReporter: {
                     showSpecTiming: true,
                     suppressErrorSummary: false,
+                    suppressPassed: true,
                     suppressSkipped: true,
+                    failFast: false,
                 },
                 summaryReporter: {
                     specLength: 80,
