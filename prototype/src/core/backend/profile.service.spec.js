@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { BackendModule } from './backend.module';
@@ -7,22 +8,21 @@ import { ProfileServiceName, ProfileService } from './profile.service';
 
 describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
-    let profileService;
+    let testUnit;
+
+    let $injector;
     let $rootScope;
-
-    function testErrorIsNotImplementedError(error) {
-        expect(error)
-            .toEqual(jasmine.any(Error));
-
-        expect(error.message)
-            .toEqual(BackendErrors.notImplemented().message);
-    }
 
     function testMemberToBeNotImplemented(done, asyncInvokable) {
         asyncInvokable()
             .then(() => done.fail('test failed'))
             .catch((e) => {
-                testErrorIsNotImplementedError(e);
+                expect(e)
+                    .toEqual(jasmine.any(Error));
+
+                expect(e.message)
+                    .toEqual(BackendErrors.notImplemented().message);
+
                 done();
             });
 
@@ -33,42 +33,45 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
         angular.mock.module(BackendModule);
 
-        inject((_$rootScope_, _profileService_) => {
+        inject((_$injector_, _$rootScope_) => {
+            $injector = _$injector_;
             $rootScope = _$rootScope_;
-            profileService = _profileService_;
+
+            testUnit = $injector.get(ProfileServiceName);
         });
 
     });
 
-    it(`should be an instanceof ${ProfileServiceName}`, () => {
+    describe('given architecture', () => {
 
-        expect(profileService)
-            .toEqual(jasmine.any(ProfileService));
+        const expectedInjects = [
+            '$q',
+        ];
 
-    });
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(ProfileService)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
 
-    describe('.getProfile', () => {
-
-        it('should mock getProfile with a not implemented function returning a reject promise', (done) => {
-
-            testMemberToBeNotImplemented(
-                done,
-                () => profileService.getProfile(),
-            );
-
+        it(`should be an instanceof ${ProfileService.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(ProfileService));
         });
 
     });
 
-    describe('.updateProfile', () => {
+    describe('.getProfile()', () => {
+
+        it('should mock getProfile with a "not implemented" function returning a reject promise', (done) => {
+            testMemberToBeNotImplemented(done, () => testUnit.getProfile());
+        });
+
+    });
+
+    describe('.updateProfile()', () => {
 
         it('should mock updateProfile with a not implemented function returning a reject promise', (done) => {
-
-            testMemberToBeNotImplemented(
-                done,
-                () => profileService.updateProfile(),
-            );
-
+            testMemberToBeNotImplemented(done, () => testUnit.updateProfile());
         });
 
     });
