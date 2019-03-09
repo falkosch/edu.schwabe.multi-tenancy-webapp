@@ -15,15 +15,15 @@ describe(`${IndexModule} i18n config`, () => {
     beforeEach(() => {
 
         angular.mock.module(LanguageModule, (_$injector_) => {
-            languageServiceProviderSpied = _$injector_.get(LanguageServiceProviderName);
+            $injector = _$injector_;
+
+            languageServiceProviderSpied = $injector.get(LanguageServiceProviderName);
             spyOn(languageServiceProviderSpied, 'addPart');
         });
 
         angular.mock.module(IndexModule);
 
-        inject((_$injector_) => {
-            $injector = _$injector_;
-        });
+        inject();
 
     });
 
