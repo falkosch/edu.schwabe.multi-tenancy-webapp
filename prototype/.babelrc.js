@@ -18,7 +18,8 @@ module.exports = (api) => {
                     ['istanbul', {
                         exclude: [
                             '{src,tenancy}/**/*.karma.js',
-                            '{src,tenancy}/**/*.spec.js'
+                            '{src,tenancy}/**/*.spec.js',
+                            '{src,tenancy}/**/*.mock.js',
                         ],
                     }],
                 ],

@@ -81,6 +81,7 @@ module.exports = {
                 'angular/mocks': true,
             },
             files: [
+                '{src,tenancy}/**/*.mock.js',
                 '{src,tenancy}/**/*.spec.js',
                 '{src,tenancy}/**/*.karma.js',
             ],
