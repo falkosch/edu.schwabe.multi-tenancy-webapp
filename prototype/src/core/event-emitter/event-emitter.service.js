@@ -1,37 +1,31 @@
+import _ from 'lodash';
+
+import { EventEmitter } from './event-emitter.model';
+
 export const EventEmitterServiceName = 'eventEmitterService';
 
-class EventEmitter {
-
-    constructor($rootScope, eventName) {
-        this.$rootScope = $rootScope;
-        this.eventName = eventName;
-
-        this.observeable = this.$rootScope.$eventToObservable(this.eventName);
-    }
-
-    emit(value) {
-        this.$rootScope.$broadcast(this.eventName, value);
-    }
-
-    subscribe(consumer) {
-        return this.observeable
-            .subscribe(([event, data]) => consumer(event, data));
-    }
-
-}
-
-const cachedEmitters = {};
+export const EventEmitterCacheId = `${EventEmitterServiceName}Cache`;
 
 export class EventEmitterService {
 
     static $inject = [
         '$injector',
         '$rootScope',
+        '$cacheFactory',
     ];
 
-    constructor($injector, $rootScope) {
+    _cachedEmitters;
+
+    constructor($injector, $rootScope, $cacheFactory) {
         this.$injector = $injector;
         this.$rootScope = $rootScope;
+        this.$cacheFactory = $cacheFactory;
+
+        this._init();
+    }
+
+    _init() {
+        this._cachedEmitters = this.$cacheFactory(EventEmitterCacheId);
     }
 
     injectableName(eventName) {
@@ -39,20 +33,24 @@ export class EventEmitterService {
     }
 
     of(eventName) {
+        const emitterName = this.injectableName(eventName);
 
-        const injectableName = this.injectableName(eventName);
+        let eventEmitter = this._cachedEmitters.get(emitterName);
 
-        if (this.$injector.has(injectableName)) {
-            return this.$injector.get(injectableName);
+        if (_.isNil(eventEmitter)) {
+            if (this.$injector.has(emitterName)) {
+                eventEmitter = this.$injector.get(emitterName);
+            }
+
+            if (_.isNil(eventEmitter)) {
+                const observable = this.$rootScope.$eventToObservable(eventName);
+                const emitter = (value => this.$rootScope.$broadcast(eventName, value));
+
+                eventEmitter = new EventEmitter(observable, emitter);
+            }
+
+            this._cachedEmitters.put(emitterName, eventEmitter);
         }
-
-        if (injectableName in cachedEmitters) {
-            return cachedEmitters[injectableName];
-        }
-
-        const eventEmitter = new EventEmitter(this.$rootScope, eventName);
-
-        cachedEmitters[injectableName] = eventEmitter;
 
         return eventEmitter;
     }
