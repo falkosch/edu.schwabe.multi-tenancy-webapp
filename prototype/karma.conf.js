@@ -28,7 +28,13 @@ module.exports = (config) => {
                     .build(),
             )
             .addConfig({
-                browsers: ['ChromeHeadless'],
+                browsers: ['ChromeHeadlessNoSandbox'],
+                customLaunchers: {
+                    ChromeHeadlessNoSandbox: {
+                        base: 'ChromeHeadless',
+                        flags: ['--no-sandbox' ],
+                    },
+                },
                 coverageReporter: {
                     reporters: [
                         { type: 'text' },
