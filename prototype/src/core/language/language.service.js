@@ -5,17 +5,22 @@ import { LanguageConstants } from './language.constants';
 
 export const LanguageServiceName = 'languageService';
 
+export const ERROR_LANGUAGE_NOT_AVAILABLE = 'language not available';
+
 export class LanguageService {
 
     static $inject = [
+        '$q',
         '$rootScope',
         '$translate',
     ];
 
     constructor(
+        $q,
         $rootScope,
         $translate,
     ) {
+        this.$q = $q;
         this.$rootScope = $rootScope;
         this.$translate = $translate;
 
@@ -52,7 +57,7 @@ export class LanguageService {
 
     changeLanguage(code) {
         if (!_.includes(this.allAvailableLanguages, code)) {
-            return this.$q.reject('language not available');
+            return this.$q.reject(new Error(ERROR_LANGUAGE_NOT_AVAILABLE));
         }
 
         return this.$translate.use(code);

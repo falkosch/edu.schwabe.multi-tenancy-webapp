@@ -8,22 +8,15 @@ export class LanguageServiceProvider {
 
     static $inject = [
         '$translatePartialLoaderProvider',
-        '$injector',
     ];
+
+    $get = _.concat(
+        LanguageService.$inject,
+        (...injectables) => new LanguageService(...injectables),
+    );
 
     constructor($translatePartialLoaderProvider, $injector) {
         this.$translatePartialLoaderProvider = $translatePartialLoaderProvider;
-        this.$injector = $injector;
-
-        this._initialize();
-    }
-
-    _initialize() {
-        const injectableNames = this.$injector.annotate(LanguageService);
-        this.$get = _.concat(
-            injectableNames,
-            (...injectables) => new LanguageService(...injectables),
-        );
     }
 
     addPart(name) {
