@@ -25,7 +25,6 @@ module.exports = (config) => {
                     .build(),
             )
             .addConfig({
-                autoWatch: false,
                 browsers: ['ChromeHeadlessNoSandbox'],
                 customLaunchers: {
                     ChromeHeadlessNoSandbox: {
@@ -44,11 +43,15 @@ module.exports = (config) => {
                     'jasmine',
                 ],
                 junitReporter: {
-                    // results will be saved as $outputDir/$browserName.xml
                     outputDir: 'test-reports',
                 },
-                reporters: ['junit', 'coverage', 'summary'],
+                reporters: ['junit', 'spec', 'coverage', 'summary'],
                 singleRun: true,
+                specReporter: {
+                    suppressErrorSummary: false,
+                    showSpecTiming: true,
+                    failFast: false,
+                },
                 summaryReporter: {
                     specLength: 80,
                 },
