@@ -32,7 +32,7 @@ module.exports = (config) => {
                 customLaunchers: {
                     ChromeHeadlessNoSandbox: {
                         base: 'ChromeHeadless',
-                        flags: ['--no-sandbox' ],
+                        flags: ['--no-sandbox'],
                     },
                 },
                 coverageReporter: {
