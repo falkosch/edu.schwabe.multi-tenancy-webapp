@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
 
@@ -11,9 +10,6 @@ process.env.CHROME_BIN = puppeteer.executablePath();
 
 module.exports = (config) => {
 
-    // pass env.* args in "karma start -- --env.*=?" and process.env into an env-object
-    // so that f.e. tenant parameters are easily retrievable
-
     const testEnv = merge(
         process.env,
         config.env,
@@ -24,39 +20,40 @@ module.exports = (config) => {
             .withTenant(testEnv.tenant)
             .withWebpackConfig(
                 testWebpackConfigBuilderFactory(testEnv, __dirname)
+                    .withProgress(false)
                     .build(),
             )
             .addConfig({
+                autoWatch: false,
                 browsers: ['ChromeHeadlessNoSandbox'],
                 customLaunchers: {
                     ChromeHeadlessNoSandbox: {
                         base: 'ChromeHeadless',
                         flags: ['--no-sandbox'],
                     },
-                    ChromeDebugging: {
-                        base: 'Chrome',
-                        flags: ['--remote-debugging-port=9333'],
-                    },
                 },
                 coverageReporter: {
+                    dir: 'coverage/',
                     reporters: [
                         { type: 'text' },
                     ],
+                    check: {
+                        global: {
+                            statements: 80,
+                            branches: 80,
+                            functions: 80,
+                            lines: 80,
+                        },
+                    },
                 },
-                reporters: _.concat(
-                    testEnv.noSpec ? [] : ['spec'],
-                    testEnv.noCoverage ? [] : ['coverage'],
-                    ['summary'],
-                ),
+                reporters: ['spec', 'coverage', 'summary'],
+                singleRun: true,
                 specReporter: {
-                    showSpecTiming: true,
                     suppressErrorSummary: false,
                     suppressPassed: true,
                     suppressSkipped: true,
+                    showSpecTiming: true,
                     failFast: false,
-                },
-                summaryReporter: {
-                    specLength: 80,
                 },
             })
             .build(),
