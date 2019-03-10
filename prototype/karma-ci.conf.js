@@ -38,6 +38,20 @@ module.exports = (config) => {
                         { type: 'text' },
                         { type: 'lcov' },
                     ],
+                    check: {
+                        global: {
+                            statements: 80,
+                            branches: 80,
+                            functions: 80,
+                            lines: 80,
+                        },
+                        each: {
+                            statements: 75,
+                            branches: 50,
+                            functions: 80,
+                            lines: 75,
+                        },
+                    },
                 },
                 junitReporter: {
                     outputDir: 'test-reports',
