@@ -24,6 +24,7 @@ module.exports = (config) => {
                     .build(),
             )
             .addConfig({
+                autoWatch: false,
                 browsers: ['ChromeHeadlessNoSandbox'],
                 customLaunchers: {
                     ChromeHeadlessNoSandbox: {
