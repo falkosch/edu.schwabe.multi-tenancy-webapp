@@ -62,7 +62,7 @@ describe(`${LanguageModule}.${LanguageServiceProviderName}`, () => {
 
         const testPartName = 'TEST';
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.addPart(testPartName))
                 .toBe(testUnit);
         });
