@@ -76,4 +76,12 @@ describe(`${BackendModule}.${ProfileServiceName}`, () => {
 
     });
 
+    describe('.loadProfiles()', () => {
+
+        it('should mock loadProfiles with a not implemented function returning a reject promise', (done) => {
+            testMemberToBeNotImplemented(done, () => testUnit.loadProfiles());
+        });
+
+    });
+
 });

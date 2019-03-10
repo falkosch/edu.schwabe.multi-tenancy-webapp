@@ -33,7 +33,7 @@ export class MockAuthenticationService extends AuthenticationService {
             return this.$q.reject(BackendErrors.missingUserPasswordProof());
         }
 
-        return this.profileService._loadProfiles()
+        return this.profileService.loadProfiles()
             .then(
                 profiles => this.$timeout(_.noop, MockAuthenticationService.MockDelay)
                     .then(() => {

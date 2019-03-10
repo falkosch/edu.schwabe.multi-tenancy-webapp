@@ -62,7 +62,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName} implementing ${BackendM
 
     });
 
-    describe('._loadProfiles()', () => {
+    describe('.loadProfiles()', () => {
 
         afterEach(() => {
             $httpBackend.verifyNoOutstandingExpectation();
@@ -79,7 +79,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName} implementing ${BackendM
                 $httpBackend.when('GET', MockProfilesUrl)
                     .respond(testData);
 
-                testUnit._loadProfiles()
+                testUnit.loadProfiles()
                     .then((actualProfiles) => {
                         expect(actualProfiles)
                             .toEqual(testData.results);
@@ -103,7 +103,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName} implementing ${BackendM
             });
 
             it('should return the saved promise of loading the profiles', () => {
-                expect(testUnit._loadProfiles())
+                expect(testUnit.loadProfiles())
                     .toBe(testProfilesPromise);
             });
 

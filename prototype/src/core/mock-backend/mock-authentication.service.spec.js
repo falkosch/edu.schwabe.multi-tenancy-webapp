@@ -29,7 +29,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
     beforeEach(() => {
 
         profileServiceMock = {
-            _loadProfiles: jasmine.createSpy(),
+            loadProfiles: jasmine.createSpy(),
         };
 
         angular.mock.module(MockBackendModule, {
@@ -139,7 +139,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
             });
 
             beforeEach(() => {
-                profileServiceMock._loadProfiles
+                profileServiceMock.loadProfiles
                     .and
                     .returnValue($q.resolve([]));
             });

@@ -19,7 +19,7 @@ export class MockProfileService extends ProfileService {
     }
 
     getProfile(userId) {
-        return this._loadProfiles()
+        return this.loadProfiles()
             .then((profiles) => {
                 const profile = _.find(profiles, ['login.uuid', userId]);
 
@@ -31,7 +31,7 @@ export class MockProfileService extends ProfileService {
             });
     }
 
-    _loadProfiles() {
+    loadProfiles() {
         if (!this._loadProfilesPromise) {
             // Let's use some random mock data from randomuser.me
             this._loadProfilesPromise = this.$http

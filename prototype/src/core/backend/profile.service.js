@@ -17,4 +17,8 @@ export class ProfileService {
     updateProfile() {
         return this.$q.reject(BackendErrors.notImplemented());
     }
+
+    loadProfiles() {
+        return this.$q.reject(BackendErrors.notImplemented());
+    }
 }
