@@ -35,7 +35,11 @@ module.exports = (config) => {
                     },
                     ChromeDebugging: {
                         base: 'Chrome',
-                        flags: ['--remote-debugging-port=9333'],
+                        flags: [
+                            '--remote-debugging-port=9333',
+                            '--auto-open-devtools-for-tabs',
+                            'http://localhost:9876/debug.html',
+                        ],
                     },
                 },
                 coverageReporter: {
