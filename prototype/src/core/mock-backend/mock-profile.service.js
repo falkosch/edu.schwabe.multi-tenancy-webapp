@@ -1,53 +1,25 @@
 import _ from 'lodash';
 
 import { ProfileService, ProfileServiceName } from '../backend/profile.service';
-import { MockProfilesUrlName } from './mock-profiles-url.constant';
+import { AnonymousProfile } from './models/anonymous-profile.model';
+import { MockProfilesUrl } from './mock-profiles-url.constant';
 
 export const MockProfileServiceName = ProfileServiceName;
-
-export class AnonymousProfile {
-
-    login = {
-        uuid: undefined,
-    };
-
-    constructor(userId) {
-        this.login.uuid = userId;
-    }
-}
 
 export class MockProfileService extends ProfileService {
 
     static $inject = [
-        '$q',
         '$http',
-        MockProfilesUrlName,
+        '$q',
     ];
 
-    profiles = [];
-
-    constructor($q, $http, mockProfilesUrl) {
+    constructor($http, $q) {
         super($q);
         this.$http = $http;
-        this.mockProfilesUrl = mockProfilesUrl;
-
-        this.initializePromise = this._initialize();
-    }
-
-    _initialize() {
-
-        // Let's use some random mock data from randomuser.me
-
-        return this.$http.get(this.mockProfilesUrl)
-            .then((response) => {
-                this.profiles = response.data.results;
-                return this.profiles;
-            });
-
     }
 
     getProfile(userId) {
-        return this.initializePromise
+        return this._loadProfiles()
             .then((profiles) => {
                 const profile = _.find(profiles, ['login.uuid', userId]);
 
@@ -59,7 +31,14 @@ export class MockProfileService extends ProfileService {
             });
     }
 
-    updateProfile() {
-        return this.$q.when();
+    _loadProfiles() {
+        if (!this._loadProfilesPromise) {
+            // Let's use some random mock data from randomuser.me
+            this._loadProfilesPromise = this.$http
+                .get(MockProfilesUrl)
+                .then(response => response.data.results);
+        }
+
+        return this._loadProfilesPromise;
     }
 }

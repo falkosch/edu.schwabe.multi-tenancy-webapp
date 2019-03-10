@@ -14,7 +14,7 @@ describe(`${BackendModule}.models.${PermissionsWithDefault.name}`, () => {
 
     describe('setDefault(identId)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setDefault(testIdentId))
                 .toBe(testUnit);
         });

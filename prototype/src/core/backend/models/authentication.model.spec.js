@@ -77,7 +77,7 @@ describe(`${BackendModule}.models.${Authentication.name}`, () => {
 
     describe('.setAuthorization(value)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setAuthorization(testAuthorization))
                 .toBe(testUnit);
         });
@@ -93,7 +93,7 @@ describe(`${BackendModule}.models.${Authentication.name}`, () => {
 
     describe('.setIdent(value)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setIdent(testIdent))
                 .toBe(testUnit);
         });
@@ -109,7 +109,7 @@ describe(`${BackendModule}.models.${Authentication.name}`, () => {
 
     describe('.setPermissions(value)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setPermissions(testPermissions))
                 .toBe(testUnit);
         });

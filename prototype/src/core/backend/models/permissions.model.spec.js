@@ -14,7 +14,7 @@ describe(`${BackendModule}.models.${Permissions.name}`, () => {
 
     describe('setPermission(token, read, write)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setPermission(testPermissionToken))
                 .toBe(testUnit);
         });
@@ -74,7 +74,7 @@ describe(`${BackendModule}.models.${Permissions.name}`, () => {
 
     describe('setPermissions(token, ...permissions)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setPermissions(testPermissionToken, testPermission))
                 .toBe(testUnit);
         });

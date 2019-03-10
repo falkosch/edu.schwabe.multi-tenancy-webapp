@@ -1,46 +1,166 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 import { MockBackendModule } from './mock-backend.module';
 
-import { MockProfileServiceName, MockProfileService } from './mock-profile.service';
+import { ProfileServiceName } from '../backend/profile.service';
+import { MockProfileService, MockProfileServiceName } from './mock-profile.service';
+import { MockProfilesUrl } from './mock-profiles-url.constant';
+import { BackendModule } from '../backend/backend.module';
+import { AnonymousProfile } from './models/anonymous-profile.model';
 
-describe(`${MockBackendModule}.${MockProfileServiceName}`, () => {
+describe(`${MockBackendModule}.${MockProfileServiceName} implementing ${BackendModule}.${ProfileServiceName}`, () => {
 
     const testData = _getTestData();
 
+    let testProfilesPromise;
+    const testKnownUserProfile = testData.results[0];
+    const testKnownUserId = testKnownUserProfile.login.uuid;
+    const testUnknownUserId = 'TEST_UNKNOWN';
+
+    let testUnit;
+
     let $httpBackend;
-    let profileService;
-    let mockProfilesUrl;
+    let $injector;
+    let $q;
+    let $rootScope;
 
     beforeEach(() => {
 
         angular.mock.module(MockBackendModule);
 
-        inject((_$httpBackend_, _profileService_, _mockProfilesUrl_) => {
+        inject((_$httpBackend_, _$injector_, _$q_, _$rootScope_) => {
             $httpBackend = _$httpBackend_;
-            profileService = _profileService_;
-            mockProfilesUrl = _mockProfilesUrl_;
+            $injector = _$injector_;
+            $q = _$q_;
+            $rootScope = _$rootScope_;
 
-            $httpBackend
-                .when('GET', mockProfilesUrl)
-                .respond(testData);
+            testProfilesPromise = $q.resolve(testData.results);
+
+            testUnit = $injector.get(ProfileServiceName);
+        });
+
+    });
+
+    describe('given architecture', () => {
+
+        const expectedInjects = [
+            '$http',
+            '$q',
+        ];
+
+        it(`should only depend on ${expectedInjects.join(',')}`, () => {
+            expect(_.sortBy($injector.annotate(MockProfileService)))
+                .toEqual(_.sortBy(expectedInjects));
+        });
+
+
+        it(`should be an instanceof ${MockProfileService.name}`, () => {
+            expect(testUnit)
+                .toEqual(jasmine.any(MockProfileService));
+        });
+
+    });
+
+    describe('._loadProfiles()', () => {
+
+        afterEach(() => {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+
+        describe('when profiles are not loaded yet', () => {
+
+            beforeEach(() => {
+                testUnit._loadProfilesPromise = undefined;
+            });
+
+            it(`should request the profile data from ${MockProfilesUrl}`, (done) => {
+                $httpBackend.when('GET', MockProfilesUrl)
+                    .respond(testData);
+
+                testUnit._loadProfiles()
+                    .then((actualProfiles) => {
+                        expect(actualProfiles)
+                            .toEqual(testData.results);
+
+                        done();
+                    })
+                    .catch((error) => {
+                        done.fail(error);
+                    });
+
+                $httpBackend.flush();
+                $rootScope.$digest();
+            });
+
+        });
+
+        describe('when profiles are already loaded', () => {
+
+            beforeEach(() => {
+                testUnit._loadProfilesPromise = testProfilesPromise;
+            });
+
+            it('should return the saved promise of loading the profiles', () => {
+                expect(testUnit._loadProfiles())
+                    .toBe(testProfilesPromise);
+            });
 
         });
 
     });
 
-    afterEach(() => {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
-    });
+    describe('.getProfile(userId)', () => {
 
-    it(`should be an instanceof ${MockProfileServiceName}`, () => {
-        $httpBackend.expectGET(mockProfilesUrl);
+        beforeEach(() => {
+            testUnit._loadProfilesPromise = testProfilesPromise;
+        });
 
-        expect(profileService)
-            .toEqual(jasmine.any(MockProfileService));
+        describe(`when a userId ${testKnownUserId} is given that is known in profiles`, () => {
 
-        $httpBackend.flush();
+            it(`should resolve to the profile with that userId ${testKnownUserId}`, (done) => {
+                testUnit.getProfile(testKnownUserId)
+                    .then((actualProfile) => {
+                        expect(actualProfile)
+                            .toEqual(testKnownUserProfile);
+
+                        expect(actualProfile.login.uuid)
+                            .toBe(testKnownUserId);
+
+                        done();
+                    })
+                    .catch((error) => {
+                        done.fail(error);
+                    });
+
+                $rootScope.$digest();
+            });
+
+        });
+
+        describe(`when a userId ${testUnknownUserId} is given that is UNKNOWN in profiles`, () => {
+
+            it(`should resolve to an ${AnonymousProfile.name} with that userId ${testUnknownUserId}`, (done) => {
+                testUnit.getProfile(testUnknownUserId)
+                    .then((actualProfile) => {
+                        expect(actualProfile)
+                            .toEqual(jasmine.any(AnonymousProfile));
+
+                        expect(actualProfile.login.uuid)
+                            .toBe(testUnknownUserId);
+
+                        done();
+                    })
+                    .catch((error) => {
+                        done.fail(error);
+                    });
+
+                $rootScope.$digest();
+            });
+
+        });
+
     });
 
     function _getTestData() {

@@ -7,11 +7,11 @@ import { MenubarController } from './menubar.controller';
 import { UserStateServiceName } from '../../core/user-state/user-state.service';
 import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
 import { ProfileServiceName } from '../../core/backend/profile.service';
-import { AnonymousProfile } from '../../core/mock-backend/mock-profile.service';
 import { Authentication } from '../../core/backend/models/authentication.model';
 import { AnonymousAuthorization } from '../../core/backend/models/anonymous-authorization.model';
 import { Ident } from '../../core/backend/models/ident.model';
 import { PermissionsWithDefault } from '../../core/backend/models/permissions-with-default.model';
+import { AnonymousProfile } from '../../core/mock-backend/models/anonymous-profile.model';
 
 describe(`${MenubarModule}.${MenubarName} controller`, () => {
 

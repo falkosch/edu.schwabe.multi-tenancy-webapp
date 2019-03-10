@@ -18,7 +18,7 @@ describe(`${BackendModule}.models.${BasicAuthorization.name}`, () => {
 
     describe('.setKey(value)', () => {
 
-        it('should return this instance', () => {
+        it('should be chainable', () => {
             expect(testUnit.setKey())
                 .toBe(testUnit);
         });
