@@ -20,16 +20,17 @@
     }
   },
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./deploy && rimraf ./coverage && rimraf ./docs",
     "build": "webpack --config webpack.prod.js",
-    "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer=true --env.noProgress=true",
+    "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer --env.noProgress",
     "build:serve": "http-server --gzip --cors ./dist",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "karma start",
     "test:ci": "karma start karma-ci.conf",
     "test:debug": "karma start --browsers Chrome",
+    "clean": "rimraf ./dist && rimraf ./deploy && rimraf ./coverage && rimraf ./docs",
     "docs": "jsdoc -c jsdoc.conf.js",
     "docs:serve": "http-server --cors ./docs",
+    "lint": "eslint . --fix && stylelint . --fix",
     "lint:ci": "eslint . && stylelint .",
     "lint:js": "eslint . --fix",
     "lint:scss": "stylelint . --fix"
@@ -139,11 +140,11 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
+      "eslint --format=codeframe",
       "git add"
     ],
     "*.scss": [
-      "stylelint --fix",
+      "stylelint",
       "git add"
     ]
   }
