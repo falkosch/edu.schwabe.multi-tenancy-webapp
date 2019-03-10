@@ -156,6 +156,9 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
             it('should return a resolved promise', (done) => {
                 testUnit.login()
                     .then(() => {
+                        expect(userStateServiceMock.login)
+                            .toHaveBeenCalledTimes(1);
+
                         done();
                     })
                     .catch((e) => {
@@ -178,6 +181,9 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
             function testFailedLogin(done, thenHook = _.noop) {
                 testUnit.login()
                     .then(() => {
+                        expect(userStateServiceMock.login)
+                            .toHaveBeenCalledTimes(1);
+
                         thenHook();
                         done();
                     })
