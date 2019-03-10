@@ -2,6 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import { LanguageConstants } from './language.constants';
+import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
 export const LanguageServiceName = 'languageService';
 
@@ -11,18 +12,18 @@ export class LanguageService {
 
     static $inject = [
         '$q',
-        '$rootScope',
         '$translate',
+        EventEmitterServiceName,
     ];
 
     constructor(
         $q,
-        $rootScope,
         $translate,
+        eventEmitterService,
     ) {
         this.$q = $q;
-        this.$rootScope = $rootScope;
         this.$translate = $translate;
+        this.eventEmitterService = eventEmitterService;
 
         this._initialize();
     }
@@ -30,17 +31,13 @@ export class LanguageService {
     _initialize() {
         this.$translate.use(LanguageConstants.default);
 
-        this.on$translatePartialLoaderStructureChangedDisposal = this.$rootScope
-            .$on(
-                '$translatePartialLoaderStructureChanged',
-                () => { this._onPartialAdded(); },
-            );
+        this._onStructureChangedDisposal = this.eventEmitterService
+            .of('$translatePartialLoaderStructureChanged')
+            .subscribe(() => { this._onPartialAdded(); });
 
-        this.on$translateChangeSuccess = this.$rootScope
-            .$on(
-                '$translateChangeSuccess',
-                (event, { language }) => { this._onLanguageChanged(language); },
-            );
+        this._onChangeSuccessDisposal = this.eventEmitterService
+            .of('$translateChangeSuccess')
+            .subscribe((event, { language }) => { this._onLanguageChanged(language); });
     }
 
     _onPartialAdded() {

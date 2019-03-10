@@ -5,14 +5,18 @@ import moment from 'moment';
 import { LanguageModule } from './language.module';
 import { LanguageServiceName, LanguageService, ERROR_LANGUAGE_NOT_AVAILABLE } from './language.service';
 import { LanguageConstants } from './language.constants';
+import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
 describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
     const testNotAvailableLanguageCode = 'NOT_AVAILABLE';
+    const testLanguageCode = _.last(LanguageConstants.allAvailable);
 
     let testUnit;
 
     let $translateMock;
+    let eventEmitterServiceMock;
+    let eventEmitterMocks;
 
     let $injector;
     let $rootScope;
@@ -20,7 +24,36 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
     beforeEach(() => {
 
-        angular.mock.module(LanguageModule);
+        eventEmitterMocks = {
+            $translatePartialLoaderStructureChanged: {
+                subscribe: jasmine.createSpy()
+                    .and
+                    .callFake((subscriber) => {
+                        const { $translatePartialLoaderStructureChanged } = eventEmitterMocks;
+                        $translatePartialLoaderStructureChanged.subscriber = subscriber;
+                        return $translatePartialLoaderStructureChanged;
+                    }),
+            },
+            $translateChangeSuccess: {
+                subscribe: jasmine.createSpy()
+                    .and
+                    .callFake((subscriber) => {
+                        const { $translateChangeSuccess } = eventEmitterMocks;
+                        $translateChangeSuccess.subscriber = subscriber;
+                        return $translateChangeSuccess;
+                    }),
+            },
+        };
+
+        eventEmitterServiceMock = {
+            of: jasmine.createSpy()
+                .and
+                .callFake(eventName => eventEmitterMocks[eventName]),
+        };
+
+        angular.mock.module(LanguageModule, {
+            [EventEmitterServiceName]: eventEmitterServiceMock,
+        });
 
         inject((_$injector_, _$rootScope_, _$q_, _$translate_) => {
             $injector = _$injector_;
@@ -30,6 +63,7 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
             $translateMock = _$translate_;
             spyOn($translateMock, 'onReady');
             spyOn($translateMock, 'use');
+            spyOn($translateMock, 'refresh');
 
             testUnit = $injector.get(LanguageServiceName);
         });
@@ -40,8 +74,8 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
         const expectedInjects = [
             '$q',
-            '$rootScope',
             '$translate',
+            EventEmitterServiceName,
         ];
 
         it(`should only depend on ${expectedInjects.join(',')}`, () => {
@@ -61,6 +95,50 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
         it('should initially use a default language', () => {
             expect($translateMock.use)
                 .toHaveBeenCalledWith(LanguageConstants.default);
+        });
+
+        it('should subscribe to event $translatePartialLoaderStructureChanged', () => {
+            expect(eventEmitterServiceMock.of)
+                .toHaveBeenCalledWith('$translatePartialLoaderStructureChanged');
+
+            expect(eventEmitterMocks.$translatePartialLoaderStructureChanged.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
+        });
+
+        it('should subscribe to event $translateChangeSuccess', () => {
+            expect(eventEmitterServiceMock.of)
+                .toHaveBeenCalledWith('$translateChangeSuccess');
+
+            expect(eventEmitterMocks.$translateChangeSuccess.subscribe)
+                .toHaveBeenCalledWith(jasmine.any(Function));
+        });
+
+    });
+
+    describe('structure changed event subscriber', () => {
+
+        it('should refresh translation tables to load the partial\'s translations', () => {
+            eventEmitterMocks.$translatePartialLoaderStructureChanged
+                .subscriber();
+
+            expect($translateMock.refresh)
+                .toHaveBeenCalledTimes(1);
+        });
+
+    });
+
+    describe('change success event subscriber', () => {
+
+        beforeEach(() => {
+            spyOn(moment, 'locale');
+        });
+
+        it('should change global locale of moment', () => {
+            eventEmitterMocks.$translateChangeSuccess
+                .subscriber(undefined, { language: testLanguageCode });
+
+            expect(moment.locale)
+                .toHaveBeenCalledWith(testLanguageCode);
         });
 
     });
@@ -89,11 +167,7 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
         describe('when language code is in the available languages', () => {
 
-            let testLanguageCode;
-
             beforeEach(() => {
-                testLanguageCode = _.last(testUnit.allAvailableLanguages);
-
                 $translateMock.use
                     .and
                     .returnValue($q.resolve());
