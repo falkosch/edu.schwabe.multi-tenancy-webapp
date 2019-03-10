@@ -21,7 +21,6 @@ module.exports = (config) => {
 
     config.set(
         new KarmaConfigBuilder()
-            .withPreprocessors('webpack', 'sourcemap')
             .withTenant(testEnv.tenant)
             .withWebpackConfig(
                 testWebpackConfigBuilderFactory(testEnv, __dirname)
@@ -40,9 +39,6 @@ module.exports = (config) => {
                         { type: 'text' },
                     ],
                 },
-                frameworks: [
-                    'jasmine',
-                ],
                 reporters: _.concat(
                     testEnv.noSpec ? [] : ['spec'],
                     testEnv.noCoverage ? [] : ['coverage'],
@@ -57,9 +53,6 @@ module.exports = (config) => {
                 },
                 summaryReporter: {
                     specLength: 80,
-                },
-                webpackMiddleware: {
-                    stats: 'minimal',
                 },
             })
             .build(),

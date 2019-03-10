@@ -6,7 +6,7 @@ module.exports = class KarmaConfigBuilder extends WithTenantConfigBuilder {
 
     constructor() {
         super();
-        this.preprocessors = [];
+        this.preprocessors = ['webpack', 'sourcemap'];
         this.webpackConfig = {};
     }
 
@@ -20,37 +20,56 @@ module.exports = class KarmaConfigBuilder extends WithTenantConfigBuilder {
         return this;
     }
 
-    buildFilesAndPreprocessors() {
+    buildFiles() {
         const tenantIndex = this.buildTenantIndex();
-        const files = [
+        return [
             `${tenantIndex}.karma.js`,
         ];
+    }
 
-        const builtPreprocessors = _.reduce(
-            files,
+    buildPreprocessors() {
+        const { preprocessors } = this;
+
+        return _.reduce(
+            this.buildFiles(),
             (accPreprocessors, file) => (
                 {
                     ...accPreprocessors,
-                    [file]: [...this.preprocessors],
+                    [file]: [...preprocessors],
                 }
             ),
             {},
         );
+    }
 
+    buildWebpack() {
+        return this.webpackConfig;
+    }
+
+    buildWebpackMiddleware() {
         return {
-            files,
-            preprocessors: builtPreprocessors,
+            stats: 'minimal',
         };
     }
 
+    buildFrameworks() {
+        return ['jasmine'];
+    }
+
     build(...appendConfigs) {
-        const { files, preprocessors } = this.buildFilesAndPreprocessors();
+        const files = this.buildFiles();
+        const frameworks = this.buildFrameworks();
+        const preprocessors = this.buildPreprocessors();
+        const webpack = this.buildWebpack();
+        const webpackMiddleware = this.buildWebpackMiddleware();
 
         return super.build(
             {
                 files,
                 preprocessors,
-                webpack: this.webpackConfig,
+                webpack,
+                webpackMiddleware,
+                frameworks,
             },
             ...appendConfigs,
         );

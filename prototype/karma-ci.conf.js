@@ -17,7 +17,6 @@ module.exports = (config) => {
 
     config.set(
         new KarmaConfigBuilder()
-            .withPreprocessors('webpack', 'sourcemap')
             .withTenant(testEnv.tenant)
             .withWebpackConfig(
                 testWebpackConfigBuilderFactory(testEnv, __dirname)
@@ -39,9 +38,6 @@ module.exports = (config) => {
                         { type: 'lcov' },
                     ],
                 },
-                frameworks: [
-                    'jasmine',
-                ],
                 junitReporter: {
                     outputDir: 'test-reports',
                 },
@@ -54,9 +50,6 @@ module.exports = (config) => {
                 },
                 summaryReporter: {
                     specLength: 80,
-                },
-                webpackMiddleware: {
-                    stats: 'minimal',
                 },
             })
             .build(),
