@@ -29,7 +29,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
     beforeEach(() => {
 
         profileServiceMock = {
-            profiles: [],
+            _loadProfiles: jasmine.createSpy(),
         };
 
         angular.mock.module(MockBackendModule, {
@@ -45,10 +45,6 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
             testUnit = $injector.get(AuthenticationServiceName);
         });
 
-    });
-
-    afterEach(() => {
-        $timeout.verifyNoPendingTasks();
     });
 
     describe('given architecture', () => {
@@ -73,32 +69,58 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
 
     describe('.authenticate()', () => {
 
-        it('should reject on missing, undefined, null or empty userPasswordProof', (done) => {
+        function testMissingUserPasswordProofError(e) {
+            expect(e)
+                .toEqual(jasmine.any(Error));
 
-            function checkError(e) {
-                expect(e)
-                    .toEqual(jasmine.any(Error));
+            expect(e.message)
+                .toEqual(BackendErrors.missingUserPasswordProof().message);
+        }
 
-                expect(e.message)
-                    .toEqual(BackendErrors.missingUserPasswordProof().message);
-            }
+        afterEach(() => {
+            $timeout.verifyNoPendingTasks();
+        });
 
-            testUnit.authenticate(testUserNameClaim)
-                .catch(e => checkError(e))
-                .then(() => _.reduce(
+        describe('when no user password proof is given', () => {
+
+            it('should reject authentication', (done) => {
+                testUnit.authenticate(testUserNameClaim)
+                    .then(() => {
+                        done.fail();
+                    })
+                    .catch((error) => {
+                        testMissingUserPasswordProofError(error);
+
+                        done();
+                    });
+
+                $timeout.flush();
+            });
+
+        });
+
+        describe('when undefined, null or empty user password proof is given', () => {
+
+            it('should reject authentication', (done) => {
+
+                const testChainedAuthenticationRequests = _.reduce(
                     [undefined, null, ''],
                     (acc, password) => acc
                         .then(() => testUnit.authenticate(testUserNameClaim, password))
-                        .catch(e => checkError(e)),
+                        .catch(e => testMissingUserPasswordProofError(e)),
                     $q.resolve(),
-                ))
-                .then(() => done())
-                .catch(e => done.fail(e));
+                );
 
-            $timeout.flush();
+                testChainedAuthenticationRequests
+                    .then(() => done())
+                    .catch(error => done.fail(error));
+
+                $timeout.flush();
+            });
+
         });
 
-        it('should return authentication data-mock-object', (done) => {
+        describe('when a valid password is given', () => {
 
             const expectedAuthentication = jasmine.objectContaining({
                 authorization: jasmine.objectContaining({
@@ -116,32 +138,41 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
                 }),
             });
 
-            testUnit.authenticate(testUserNameClaim, testUserPasswordProof)
-                .then((authentication) => {
+            beforeEach(() => {
+                profileServiceMock._loadProfiles
+                    .and
+                    .returnValue($q.resolve([]));
+            });
 
-                    expect(authentication)
-                        .toEqual(jasmine.any(Authentication));
+            it('should return authentication data-mock-object', (done) => {
+                testUnit.authenticate(testUserNameClaim, testUserPasswordProof)
+                    .then((authentication) => {
 
-                    expect(authentication.authorization)
-                        .toEqual(jasmine.any(Authorization));
+                        expect(authentication)
+                            .toEqual(jasmine.any(Authentication));
 
-                    expect(authentication.ident)
-                        .toEqual(jasmine.any(Ident));
+                        expect(authentication.authorization)
+                            .toEqual(jasmine.any(Authorization));
 
-                    expect(authentication.permissions)
-                        .toEqual(jasmine.any(Permissions));
+                        expect(authentication.ident)
+                            .toEqual(jasmine.any(Ident));
 
-                    expect(authentication)
-                        .toEqual(expectedAuthentication);
+                        expect(authentication.permissions)
+                            .toEqual(jasmine.any(Permissions));
 
-                    done();
+                        expect(authentication)
+                            .toEqual(expectedAuthentication);
 
-                })
-                .catch(e => done.fail(e));
+                        done();
+                    })
+                    .catch(e => done.fail(e));
 
-            $rootScope.$digest();
-            $timeout.flush();
+                $rootScope.$digest();
+                $timeout.flush();
+            });
+
         });
+
 
     });
 

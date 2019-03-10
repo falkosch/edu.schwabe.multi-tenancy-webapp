@@ -33,31 +33,30 @@ export class MockAuthenticationService extends AuthenticationService {
             return this.$q.reject(BackendErrors.missingUserPasswordProof());
         }
 
-        return this.$q.when(this.profileService.initializePromise)
-            .then(profiles => this.$timeout(
-                () => {
+        return this.profileService._loadProfiles()
+            .then(
+                profiles => this.$timeout(_.noop, MockAuthenticationService.MockDelay)
+                    .then(() => {
+                        const firstProfile = _.head(profiles);
+                        const id = _.get(firstProfile, 'login.uuid') || uuidV4();
+                        const key = uuidV4();
 
-                    const firstProfile = _.head(profiles);
-                    const id = _.get(firstProfile, 'login.uuid') || uuidV4();
-                    const key = uuidV4();
-
-                    return new Authentication()
-                        .setAuthorization(new BasicAuthorization().setKey(key))
-                        .setIdent(
-                            new IdentWithProfile()
-                                .setId(id)
-                                .setName(userNameClaim)
-                                .setFirstName(_.get(firstProfile, 'name.first', 'Mock'))
-                                .setLastName(_.get(firstProfile, 'name.last', 'User'))
-                                .setBirthdate(moment().toDate()),
-                        )
-                        .setPermissions(
-                            new PermissionsWithDefault()
-                                .setDefault(id)
-                                .setPermission('greet', true, false),
-                        );
-                },
-                MockAuthenticationService.MockDelay,
-            ));
+                        return new Authentication()
+                            .setAuthorization(new BasicAuthorization().setKey(key))
+                            .setIdent(
+                                new IdentWithProfile()
+                                    .setId(id)
+                                    .setName(userNameClaim)
+                                    .setFirstName(_.get(firstProfile, 'name.first', 'Mock'))
+                                    .setLastName(_.get(firstProfile, 'name.last', 'User'))
+                                    .setBirthdate(moment().toDate()),
+                            )
+                            .setPermissions(
+                                new PermissionsWithDefault()
+                                    .setDefault(id)
+                                    .setPermission('greet', true, false),
+                            );
+                    }),
+            );
     }
 }
