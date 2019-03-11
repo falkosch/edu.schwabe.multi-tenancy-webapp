@@ -93,6 +93,7 @@ module.exports = {
                 'jasmine/no-spec-dupes': ['warn', 'branch'],
                 'jasmine/no-suite-dupes': ['warn', 'branch'],
                 'sonarjs/no-duplicate-string': 'off',
+                'sonarjs/no-identical-functions': 'off',
             },
         },
         {
