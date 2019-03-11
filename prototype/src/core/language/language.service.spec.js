@@ -15,8 +15,8 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
     let testUnit;
 
     let $translateMock;
-    let eventEmitterServiceMock;
     let eventEmitterMocks;
+    let eventEmitterServiceMock;
 
     let $injector;
     let $rootScope;
@@ -29,27 +29,33 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
                 subscribe: jasmine.createSpy()
                     .and
                     .callFake((subscriber) => {
-                        const { $translatePartialLoaderStructureChanged } = eventEmitterMocks;
-                        $translatePartialLoaderStructureChanged.subscriber = subscriber;
-                        return $translatePartialLoaderStructureChanged;
+                        const eventEmitter = eventEmitterMocks
+                            .$translatePartialLoaderStructureChanged;
+                        eventEmitter.subscriber = subscriber;
+                        return eventEmitter;
                     }),
             },
             $translateChangeSuccess: {
                 subscribe: jasmine.createSpy()
                     .and
                     .callFake((subscriber) => {
-                        const { $translateChangeSuccess } = eventEmitterMocks;
-                        $translateChangeSuccess.subscriber = subscriber;
-                        return $translateChangeSuccess;
+                        const eventEmitter = eventEmitterMocks.$translateChangeSuccess;
+                        eventEmitter.subscriber = subscriber;
+                        return eventEmitter;
                     }),
             },
         };
 
         eventEmitterServiceMock = {
-            of: jasmine.createSpy()
-                .and
-                .callFake(eventName => eventEmitterMocks[eventName]),
+            of: jasmine.createSpy(),
         };
+        eventEmitterServiceMock.of.withArgs('$translatePartialLoaderStructureChanged')
+            .and
+            .returnValue(eventEmitterMocks.$translatePartialLoaderStructureChanged);
+        eventEmitterServiceMock.of.withArgs('$translateChangeSuccess')
+            .and
+            .returnValue(eventEmitterMocks.$translateChangeSuccess);
+
 
         angular.mock.module(LanguageModule, {
             [EventEmitterServiceName]: eventEmitterServiceMock,

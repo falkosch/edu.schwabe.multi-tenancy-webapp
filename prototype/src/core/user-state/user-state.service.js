@@ -4,15 +4,13 @@ import { EventEmitterServiceName } from '../event-emitter/event-emitter.service'
 
 export const UserStateServiceName = 'userStateService';
 
-export class UserStateEvents {
+export const UserStateEventLogin = 'user-state-login';
 
-    static Login = 'user-state-login';
+export const UserStateEventLogout = 'user-state-logout';
 
-    static Logout = 'user-state-logout';
+export const ERROR_ALREADY_LOGGED_IN = 'log out first';
 
-}
-
-class AuthenticatedUser {
+class AuthenticatedUserState {
 
     static $inject = [
         '$q',
@@ -32,16 +30,16 @@ class AuthenticatedUser {
     }
 
     login() {
-        return this.$q.reject(new Error('log out first'));
+        return this.$q.reject(new Error(ERROR_ALREADY_LOGGED_IN));
     }
 
     logout() {
-        this.context.userState = new AnonymousUser(this.context);
+        this.context.userState = new AnonymousUserState(this.context);
         return this.$q.resolve();
     }
 }
 
-class AnonymousUser {
+class AnonymousUserState {
 
     static $inject = [
         '$q',
@@ -65,13 +63,13 @@ class AnonymousUser {
         return this.authenticationService
             .authenticate(userNameClaim, userPasswordProof)
             .then((authentication) => {
-                this.context.userState = new AuthenticatedUser(this.context, authentication);
+                this.context.userState = new AuthenticatedUserState(this.context, authentication);
                 return authentication;
             });
     }
 
     logout() {
-        this.context.userState = new AnonymousUser(this.context);
+        this.context.userState = new AnonymousUserState(this.context);
         return this.$q.resolve();
     }
 }
@@ -98,10 +96,10 @@ export class UserStateService {
         this.$rootScope = $rootScope;
         this.injectionService = injectionService;
 
-        this.onLogin = eventEmitterService.of(UserStateEvents.Login);
-        this.onLogout = eventEmitterService.of(UserStateEvents.Logout);
+        this.onLogin = eventEmitterService.of(UserStateEventLogin);
+        this.onLogout = eventEmitterService.of(UserStateEventLogout);
 
-        this.userState = new AnonymousUser(this);
+        this.userState = new AnonymousUserState(this);
     }
 
     get isLoggedIn() {
