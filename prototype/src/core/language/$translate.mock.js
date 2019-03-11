@@ -7,9 +7,11 @@ beforeAll(() => {
 
     let $q;
 
-    const $translateMock = jasmine.createSpy()
-        .and
-        .callFake(keys => $q.resolve(_.zipObject(keys, keys)));
+    const $translateMock = jasmine.createSpy();
+    $translateMock.withArgs(jasmine.any(Array))
+        .and.callFake(keys => $q.resolve(_.zipObject(keys, keys)));
+    $translateMock.withArgs(jasmine.any(String))
+        .and.callFake(_.identity);
     $translateMock.preferredLanguage = jasmine.createSpy();
     $translateMock.storage = jasmine.createSpy();
     $translateMock.storageKey = jasmine.createSpy();
