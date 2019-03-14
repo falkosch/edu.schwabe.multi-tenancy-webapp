@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable compat/compat */
-
 // Credit for the original code goes to https://www.npmjs.com/package/serviceworker-webpack-plugin
 // https://github.com/oliviertassinari/serviceworker-webpack-plugin/blob/master/docs/src/sw.js
 
