@@ -12,8 +12,6 @@ import { profileRoute } from './profile.route';
 import { profileI18NConfig } from './profile-i18n.config';
 import { profileNavigationRun } from './profile-navigation.run';
 import { ProfileUnsetValueFilterName, ProfileUnsetValueFilter } from './profile-unset-value.filter';
-import { ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective } from './profile-unset-value.formatter';
-import { ProfileUnsetValueParserName, ProfileUnsetValueParserDirective } from './profile-unset-value.parser';
 
 import './i18n/de.json';
 import './i18n/en.json';
@@ -29,8 +27,6 @@ export const ProfileModule = angular
     ])
     .component(ProfileComponentName, ProfileComponent)
     .filter(ProfileUnsetValueFilterName, ProfileUnsetValueFilter)
-    .directive(ProfileUnsetValueFormatterName, ProfileUnsetValueFormatterDirective)
-    .directive(ProfileUnsetValueParserName, ProfileUnsetValueParserDirective)
     .config(profileRoute)
     .config(profileI18NConfig)
     .run(profileNavigationRun)
