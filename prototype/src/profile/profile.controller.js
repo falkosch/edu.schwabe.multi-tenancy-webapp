@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { GlobalSpinnerServiceName } from '../ui/global-spinner/global-spinner.service';
 
 export class ProfileController {
@@ -7,9 +9,7 @@ export class ProfileController {
         GlobalSpinnerServiceName,
     ];
 
-    enabled = [];
-
-    profileForm;
+    _enabledControls = [];
 
     viewmodel;
 
@@ -18,16 +18,26 @@ export class ProfileController {
         this.globalSpinnerService = globalSpinnerService;
     }
 
+    isEnabled(controlName) {
+        return _.includes(this._enabledControls, controlName);
+    }
+
     enableControl(controlName) {
-        this.enabled = [
-            ...this.enabled,
-            controlName,
-        ];
+        if (!_.isString(controlName)) {
+            return false;
+        }
+        if (_.includes(this._enabledControls, controlName)) {
+            return true;
+        }
+
+        this._enabledControls = [...this._enabledControls, controlName];
+
+        return true;
     }
 
     submit() {
-        this.globalSpinnerService.spinWhilePromise(
-            this.$q.when()
+        return this.globalSpinnerService.spinWhilePromise(
+            this.$q.resolve()
                 .then(() => this.viewmodel.save()),
         );
     }
