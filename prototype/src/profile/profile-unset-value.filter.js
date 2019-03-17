@@ -1,6 +1,8 @@
 import _ from 'lodash';
 
-export const ProfileUnsetValueFilterName = 'profileUnsetValue';
+export const ProfileUnsetValueProviderName = 'profileUnsetValue';
+
+export const ProfileUnsetValueFilterName = `${ProfileUnsetValueProviderName}Filter`;
 
 export function ProfileUnsetValueFilter() {
 
