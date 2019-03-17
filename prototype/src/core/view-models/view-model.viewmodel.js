@@ -2,15 +2,9 @@ import _ from 'lodash';
 
 import { EventEmitterServiceName } from '../event-emitter/event-emitter.service';
 
-export const ViewModelsServiceName = 'userStateService';
+export const ViewModelEventChanged = 'view-model-changed';
 
-export class ViewModelEvents {
-
-    static Changed = 'view-model-changed';
-
-    static Saved = 'view-model-saved';
-
-}
+export const ViewModelEventSaved = 'view-model-saved';
 
 export class ViewModel {
 
@@ -31,8 +25,8 @@ export class ViewModel {
     constructor(injectionService, originalModel) {
         injectionService.injectByStaticInjectionNames(this);
 
-        this.onChanged = this.eventEmitterService.of(ViewModelEvents.Changed);
-        this.onSaved = this.eventEmitterService.of(ViewModelEvents.Saved);
+        this.onChanged = this.eventEmitterService.of(ViewModelEventChanged);
+        this.onSaved = this.eventEmitterService.of(ViewModelEventSaved);
 
         this.originalModel = originalModel;
 
@@ -44,16 +38,16 @@ export class ViewModel {
 
             const getModelValue = () => _.get(this.transientModel, modelProperty);
 
-            const setModelValue = (newValue) => {
-                const oldValue = getModelValue();
-                _.set(this.transientModel, modelProperty, newValue);
-                return this.notifyModelChanged(modelProperty, oldValue, newValue);
-            };
-
             return {
                 enumerable: true,
-                get: getModelValue,
-                set: setModelValue,
+                get() {
+                    return getModelValue();
+                },
+                set(newValue) {
+                    const oldValue = getModelValue();
+                    _.set(this.transientModel, modelProperty, newValue);
+                    return this.notifyModelChanged(modelProperty, oldValue, newValue);
+                },
             };
         });
 
@@ -73,7 +67,9 @@ export class ViewModel {
     save() {
         this.originalModel = this.transientModel;
         this.reset();
-        return this.onSaved.emit(this);
+        return this.onSaved.emit({
+            viewModel: this,
+        });
     }
 
     reset() {
