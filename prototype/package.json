@@ -37,8 +37,8 @@
     "test:precommit": "karma start karma-precommit.conf"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
-    "@babel/runtime": "^7.3.1",
+    "@babel/polyfill": "^7.4.0",
+    "@babel/runtime": "^7.4.2",
     "@uirouter/angularjs": "^1.0.22",
     "angular": "^1.7.8",
     "angular-animate": "^1.7.8",
@@ -63,17 +63,17 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.3",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "@types/angular": "^1.6.54",
     "@types/angular-animate": "^1.5.10",
     "@types/angular-material": "^1.1.65",
     "@types/angular-mocks": "^1.7.0",
     "@types/angular-translate": "^2.16.0",
-    "@types/jasmine": "^3.3.10",
+    "@types/jasmine": "^3.3.12",
     "@types/lodash": "^4.14.123",
     "angular-mocks": "^1.7.8",
     "babel-eslint": "^10.0.1",
@@ -84,7 +84,7 @@
     "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
-    "eslint": "^5.15.2",
+    "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-problems": "^2.0.0",
     "eslint-plugin-angular": "^4.0.0",
@@ -146,13 +146,7 @@
     "webpack-merge": "^4.2.1"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --format=codeframe",
-      "git add"
-    ],
-    "*.scss": [
-      "stylelint",
-      "git add"
-    ]
+    "*.js": "eslint --format=codeframe",
+    "*.scss": "stylelint"
   }
 }
