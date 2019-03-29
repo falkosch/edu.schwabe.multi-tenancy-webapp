@@ -107,6 +107,12 @@ describe(`${PromiseTrackerModule}.models.${PromiseTracker.name}`, () => {
                     $rootScope.$digest();
                     $rootScope.$digest();
 
+                    expect(testUnit.isIdling)
+                        .toEqual(false);
+
+                    expect(testUnit.isBusy)
+                        .toEqual(true);
+
                     done();
                 });
 
