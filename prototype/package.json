@@ -68,6 +68,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
     "@types/angular": "^1.6.54",
     "@types/angular-animate": "^1.5.10",
     "@types/angular-material": "^1.1.67",
@@ -120,6 +121,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "ngtemplate-loader": "^2.0.1",
     "node-sass": "^4.11.0",
+    "nyc": "^13.3.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^7.0.1",
@@ -148,5 +150,10 @@
   "lint-staged": {
     "*.js": "eslint --format=codeframe",
     "*.scss": "stylelint"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ]
   }
 }
