@@ -1,6 +1,5 @@
 const path = require('path');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
@@ -25,10 +24,6 @@ module.exports = (env = {}) => common(env)
             filename: '[name].[hash].bundle.js',
         },
         plugins: [
-            new CleanWebpackPlugin([
-                'dist',
-                'deploy',
-            ]),
             new HashedModuleIdsPlugin(),
             new WebappWebpackPlugin({
                 cache: true,
@@ -174,6 +169,9 @@ module.exports = (env = {}) => common(env)
         plugins: [
             new CompressionPlugin(),
             new FileManagerPlugin({
+                onStart: {
+                    delete: ['dist', 'deploy'],
+                },
                 onEnd: {
                     mkdir: [
                         './deploy',
