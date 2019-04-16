@@ -9,29 +9,39 @@ pipeline {
   }
   stages {
     stage('checkout') {
-      nodejs() {
-        sh 'npm install'
-        sh 'npx lerna bootstrap'
+      steps {
+        nodejs() {
+          sh 'npm install'
+          sh 'npx lerna bootstrap'
+        }
       }
     }
     stage('lint') {
-      nodejs() {
-        sh 'npx lerna run lint:ci'
+      steps {
+        nodejs() {
+          sh 'npx lerna run lint:ci'
+        }
       }
     }
     stage('unit tests') {
-      nodejs() {
-        sh 'npx lerna run test:ci'
+      steps {
+        nodejs() {
+          sh 'npx lerna run test:ci'
+        }
       }
     }
     stage('build artifact') {
-      nodejs() {
-        sh 'npx lerna run build:ci'
+      steps {
+        nodejs() {
+          sh 'npx lerna run build:ci'
+        }
       }
     }
     stage('generate docs') {
-      nodejs() {
-        sh 'npx lerna run docs'
+      steps {
+        nodejs() {
+          sh 'npx lerna run docs'
+        }
       }
     }
   }
