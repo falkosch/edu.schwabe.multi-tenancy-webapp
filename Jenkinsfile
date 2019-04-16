@@ -8,7 +8,7 @@ pipeline {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
   }
   triggers {
-    pollSCM('H */15 * * * *')
+    pollSCM('H */15 * * *')
   }
   stages {
     stage('checkout') {
