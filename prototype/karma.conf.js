@@ -7,7 +7,10 @@ const KarmaConfigBuilder = require('./scripts/karma-config-builder');
 const testWebpackConfigBuilderFactory = require('./scripts/webpack.test');
 
 process.env.NODE_ENV = 'test';
-process.env.CHROME_BIN = puppeteer.executablePath();
+
+const chromePath = puppeteer.executablePath();
+process.env.CHROME_BIN = chromePath;
+process.env.CHROMIUM_BIN = chromePath;
 
 module.exports = (config) => {
 
@@ -27,10 +30,10 @@ module.exports = (config) => {
                     .build(),
             )
             .addConfig({
-                browsers: ['ChromeHeadlessNoSandbox'],
+                browsers: ['ChromiumHeadlessNoSandbox'],
                 customLaunchers: {
-                    ChromeHeadlessNoSandbox: {
-                        base: 'ChromeHeadless',
+                    ChromiumHeadlessNoSandbox: {
+                        base: 'ChromiumHeadless',
                         flags: ['--no-sandbox'],
                     },
                     ChromeDebugging: {
