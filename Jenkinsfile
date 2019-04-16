@@ -7,41 +7,34 @@ pipeline {
   parameters {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
   }
+  triggers {
+    pollSCM('H */15 * * * *')
+  }
   stages {
     stage('checkout') {
       steps {
-        nodejs() {
-          sh 'npm install'
-          sh 'npx lerna bootstrap'
-        }
+        sh 'npm install'
+        sh 'npx lerna bootstrap'
       }
     }
     stage('lint') {
       steps {
-        nodejs() {
-          sh 'npx lerna run lint:ci'
-        }
+        sh 'npx lerna run lint:ci'
       }
     }
     stage('unit tests') {
       steps {
-        nodejs() {
-          sh 'npx lerna run test:ci'
-        }
+        sh 'npx lerna run test:ci'
       }
     }
     stage('build artifact') {
       steps {
-        nodejs() {
-          sh 'npx lerna run build:ci'
-        }
+        sh 'npx lerna run build:ci'
       }
     }
     stage('generate docs') {
       steps {
-        nodejs() {
-          sh 'npx lerna run docs'
-        }
+        sh 'npx lerna run docs'
       }
     }
   }
