@@ -25,7 +25,7 @@ pipeline {
       steps {
         sh 'npx lerna run test:ci'
         junit '**/test-reports/*.xml'
-        cobertura coberturaReportFile: '**/coverage/cobertura.xml',
+        cobertura coberturaReportFile: '**/coverage/**/cobertura.xml',
           conditionalCoverageTargets: '70, 0, 0',
           enableNewApi: true,
           lineCoverageTargets: '80, 0, 0',
