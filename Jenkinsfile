@@ -6,6 +6,9 @@ pipeline {
   triggers {
     pollSCM('H */15 * * *')
   }
+  options {
+    skipStagesAfterUnstable()
+  }
   stages {
     stage('checkout') {
       steps {
@@ -21,6 +24,7 @@ pipeline {
     stage('unit tests') {
       steps {
         sh 'npx lerna run test:ci'
+        junit './**/test-reports/*.xml'
       }
     }
     stage('build artifact') {
@@ -32,6 +36,11 @@ pipeline {
       steps {
         sh 'npx lerna run docs'
       }
+    }
+  }
+  post {
+    always {
+      deleteDir()
     }
   }
 }
