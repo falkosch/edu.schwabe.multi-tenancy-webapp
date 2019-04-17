@@ -37,6 +37,7 @@ module.exports = (config) => {
                     reporters: [
                         { type: 'text' },
                         { type: 'lcov' },
+                        { type: 'cobertura', file: 'cobertura.xml' },
                     ],
                     check: {
                         global: {
