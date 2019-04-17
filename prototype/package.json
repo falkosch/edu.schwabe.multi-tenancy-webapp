@@ -23,7 +23,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer --env.noProgress",
     "build:serve": "http-server --gzip --cors ./dist",
-    "clean": "rimraf ./dist && rimraf ./deploy && rimraf ./coverage && rimraf ./docs",
+    "clean": "rimraf ./dist ./deploy ./coverage ./test-reports ./docs",
     "docs": "jsdoc -c jsdoc.conf.js",
     "docs:serve": "http-server --cors ./docs",
     "lint": "eslint . --fix && stylelint . --fix",
