@@ -6,9 +6,6 @@ pipeline {
   parameters {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
   }
-  tools {
-    docker 'latest'
-  }
   triggers {
     pollSCM('H */15 * * *')
   }
