@@ -1,11 +1,5 @@
 pipeline {
-  //agent any
-  agent {
-    docker {
-      image 'atlassianlabs/docker-node-jdk-chrome-firefox:latest'
-      label 'docker'
-    }
-  }
+  agent any
   parameters {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
   }
