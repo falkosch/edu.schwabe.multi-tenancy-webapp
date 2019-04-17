@@ -25,6 +25,14 @@ pipeline {
       steps {
         sh 'npx lerna run test:ci'
         junit '**/test-reports/*.xml'
+        cobertura coberturaReportFile: '**/coverage/cobertura.xml',
+          conditionalCoverageTargets: '70, 0, 0',
+          enableNewApi: true,
+          lineCoverageTargets: '80, 0, 0',
+          maxNumberOfBuilds: 0,
+          methodCoverageTargets: '80, 0, 0',
+          onlyStable: false,
+          sourceEncoding: 'ASCII'
       }
     }
     stage('build artifact') {
