@@ -24,7 +24,7 @@ pipeline {
     stage('unit tests') {
       steps {
         sh 'npx lerna run test:ci'
-        junit './**/test-reports/*.xml'
+        junit '**/test-reports/*.xml'
       }
     }
     stage('build artifact') {
