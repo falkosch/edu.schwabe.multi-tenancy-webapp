@@ -37,8 +37,8 @@
     "test:precommit": "karma start karma-precommit.conf"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.0",
-    "@babel/runtime": "^7.4.2",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/runtime": "^7.4.3",
     "@uirouter/angularjs": "^1.0.22",
     "angular": "^1.7.8",
     "angular-animate": "^1.7.8",
@@ -62,7 +62,7 @@
     "uuid-browser": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -136,13 +136,13 @@
     "stylelint": "^10.0.1",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-no-unsupported-browser-features": "^3.0.2",
-    "stylelint-scss": "^3.5.4",
+    "stylelint-scss": "^3.6.0",
     "terser-webpack-plugin": "^1.2.3",
     "url-loader": "^1.1.2",
-    "webapp-webpack-plugin": "^2.6.1",
+    "webapp-webpack-plugin": "^2.7.0",
     "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.0",
+    "webpack-cli": "^3.3.1",
     "webpack-dev-server": "^3.3.1",
     "webpack-merge": "^4.2.1"
   },
