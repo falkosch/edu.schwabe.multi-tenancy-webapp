@@ -16,33 +16,45 @@ pipeline {
         sh 'npx lerna bootstrap'
       }
     }
-    stage('lint') {
-      steps {
-        sh 'npx lerna run lint:ci'
+    stage('validation') {
+      failFast false
+      parallel {
+        stage('lint') {
+          steps {
+            sh 'npx lerna run lint:ci'
+          }
+        }
+        stage('unit tests') {
+          steps {
+            sh 'npx lerna run test:ci'
+            junit '**/test-reports/*.xml'
+            cobertura([
+              coberturaReportFile: '**/coverage/**/cobertura.xml',
+              conditionalCoverageTargets: '70, 0, 0',
+              enableNewApi: true,
+              lineCoverageTargets: '80, 0, 0',
+              maxNumberOfBuilds: 0,
+              methodCoverageTargets: '80, 0, 0',
+              onlyStable: false,
+              sourceEncoding: 'ASCII'
+            ])
+          }
+        }
       }
     }
-    stage('unit tests') {
-      steps {
-        sh 'npx lerna run test:ci'
-        junit '**/test-reports/*.xml'
-        cobertura coberturaReportFile: '**/coverage/**/cobertura.xml',
-          conditionalCoverageTargets: '70, 0, 0',
-          enableNewApi: true,
-          lineCoverageTargets: '80, 0, 0',
-          maxNumberOfBuilds: 0,
-          methodCoverageTargets: '80, 0, 0',
-          onlyStable: false,
-          sourceEncoding: 'ASCII'
-      }
-    }
-    stage('build artifact') {
-      steps {
-        sh 'npx lerna run build:ci'
-      }
-    }
-    stage('generate docs') {
-      steps {
-        sh 'npx lerna run docs'
+    stage('build') {
+      failFast true
+      parallel {
+        stage('build artifact') {
+          steps {
+            sh 'npx lerna run build:ci'
+          }
+        }
+        stage('generate docs') {
+          steps {
+            sh 'npx lerna run docs'
+          }
+        }
       }
     }
   }
