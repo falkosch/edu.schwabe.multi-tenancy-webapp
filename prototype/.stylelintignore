@@ -1,5 +1,4 @@
-/test-reports/**
-/coverage/**
+/reports/**
 /deploy/**
 /dist/**
 /node_modules/**

@@ -33,7 +33,6 @@ module.exports = (config) => {
                     },
                 },
                 coverageReporter: {
-                    dir: 'coverage/',
                     reporters: [
                         { type: 'text' },
                     ],

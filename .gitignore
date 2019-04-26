@@ -1,8 +1,7 @@
-coverage/
 docs/
 dist/
 deploy/
-test-reports/
+reports/
 
 package-lock.json
 

@@ -33,7 +33,7 @@ module.exports = (config) => {
                     },
                 },
                 coverageReporter: {
-                    dir: 'coverage/',
+                    dir: 'reports/coverage/',
                     reporters: [
                         { type: 'text' },
                         { type: 'lcov' },
@@ -55,9 +55,10 @@ module.exports = (config) => {
                     },
                 },
                 junitReporter: {
-                    outputDir: 'test-reports',
+                    outputDir: 'reports/unit-tests/',
                 },
                 reporters: ['junit', 'spec', 'coverage', 'summary'],
+                colors: false,
                 singleRun: true,
                 specReporter: {
                     suppressErrorSummary: false,

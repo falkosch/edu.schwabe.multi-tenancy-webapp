@@ -1,6 +1,14 @@
 {
   "name": "@edu.schwabe.webapp-prototypes/webapp-prototypes",
   "private": true,
+  "scripts": {
+    "build:ci": "lerna run build:ci",
+    "clean:ci": "lerna run clean:ci",
+    "docs:ci": "lerna run docs:ci",
+    "lint:ci": "lerna run lint:ci",
+    "postinstall": "lerna bootstrap",
+    "test:ci": "lerna run test:ci"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit"

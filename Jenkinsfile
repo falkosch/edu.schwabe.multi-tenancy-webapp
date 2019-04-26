@@ -1,19 +1,22 @@
 pipeline {
   agent any
+  options {
+    disableConcurrentBuilds()
+    preserveStashes(buildCount: 2)
+    skipStagesAfterUnstable()
+    timeout(time: 60, unit: 'MINUTES')
+  }
   parameters {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
   }
   triggers {
     pollSCM('H */15 * * *')
   }
-  options {
-    skipStagesAfterUnstable()
-  }
   stages {
     stage('checkout') {
       steps {
         sh 'npm install'
-        sh 'npx lerna bootstrap'
+        sh 'npm run clean:ci'
       }
     }
     stage('validation') {
@@ -21,15 +24,31 @@ pipeline {
       parallel {
         stage('lint') {
           steps {
-            sh 'npx lerna run lint:ci'
+            script {
+              try {
+                sh 'npm run lint:ci'
+              }
+              finally {
+                recordIssues(
+                  enabledForFailure: true,
+                  ignoreFailedBuilds: false,
+                  qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
+                  tools: [checkStyle(pattern: '**/reports/*.checkstyle.xml')]
+                )
+              }
+            }
           }
         }
         stage('unit tests') {
           steps {
-            sh 'npx lerna run test:ci'
-            junit '**/test-reports/*.xml'
+            script {
+              try {
+            sh 'npm run test:ci'
+              }
+              finally {
+            junit '**/reports/unit-tests/TESTS*.xml'
             cobertura([
-              coberturaReportFile: '**/coverage/**/cobertura.xml',
+              coberturaReportFile: '**/reports/coverage/**/cobertura.xml',
               conditionalCoverageTargets: '70, 0, 0',
               enableNewApi: true,
               lineCoverageTargets: '80, 0, 0',
@@ -38,6 +57,11 @@ pipeline {
               onlyStable: false,
               sourceEncoding: 'ASCII'
             ])
+              }
+              if (currentBuild.resultIsWorseOrEqualTo('UNSTABLE')) {
+                error('Test stage did not pass')
+              }
+            }
           }
         }
       }
@@ -47,19 +71,19 @@ pipeline {
       parallel {
         stage('build artifact') {
           steps {
-            sh 'npx lerna run build:ci'
+            sh 'npm run build:ci'
           }
         }
         stage('generate docs') {
           steps {
-            sh 'npx lerna run docs'
+            sh 'npm run docs:ci'
           }
         }
       }
     }
   }
   post {
-    always {
+    success {
       deleteDir()
     }
   }
