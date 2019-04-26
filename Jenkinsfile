@@ -43,20 +43,20 @@ pipeline {
           steps {
             script {
               try {
-            sh 'npm run test:ci'
+                sh 'npm run test:ci'
               }
               finally {
-            junit '**/reports/unit-tests/TESTS*.xml'
-            cobertura([
-              coberturaReportFile: '**/reports/coverage/**/cobertura.xml',
-              conditionalCoverageTargets: '70, 0, 0',
-              enableNewApi: true,
-              lineCoverageTargets: '80, 0, 0',
-              maxNumberOfBuilds: 0,
-              methodCoverageTargets: '80, 0, 0',
-              onlyStable: false,
-              sourceEncoding: 'ASCII'
-            ])
+                junit '**/reports/unit-tests/TESTS*.xml'
+                cobertura([
+                  coberturaReportFile: '**/reports/coverage/**/cobertura.xml',
+                  conditionalCoverageTargets: '70, 0, 0',
+                  enableNewApi: true,
+                  lineCoverageTargets: '80, 0, 0',
+                  maxNumberOfBuilds: 0,
+                  methodCoverageTargets: '80, 0, 0',
+                  onlyStable: false,
+                  sourceEncoding: 'ASCII'
+                ])
               }
               if (currentBuild.resultIsWorseOrEqualTo('UNSTABLE')) {
                 error('Test stage did not pass')
@@ -77,6 +77,39 @@ pipeline {
         stage('generate docs') {
           steps {
             sh 'npm run docs:ci'
+          }
+        }
+      }
+    }
+    stage('deploy') {
+      when {
+        expression {
+          currentBuild.resultIsBetterOrEqualTo('SUCCESS')
+        }
+      }
+      stages {
+        stage('deploy artifact to change request stage') {
+          when {
+            changeRequest()
+          }
+          steps {
+            echo 'deploying to change request stage'
+          }
+        }
+        stage('deploy artifact to master stage') {
+          when {
+            branch 'master'
+          }
+          steps {
+            echo 'deploying to master stage'
+          }
+        }
+        stage('deploy artifact to production stage') {
+          when {
+            buildingTag()
+          }
+          steps {
+            echo 'deploying to production stage'
           }
         }
       }
