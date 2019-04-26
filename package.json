@@ -6,6 +6,7 @@
     "clean:ci": "lerna run clean:ci",
     "docs:ci": "lerna run docs:ci",
     "lint:ci": "lerna run lint:ci",
+    "sonar:ci": "lerna run sonar:ci",
     "postinstall": "lerna bootstrap",
     "test:ci": "lerna run test:ci"
   },
