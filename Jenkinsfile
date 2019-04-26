@@ -86,5 +86,15 @@ pipeline {
     success {
       deleteDir()
     }
+    failure {
+      script {
+        committerEmail = sh(returnStdout: true, script: 'git --no-pager show -s --format=\'%ae\'').trim()
+      }
+      mail(
+        to: "${committerEmail}",
+        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+        body: "Something is wrong with ${env.BUILD_URL}"
+      )
+    }
   }
 }
