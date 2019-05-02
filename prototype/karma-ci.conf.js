@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
+const _ = require('lodash');
 
 const KarmaConfigBuilder = require('./scripts/karma-config-builder');
 
@@ -34,6 +35,7 @@ module.exports = (config) => {
                 },
                 coverageReporter: {
                     dir: 'reports/coverage/',
+                    subdir: browser => _.head(_.split(_.toLower(browser), /[ /-]/)),
                     reporters: [
                         { type: 'text' },
                         { type: 'lcov' },
