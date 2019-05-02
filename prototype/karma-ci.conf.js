@@ -20,7 +20,7 @@ module.exports = (config) => {
         new KarmaConfigBuilder()
             .withTenant(testEnv.tenant)
             .withWebpackConfig(
-                testWebpackConfigBuilderFactory(testEnv, __dirname)
+                testWebpackConfigBuilderFactory(__dirname, testEnv)
                     .withProgress(false)
                     .build(),
             )
