@@ -39,20 +39,6 @@ pipeline {
             }
           }
         }
-        stage('sonar-quality-gate') {
-          steps {
-            script {
-              withSonarQubeEnv('sonarqube') {
-                withEnv(["sonar.branch.name=${env.BRANCH_NAME}"]) {
-                  sh 'npm run sonar:ci'
-                }
-              }
-              timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-        }
         stage('unit tests') {
           steps {
             script {
@@ -76,6 +62,20 @@ pipeline {
                 error('Test stage did not pass')
               }
             }
+          }
+        }
+      }
+    }
+    stage('sonar quality gate') {
+      steps {
+        script {
+          withSonarQubeEnv('sonarqube') {
+            withEnv(["sonar.branch.name=${env.BRANCH_NAME}"]) {
+              sh 'npm run sonar:ci'
+            }
+          }
+          timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
           }
         }
       }
