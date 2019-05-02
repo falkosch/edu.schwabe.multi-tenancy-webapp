@@ -1,21 +1,59 @@
-# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
-
-# You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassianlabs/docker-node-jdk-chrome-firefox:latest
-
 options:
   max-time: 5 # minutes
-
+definitions:
+  caches:
+    prototype-node: prototype/node_modules
+    prototype-deploy: prototype/deploy
 pipelines:
   default:
     - step:
-        name: Lint, Test and Build
+        name: checkout & validate & build
         caches:
           - node
+          - prototype-node
         script:
-          - npm install
-          - npx lerna bootstrap
-          - npx lerna run lint:ci
-          - npx lerna run test:ci
-          - npx lerna run build:ci
-          - npx lerna run docs
+          - npm install --unsafe-perm
+          - npm run lint:ci
+          - npm run test:ci
+          - pipe: sonarsource/sonarcloud-scan:0.1.5
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+          - npm run docs:ci
+          - npm run build:ci
+  branches:
+    feature/*:
+      - step:
+          name: deploying to change request stage
+          caches:
+            - node
+            - prototype-node
+            - prototype-deploy
+          script:
+            - echo "deploying to change request stage"
+            - npm install --unsafe-perm
+            - ls prototype/deploy
+    master:
+      - step:
+          name: deploying to master stage
+          deployment: staging
+          caches:
+            - node
+            - prototype-node
+            - prototype-deploy
+          script:
+            - echo "deploying to master stage"
+            - npm install --unsafe-perm
+            - ls prototype/deploy
+      - step:
+          name: deploying to production
+          deployment: production
+          trigger: manual
+          caches:
+            - node
+            - prototype-node
+            - prototype-deploy
+          script:
+            - echo "deploying to production stage"
+            - npm install --unsafe-perm
+            - ls prototype/deploy

@@ -32,7 +32,12 @@ module.exports = (env = {}) => common(env)
                     appShortName: projectPackage[projectPackage.name].shortName,
                 },
             }),
-            new ImageminPlugin({}),
+            new ImageminPlugin({
+                // https://github.com/Klathmon/imagemin-webpack-plugin#api
+                optipng: {
+                    optimizationLevel: 1,
+                },
+            }),
             new MiniCssExtractPlugin({
                 chunkFilename: '[name].[hash].chunk.css',
                 filename: '[name].[hash].bundle.css',
@@ -136,12 +141,20 @@ module.exports = (env = {}) => common(env)
                                 },
                                 optipng: {
                                     // https://github.com/imagemin/imagemin-optipng#options
+                                    optimizationLevel: 1,
+                                },
+                                pngquant: {
+                                    // https://github.com/imagemin/imagemin-pngquant#options
+                                    speed: 10,
                                 },
                                 gifsicle: {
-                                    // https://github.com/imagemin/imagemin-gifsicle
+                                    // https://github.com/imagemin/imagemin-gifsicle#options
+                                },
+                                svgo: {
+                                    // https://github.com/imagemin/imagemin-svgo#options
                                 },
                                 webp: {
-                                    // https://github.com/imagemin/imagemin-webp
+                                    // https://github.com/imagemin/imagemin-webp#options
                                 },
                             },
                         },
@@ -167,7 +180,13 @@ module.exports = (env = {}) => common(env)
     })
     .build({
         plugins: [
-            new CompressionPlugin(),
+            new CompressionPlugin({
+                cache: true,
+                compressionOptions: {
+                    // https://nodejs.org/api/zlib.html#zlib_class_options
+                    level: 1, // compression with best speed
+                },
+            }),
             new FileManagerPlugin({
                 onStart: {
                     delete: ['dist', 'deploy'],
@@ -176,9 +195,15 @@ module.exports = (env = {}) => common(env)
                     mkdir: [
                         './deploy',
                     ],
-                    archive: [
-                        { source: './dist', destination: './deploy/prototype.zip' },
-                    ],
+                    archive: [{
+                        source: './dist',
+                        destination: './deploy/prototype.zip',
+                        options: {
+                            zlib: {
+                                level: 1,
+                            },
+                        },
+                    }],
                 },
             }),
         ],
