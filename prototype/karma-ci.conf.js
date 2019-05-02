@@ -57,7 +57,7 @@ module.exports = (config) => {
                     },
                 },
                 junitReporter: {
-                    outputDir: 'reports/unit-tests/',
+                    outputDir: 'reports/test-reports/',
                 },
                 reporters: ['junit', 'spec', 'coverage', 'summary'],
                 colors: false,

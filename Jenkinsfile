@@ -46,7 +46,7 @@ pipeline {
                 sh 'npm run test:ci'
               }
               finally {
-                junit '**/reports/unit-tests/TESTS*.xml'
+                junit '**/reports/test-reports/TESTS*.xml'
                 cobertura([
                   coberturaReportFile: '**/reports/coverage/**/cobertura.xml',
                   conditionalCoverageTargets: '70, 0, 0',
