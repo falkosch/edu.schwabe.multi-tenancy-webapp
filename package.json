@@ -7,7 +7,7 @@
     "docs:ci": "lerna run docs:ci",
     "lint:ci": "lerna run lint:ci",
     "sonar:ci": "lerna run sonar:ci",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap --no-ci",
     "test:ci": "lerna run test:ci"
   },
   "husky": {
