@@ -8,8 +8,7 @@
       "message": "chore(release): publish"
     }
   },
-  "npmClient": "yarn",
   "npmClientArgs": [
-    "--no-lockfile"
+    "--no-package-lock"
   ]
 }
