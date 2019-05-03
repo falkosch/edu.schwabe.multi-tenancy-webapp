@@ -31,6 +31,21 @@ definitions:
           - npm run build:ci
         artifacts:
           - prototype/deploy/**
+    - step: &build-gated
+        name: Quality Gate, then Build
+        caches:
+          - node
+          - prototype-node
+          - sonar
+        script:
+          - pipe: sonarsource/sonarcloud-scan:0.1.5
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: '-Dsonar.projectBaseDir=./prototype'
+          - npm install --unsafe-perm
+          - npm run build:ci
+        artifacts:
+          - prototype/deploy/**
     - step: &deploy
         name: Deploy
         deployment: test
@@ -42,20 +57,12 @@ pipelines:
   pull-requests:
     '**':
       - step: *validate
-      - step:
-          name: Quality Gate
-          caches:
-            - sonar
-          script:
-            - pipe: sonarsource/sonarcloud-scan:0.1.5
-              variables:
-                SONAR_TOKEN: ${SONAR_TOKEN}
-                EXTRA_ARGS: '-Dsonar.projectBaseDir=./prototype'
-      - step: *build
+      - step: *build-gated
       - step: *deploy
   branches:
     master:
-      - step: *build
+      - step: *validate
+      - step: *build-gated
       - step:
           <<: *deploy
           deployment: staging
