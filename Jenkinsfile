@@ -2,9 +2,9 @@ pipeline {
   agent any
   options {
     disableConcurrentBuilds()
-    preserveStashes(buildCount: 2)
+    preserveStashes()
     skipStagesAfterUnstable()
-    timeout(time: 60, unit: 'MINUTES')
+    timeout(time: 10, unit: 'MINUTES')
   }
   parameters {
     string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')

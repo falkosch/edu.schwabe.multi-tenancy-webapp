@@ -7,6 +7,8 @@
     "docs:ci": "lerna run docs:ci",
     "lint:ci": "lerna run lint:ci",
     "sonar:ci": "lerna run sonar:ci",
+    "sonar:ci-js": "lerna run sonar:ci-js",
+    "sonar:ci-scss": "lerna run sonar:ci-scss",
     "postinstall": "lerna bootstrap",
     "test:ci": "lerna run test:ci"
   },

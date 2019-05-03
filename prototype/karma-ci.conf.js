@@ -38,7 +38,7 @@ module.exports = (config) => {
                     subdir: browser => _.head(_.split(_.toLower(browser), /[ /-]/)),
                     reporters: [
                         { type: 'text' },
-                        { type: 'lcov' },
+                        { type: 'lcovonly' },
                         { type: 'cobertura', file: 'cobertura.xml' },
                     ],
                     check: {

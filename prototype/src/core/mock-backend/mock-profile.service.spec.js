@@ -281,7 +281,7 @@ describe(`${MockBackendModule}.${MockProfileServiceName} implementing ${BackendM
                     "location": {
                         "street": "1158 strand road",
                         "city": "gorey",
-                        "state": "d�n laoghaire�rathdown",
+                        "state": "dún laoghaire–rathdown",
                         "postcode": 44191,
                         "coordinates": {
                             "latitude": "-73.1917",
