@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer --env.noProgress",
+    "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer --env.noProgress && node ./scripts/hash-output.js",
     "build:serve": "static-server dist/",
     "clean": "rimraf ./dist ./deploy ./reports ./docs",
     "clean:ci": "npm run clean",
