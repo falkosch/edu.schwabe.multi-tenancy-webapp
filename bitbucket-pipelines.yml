@@ -52,8 +52,6 @@ definitions:
         script:
           - ls prototype/{,deploy}
 pipelines:
-  default:
-    - step: *validate
   pull-requests:
     '**':
       - step: *validate
