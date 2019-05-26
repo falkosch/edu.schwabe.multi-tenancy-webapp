@@ -80,6 +80,7 @@ pipelines:
           name: Deploy to staging
           deployment: staging
           script:
+            - cat ~/.ssh/known_hosts
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
