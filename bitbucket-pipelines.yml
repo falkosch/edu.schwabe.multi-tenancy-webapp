@@ -59,7 +59,7 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && mkdir -p ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf ${BITBUCKET_BRANCH##*/} && mkdir ${BITBUCKET_BRANCH##*/}'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
@@ -70,7 +70,7 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}/*.zip && rm -f ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}/*.zip'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && unzip prototype.zip && rm -f prototype.zip*'
   branches:
     master:
       - step: *validate
@@ -83,7 +83,7 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/staging && mkdir -p ${DEPLOY_DOC_ROOT}/staging'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf staging && mkdir staging'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
@@ -94,7 +94,7 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/staging/*.zip && rm -f ${DEPLOY_DOC_ROOT}/staging/*.zip'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/staging && unzip prototype.zip && rm -f prototype.zip*'
     'release/*':
       - step: *build
       - step:
@@ -106,7 +106,7 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/production && mkdir -p ${DEPLOY_DOC_ROOT}/production'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf production && mkdir production'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
@@ -117,4 +117,4 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/production/*.zip && rm -f ${DEPLOY_DOC_ROOT}/production/*.zip'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/production && unzip prototype.zip && rm -f prototype.zip*'
