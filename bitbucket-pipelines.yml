@@ -1,8 +1,6 @@
 image: atlassianlabs/docker-node-jdk-chrome-firefox:latest
 options:
   max-time: 10 # minutes
-clone:
-  depth: full
 definitions:
   caches:
     sonar: ~/.sonar/cache
@@ -37,6 +35,8 @@ definitions:
           - node
           - prototype-node
           - sonar
+        clone:
+          depth: full
         script:
           - pipe: sonarsource/sonarcloud-scan:0.1.5
             variables:
@@ -46,28 +46,76 @@ definitions:
           - npm run build:ci
         artifacts:
           - prototype/deploy/**
-    - step: &deploy
-        name: Deploy
-        deployment: test
-        script:
-          - ls prototype/{,deploy}
 pipelines:
   pull-requests:
     '**':
       - step: *validate
       - step: *build-gated
-      - step: *deploy
+      - step:
+          name: Deploy to test branch
+          deployment: test
+          script:
+            - cat ~/.ssh/known_hosts
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && mkdir -p ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
+            - pipe: atlassian/sftp-deploy:0.4.0
+              variables:
+                USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                REMOTE_PATH: '${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
+                LOCAL_PATH: 'prototype/deploy'
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}/*.zip && rm -f ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}/*.zip'
   branches:
     master:
       - step: *validate
       - step: *build-gated
       - step:
-          <<: *deploy
+          name: Deploy to staging
           deployment: staging
-          trigger: manual
+          script:
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/staging && mkdir -p ${DEPLOY_DOC_ROOT}/staging'
+            - pipe: atlassian/sftp-deploy:0.4.0
+              variables:
+                USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                REMOTE_PATH: '${DEPLOY_DOC_ROOT}/staging'
+                LOCAL_PATH: 'prototype/deploy'
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/staging/*.zip && rm -f ${DEPLOY_DOC_ROOT}/staging/*.zip'
     'release/*':
       - step: *build
       - step:
-          <<: *deploy
+          name: Deploy to production
           deployment: production
           trigger: manual
+          script:
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'rm -rf ${DEPLOY_DOC_ROOT}/production && mkdir -p ${DEPLOY_DOC_ROOT}/production'
+            - pipe: atlassian/sftp-deploy:0.4.0
+              variables:
+                USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                REMOTE_PATH: '${DEPLOY_DOC_ROOT}/production'
+                LOCAL_PATH: 'prototype/deploy'
+            - pipe: atlassian/ssh-run:0.1.4
+              variables:
+                SSH_USER: ${DEPLOY_USER}
+                SERVER: ${DEPLOY_WEBSERVER}
+                COMMAND: 'unzip ${DEPLOY_DOC_ROOT}/production/*.zip && rm -f ${DEPLOY_DOC_ROOT}/production/*.zip'
