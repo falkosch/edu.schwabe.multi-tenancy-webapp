@@ -55,7 +55,6 @@ pipelines:
           name: Deploy to test branch
           deployment: test
           script:
-            - cat ~/.ssh/known_hosts
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -66,7 +65,7 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
-                LOCAL_PATH: 'prototype/deploy'
+                LOCAL_PATH: 'prototype/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -80,7 +79,6 @@ pipelines:
           name: Deploy to staging
           deployment: staging
           script:
-            - cat ~/.ssh/known_hosts
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -91,7 +89,7 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/staging'
-                LOCAL_PATH: 'prototype/deploy'
+                LOCAL_PATH: 'prototype/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -114,7 +112,7 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/production'
-                LOCAL_PATH: 'prototype/deploy'
+                LOCAL_PATH: 'prototype/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
