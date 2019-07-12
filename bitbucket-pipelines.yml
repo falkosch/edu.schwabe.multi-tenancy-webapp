@@ -4,13 +4,11 @@ options:
 definitions:
   caches:
     sonar: ~/.sonar/cache
-    prototype-node: prototype/node_modules
   steps:
     - step: &validate
         name: Validate
         caches:
           - node
-          - prototype-node
         script:
           - npm install --unsafe-perm
           - npm run lint:ci
@@ -18,22 +16,22 @@ definitions:
           - npm run sonar:ci-js
           - npm run sonar:ci-scss
         artifacts:
-          - prototype/reports/**
+          - reports/**
+          - base-app/reports/**
+          - tenants/*/reports/**
     - step: &build
         name: Build
         caches:
           - node
-          - prototype-node
         script:
           - npm install --unsafe-perm
           - npm run build:ci
         artifacts:
-          - prototype/deploy/**
+          - tenants/*/deploy/**
     - step: &build-gated
         name: Quality Gate, then Build
         caches:
           - node
-          - prototype-node
           - sonar
         clone:
           depth: full
@@ -41,11 +39,10 @@ definitions:
           - pipe: sonarsource/sonarcloud-scan:0.1.5
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: '-Dsonar.projectBaseDir=./prototype'
           - npm install --unsafe-perm
           - npm run build:ci
         artifacts:
-          - prototype/deploy/**
+          - tenants/*/deploy/**
 pipelines:
   pull-requests:
     '**':
@@ -65,12 +62,12 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
-                LOCAL_PATH: 'prototype/deploy/*'
+                LOCAL_PATH: 'tenants/tenant1/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && unzip prototype.zip && rm -f prototype.zip*'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && unzip *.zip && rm -f *.zip*'
   branches:
     master:
       - step: *validate
@@ -89,12 +86,12 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/staging'
-                LOCAL_PATH: 'prototype/deploy/*'
+                LOCAL_PATH: 'tenants/tenant1/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/staging && unzip prototype.zip && rm -f prototype.zip*'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/staging && unzip *.zip && rm -f *.zip*'
     'release/*':
       - step: *build
       - step:
@@ -112,9 +109,9 @@ pipelines:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/production'
-                LOCAL_PATH: 'prototype/deploy/*'
+                LOCAL_PATH: 'tenants/tenant1/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/production && unzip prototype.zip && rm -f prototype.zip*'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/production && unzip *.zip && rm -f *.zip*'

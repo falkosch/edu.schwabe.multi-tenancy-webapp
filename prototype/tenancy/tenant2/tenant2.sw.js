@@ -1,1 +1,0 @@
-// Service worker tenant2

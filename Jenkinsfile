@@ -33,7 +33,7 @@ pipeline {
                   enabledForFailure: true,
                   ignoreFailedBuilds: false,
                   qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
-                  tools: [checkStyle(pattern: '**/reports/*.checkstyle.xml')]
+                  tools: [checkStyle(pattern: 'reports/*.checkstyle.xml')]
                 )
               }
             }
@@ -130,9 +130,6 @@ pipeline {
     }
   }
   post {
-    always {
-      deleteDir()
-    }
     failure {
       script {
         committerEmail = sh(returnStdout: true, script: 'git --no-pager show -s --format=\'%ae\'').trim()

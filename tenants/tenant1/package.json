@@ -1,0 +1,60 @@
+{
+  "name": "@edu.schwabe.webapp-prototypes/angularjs-tenant1",
+  "description": "First example tenant for the AngularJS multi-tenant web app prototype",
+  "version": "0.0.1",
+  "author": {
+    "name": "Falko Schwabe",
+    "url": "https://bitbucket.org/falko_schwabe/edu.schwabe.webapp-prototypes"
+  },
+  "private": true,
+  "@edu.schwabe.webapp-prototypes/angularjs-tenant1": {
+    "ngAppModule": "tenant1",
+    "shortName": "ngTenant1",
+    "language": {
+      "allAvailable": [
+        "de",
+        "en"
+      ],
+      "fallback": "en",
+      "default": "en",
+      "partialsUrlTemplate": "{part}/i18n/{lang}.json"
+    }
+  },
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer --env.noProgress && node ../../tools/hash-output.js \"./deploy\"",
+    "build:serve": "static-server dist/",
+    "clean": "rimraf ./reports ./dist ./deploy",
+    "clean:ci": "npm run clean",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "test": "karma start",
+    "test:ci": "karma start karma-ci.conf",
+    "test:debug": "karma start --browsers ChromeDebugging --reporters kjhtml",
+    "test:precommit": "karma start karma-precommit.conf"
+  },
+  "dependencies": {
+    "@edu.schwabe.webapp-prototypes/angularjs-base-app": "^0.0.1",
+    "@uirouter/angularjs": "^1.0.22",
+    "angular": "^1.7.8",
+    "angular-animate": "^1.7.8",
+    "angular-aria": "^1.7.8",
+    "angular-material": "^1.1.19",
+    "angular-messages": "^1.7.8",
+    "angular-sanitize": "^1.7.8",
+    "angular-translate": "^2.18.1",
+    "angular-translate-handler-log": "^2.18.1",
+    "angular-translate-interpolation-messageformat": "^2.18.1",
+    "angular-translate-loader-partial": "^2.18.1",
+    "angular-translate-loader-static-files": "^2.18.1",
+    "angular-translate-loader-url": "^2.18.1",
+    "core-js": "^3.1.4",
+    "default-passive-events": "^1.0.10",
+    "lodash": "^4.17.14",
+    "material-icons": "^0.3.1",
+    "moment": "^2.24.0",
+    "regenerator-runtime": "^0.13.2",
+    "rx-angular": "^1.1.3",
+    "uuid-browser": "^3.1.0"
+  },
+  "devDependencies": {}
+}

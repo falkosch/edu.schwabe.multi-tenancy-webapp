@@ -1,0 +1,29 @@
+module.exports = (api) => {
+    // do not execute this config js every time a file is compiled
+    api.cache.forever();
+
+    return {
+        presets: [
+            '@babel/preset-env',
+        ],
+        plugins: [
+            '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-syntax-dynamic-import',
+            'lodash',
+        ],
+        env: {
+            test: {
+                plugins: [
+                    ['istanbul', {
+                        exclude: [
+                            '**/*.karma.js',
+                            '**/*.spec.js',
+                            '**/*.mock.js',
+                        ],
+                    }],
+                ],
+            },
+        },
+    };
+};

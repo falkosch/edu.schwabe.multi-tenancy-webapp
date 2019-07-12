@@ -1,0 +1,7 @@
+reports/
+deploy/
+dist/
+node_modules/
+obj/
+bin/
+docs/
