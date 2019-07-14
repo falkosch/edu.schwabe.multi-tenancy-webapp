@@ -1,5 +1,3 @@
-import projectPackage from '../../../package.json';
-
-const { language } = projectPackage[projectPackage.name];
+const { language } = PROJECT_PROPERTIES;
 
 export const LanguageConstants = Object.freeze(language);

@@ -58,7 +58,8 @@ module.exports = {
                 'process': true,
                 '__dirname': true,
                 '__filename': true,
-                '__VERSION__': true,
+                'VERSION': true,
+                'PROJECT_PROPERTIES': true,
             },
         },
         {

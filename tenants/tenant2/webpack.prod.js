@@ -113,6 +113,16 @@ module.exports = (env = {}) => common(env)
                                 sourceMapContents: false,
                             },
                         },
+                        {
+                            loader: 'sass-resources-loader',
+                            options: {
+                                sourceMap: true,
+                                sourceMapContents: false,
+                                resources: [
+                                    'src/scss/shared/**/*.scss',
+                                ],
+                            },
+                        },
                     ],
                 },
                 {

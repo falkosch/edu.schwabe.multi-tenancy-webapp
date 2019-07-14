@@ -10,7 +10,7 @@ import _ from 'lodash';
 const { assets } = global.serviceWorkerOption;
 
 const CACHE_PREFIX = __filename;
-const CACHE_NAME = `${CACHE_PREFIX}?v=${__VERSION__}`;
+const CACHE_NAME = `${CACHE_PREFIX}?v=${VERSION}`;
 
 const BLACK_LIST = [
     // /\/i18n\/([A-Z]{2}|[a-z]{2})([-_]([A-Z]{2}|[a-z]{2}))?\.json/,

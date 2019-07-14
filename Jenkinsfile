@@ -6,9 +6,6 @@ pipeline {
     skipStagesAfterUnstable()
     timeout(time: 10, unit: 'MINUTES')
   }
-  parameters {
-    string(name: 'tenant', defaultValue: '', description: 'Name of a tenant app to build')
-  }
   triggers {
     pollSCM('H */15 * * *')
   }

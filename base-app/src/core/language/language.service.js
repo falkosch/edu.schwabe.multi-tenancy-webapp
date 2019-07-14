@@ -37,7 +37,7 @@ export class LanguageService {
 
         this._onChangeSuccessDisposal = this.eventEmitterService
             .of('$translateChangeSuccess')
-            .subscribe((event, { language }) => { this._onLanguageChanged(language); });
+            .subscribe((__, { language }) => { this._onLanguageChanged(language); });
     }
 
     _onPartialAdded() {

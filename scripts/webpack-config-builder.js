@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const merge = require('webpack-merge');
 const path = require('path');
-// const fs = require('fs');
+const fs = require('fs');
 
 const ConfigBuilder = require('./config-builder');
 
@@ -121,43 +121,46 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         );
     }
 
-    // buildResourcesOverridePlugin() {
-    //     if (!this.isWithResourcesToOverride()) {
-    //         return undefined;
-    //     }
+    buildResourcesOverridePlugin() {
+        if (!this.isWithResourcesToOverride()) {
+            return undefined;
+        }
 
-    //     const webpack = this.require('webpack');
-    //     return new webpack.NormalModuleReplacementPlugin(
-    //         this.resourcesToOverride,
-    //         (resource) => {
-    //             const { context, request } = resource;
+        const baseAppSrcPath = path.resolve(__dirname, '..', 'base-app', 'src');
 
-    //             const originalFilePath = path.resolve(context, request);
-    //             const relativeToDefaultPath = path.relative(this.defaultPath, originalFilePath);
+        const webpack = this.require('webpack');
+        return new webpack.NormalModuleReplacementPlugin(
+            this.resourcesToOverride,
+            (resource) => {
+                const { context, request } = resource;
+                if (_.isNil(request)) {
+                    return;
+                }
+                if (context === this.context) {
+                    return;
+                }
 
-    //             if (!_.startsWith(relativeToDefaultPath, '..')) {
-    //                 const absoluteTenantPath = path.resolve(tenantPath, relativeToDefaultPath);
-    //                 const tenantPathRelativeToContext = path.relative(
-    //                     context,
-    //                     absoluteTenantPath,
-    //                 );
+                const originalFilePath = path.resolve(context, request);
+                const relativeToBaseAppSrcPath = path.relative(baseAppSrcPath, originalFilePath);
 
-    //                 // when we have a file in tenant directory, we override the resource request
-    //                 // in base app
-    //                 if (fs.existsSync(absoluteTenantPath)) {
-    //                     // eslint-disable-next-line no-param-reassign
-    //                     resource.request = tenantPathRelativeToContext;
-    //                 }
-    //             }
+                if (!_.startsWith(relativeToBaseAppSrcPath, '..')) {
+                    const absoluteTenantPath = path.resolve(this.context, 'src', relativeToBaseAppSrcPath);
 
-    //         },
-    //     );
-    // }
+                    // when we have a file in tenant directory, we override the resource request
+                    // in base app
+                    if (fs.existsSync(absoluteTenantPath)) {
+                        // eslint-disable-next-line no-param-reassign
+                        resource.request = path.relative(context, absoluteTenantPath);
+                    }
+                }
+
+            },
+        );
+    }
 
     buildPlugins() {
         const packageProperties = this.buildPackageProperties();
         const projectProperties = this.buildProjectProperties();
-        const [firstLanguage, ...restLanguages] = projectProperties.language.allAvailable;
 
         const { DuplicatesPlugin } = this.require('inspectpack/plugin');
         const ServiceworkerWebpackPlugin = this.require('serviceworker-webpack-plugin');
@@ -168,17 +171,12 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
                 entry: `./src/${projectProperties.ngAppModule}.sw.js`,
             }),
             new webpack.DefinePlugin({
-                __VERSION__: JSON.stringify(packageProperties.version),
+                VERSION: JSON.stringify(packageProperties.version),
+                PROJECT_PROPERTIES: JSON.stringify(projectProperties),
             }),
             new webpack.ContextReplacementPlugin(
                 /moment[/\\]locale$/,
-                new RegExp(
-                    _.reduce(
-                        restLanguages,
-                        (expression, nextLanguage) => `${expression}|${nextLanguage}`,
-                        firstLanguage,
-                    ),
-                ),
+                new RegExp(projectProperties.language.allAvailable.join('|')),
             ),
         ];
 
@@ -204,10 +202,10 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
             plugins.push(new webpackBundleAnalyzer.BundleAnalyzerPlugin());
         }
 
-        // const resourcesOverridePlugin = this.buildResourcesOverridePlugin();
-        // if (resourcesOverridePlugin) {
-        //     plugins.push(resourcesOverridePlugin);
-        // }
+        const resourcesOverridePlugin = this.buildResourcesOverridePlugin();
+        if (resourcesOverridePlugin) {
+            plugins.push(resourcesOverridePlugin);
+        }
 
         return plugins;
     }
@@ -231,7 +229,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
     buildResolve() {
         return {
             modules: [
-                // solve the duplicate dependency import issues by telling the resolver of webpack
+                // solves the duplicate dependency import issues by telling the resolver of webpack
                 // to always look first into the bundles node_modules (!) and then somewhere else
                 // as would npm do
                 path.resolve(this.context, 'node_modules'),
@@ -240,31 +238,11 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         };
     }
 
-    buildRules() {
-        return [
-            // {
-            //     test: /\.scss$/,
-            //     use: [
-            //         {
-            //             loader: 'sass-resources-loader',
-            //             options: {
-            //                 sourceMap: true,
-            //                 resources: [
-            //                     `src/scss/shared/**/*.scss`,
-            //                 ],
-            //             },
-            //         },
-            //     ],
-            // }
-        ];
-    }
-
     build(...appendConfigs) {
         const entry = this.buildEntry();
         const plugins = this.buildPlugins();
         const output = this.buildOutput();
         const resolve = this.buildResolve();
-        const rules = this.buildRules();
 
         return super.build(
             {
@@ -273,9 +251,6 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
                 plugins,
                 output,
                 resolve,
-                module: {
-                    rules,
-                },
             },
             ...appendConfigs,
         );
