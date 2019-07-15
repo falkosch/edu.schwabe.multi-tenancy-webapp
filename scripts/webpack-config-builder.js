@@ -176,7 +176,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
             }),
             new webpack.ContextReplacementPlugin(
                 /moment[/\\]locale$/,
-                new RegExp(projectProperties.language.allAvailable.join('|')),
+                new RegExp(_.join(projectProperties.language.allAvailable, '|')),
             ),
         ];
 
