@@ -1,14 +1,17 @@
 {
-    "login": {
-        "navigation-entry": "Anmeldung",
-        "errors": {
-            "username": {
-                "required": "Bitte gib deinen Benutzernamen ein.",
-                "maxlength": "Dein Benutzername darf nicht länger als 255 Zeichen sein."
-            },
-            "password": {
-                "maxlength": "Dein Passwort darf nicht länger als 255 Zeichen sein."
-            }
-        }
+  "login": {
+    "navigation-entry": "Anmeldung",
+    "errors": {
+      "username": {
+        "required": "Bitte gib deinen Benutzernamen ein.",
+        "maxlength": "Dein Benutzername darf nicht länger als 255 Zeichen sein."
+      },
+      "password": {
+        "maxlength": "Dein Passwort darf nicht länger als 255 Zeichen sein."
+      }
+    },
+    "failed": {
+      "title": "Login fehlgeschlagen :("
     }
+  }
 }

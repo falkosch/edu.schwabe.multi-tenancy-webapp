@@ -1,6 +1,6 @@
 {
-    "header": {
-        "title": "Willkommen",
-        "username-tag": "{{tag}} ({{first}} {{last}})"
-    }
+  "header": {
+    "title": "Willkommen",
+    "username-tag": "{{tag}} ({{first}} {{last}})"
+  }
 }

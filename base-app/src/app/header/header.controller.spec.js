@@ -7,6 +7,7 @@ import { HeaderController } from './header.controller';
 import { UserStateServiceName } from '../../core/user-state/user-state.service';
 import { ProfileServiceName } from '../../core/backend/profile.service';
 import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
+import { LanguageServiceName } from '../../core/language/language.service';
 
 describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
 
@@ -20,6 +21,7 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
     let userStateServiceMock;
     let profileServiceMock;
     let globalSpinnerServiceMock;
+    let languageServiceMock;
 
     let $injector;
     let $rootScope;
@@ -50,6 +52,12 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
                 .callFake(() => $q.resolve(testProfile)),
         };
 
+        languageServiceMock = {
+            allAvailableLanguages: ['test1', 'TEST2'],
+            currentLanguage: 'TEST2',
+            changeLanguage: jasmine.createSpy('changeLanguage'),
+        };
+
         angular.mock.module(HeaderModule);
 
         inject((_$injector_, _$rootScope_, _$q_, $componentController) => {
@@ -63,6 +71,7 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
                     [UserStateServiceName]: userStateServiceMock,
                     [ProfileServiceName]: profileServiceMock,
                     [GlobalSpinnerServiceName]: globalSpinnerServiceMock,
+                    [LanguageServiceName]: languageServiceMock,
                 },
             );
         });
@@ -75,6 +84,7 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
             UserStateServiceName,
             ProfileServiceName,
             GlobalSpinnerServiceName,
+            LanguageServiceName,
         ];
 
         it(`should only depend on ${expectedInjects.join(',')}`, () => {
@@ -219,6 +229,24 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
 
     });
 
+    describe('.allAvailableLanguages', () => {
+
+        it('should return the available languages', () => {
+            expect(testUnit.allAvailableLanguages)
+                .toEqual(languageServiceMock.allAvailableLanguages);
+        });
+
+    });
+
+    describe('.currentLanguage', () => {
+
+        it('should return the current language', () => {
+            expect(testUnit.currentLanguage)
+                .toBe(languageServiceMock.currentLanguage);
+        });
+
+    });
+
     describe('.isLoggedIn', () => {
 
         it('should return the logged in status of the user', () => {
@@ -295,6 +323,24 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
 
             });
 
+        });
+
+    });
+
+    describe('.changeLanguage(code)', () => {
+
+        beforeEach(() => {
+            languageServiceMock.changeLanguage
+                .and.returnValue();
+        });
+
+        it('should change the language', () => {
+            const nextLanguage = _.head(languageServiceMock.allAvailableLanguages);
+
+            testUnit.changeLanguage(nextLanguage);
+
+            expect(languageServiceMock.changeLanguage)
+                .toHaveBeenCalledWith(nextLanguage);
         });
 
     });

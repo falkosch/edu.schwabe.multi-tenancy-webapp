@@ -15,6 +15,17 @@ module.exports = (env = {}) => common(env)
     .withContext(__dirname)
     .withPackageProperties(packageProperties)
     .withBundleAnalyzer(!env.noBundleAnalyzer)
+    .addHtmlWebpackPluginConfig({
+        minify: {
+            // https://github.com/kangax/html-minifier#options-quick-reference
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            useShortDoctype: true,
+        },
+    })
     .addConfig({
         mode: 'production',
         output: {
@@ -92,6 +103,7 @@ module.exports = (env = {}) => common(env)
                                 name: '[path][name].[ext]',
                             },
                         },
+                        '../../tools/minify-json-loader.js',
                     ],
                 },
                 {

@@ -1,15 +1,15 @@
 {
-    "footer": {
-        "sections": {
-            "1": {
-                "text": "Implementiert mit ..."
-            },
-            "2": {
-                "text": "Zusammengepackt mit ..."
-            },
-            "3": {
-                "text": "Und vielen anderen großartigen Projekten, die alle in der <em>package.json</em> aufgelistet sind."
-            }
-        }
+  "footer": {
+    "sections": {
+      "1": {
+        "text": "Implementiert mit ..."
+      },
+      "2": {
+        "text": "Zusammengepackt mit ..."
+      },
+      "3": {
+        "text": "Und vielen anderen großartigen Projekten, die alle in der <em>package.json</em> aufgelistet sind."
+      }
     }
+  }
 }

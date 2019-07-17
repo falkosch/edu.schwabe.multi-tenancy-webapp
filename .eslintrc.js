@@ -130,6 +130,7 @@ module.exports = {
                 'tenants/*/webpack.*.js',
             ],
             rules: {
+                'no-console': 'off',
                 'import/no-extraneous-dependencies': 'off',
                 'sonarjs/no-duplicate-string': 'off',
             },

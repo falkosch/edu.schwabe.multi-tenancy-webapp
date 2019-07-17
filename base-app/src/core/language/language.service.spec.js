@@ -169,6 +169,21 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
     });
 
+    describe('.currentLanguages', () => {
+
+        beforeEach(() => {
+            $translateMock.use
+                .and
+                .returnValue(testLanguageCode);
+        });
+
+        it('should return the language code of the currently set language', () => {
+            expect(testUnit.currentLanguage)
+                .toBe(testLanguageCode);
+        });
+
+    });
+
     describe('.changeLanguage(code)', () => {
 
         describe('when language code is in the available languages', () => {

@@ -1,37 +1,36 @@
 {
-    "start": {
-        "navigation-entry": "Start",
-        "title": "Alles hat einen Anfang...",
-        "sections": {
-            "1": {
-                "headline": "Über dieses Projekt",
-                "paragraph": "Dieses Projekt dient zum Ausprobieren verschiedener Webapp-Technologien, die dabei helfen, einen eher komplexen Webapp-Prototypen aufzuziehen. Die Webapp basiert zurzeit auf AngularJS."
-            },
-            "2": {
-                "headline": "Grundlegende Idee",
-                "bullets": {
-                    "1": "Soviel wie möglich wiederverwenden statt neuentwickeln.",
-                    "2": "Schlanker Code durch Anwendung von allgemeinen Software-Entwurfsmustern, um Wiederverwendung von häufig wiederkehrenden Teilen der Webapp zu vereinfachen.",
-                    "3": "Technologien sinnvoll und richtig einsetzen.",
-                    "4": "Von Fehlern lernen and es beim nächsten Mal besser machen."
-                }
-            },
-            "3": {
-                "headline": "Lösungen in diesem Projekt",
-                "paragraph": "Auch wenn der Inhalt der Webapp nicht aufsehenerregend ist, das Setup ist es allemal. Verwendet wird:",
-                "bullets": {
-                    "1": "Ein schlankes, stabiles ES6+ modularisiertes Projekt,",
-                    "2": "Webpack als Bundler,",
-                    "3": "Babel als JavaScript \"Compiler\",",
-                    "4": "Karma und Jasmine für die Unit-Test-Umgebung,",
-                    "5": "AngularJS, UI-Router und AngularJS Material als Basis für die UI und",
-                    "6": "eine Multi-Tenant-Umgebung, die Tenants zur Build-Zeit erstellt."
-                }
-            }
-        },
-        "images": {
-            "headline": "Bilder Testbereich",
-            "generic-subhead": "Bild {{number}}"
+  "start": {
+    "navigation-entry": "Start",
+    "title": "Alles hat einen Anfang...",
+    "sections": {
+      "1": {
+        "headline": "Über dieses Projekt",
+        "paragraph": "Dieses Projekt dient zum Ausprobieren verschiedener Webapp-Technologien, die dabei helfen, einen eher komplexen Webapp-Prototypen aufzuziehen. Die Webapp basiert zurzeit auf AngularJS."
+      },
+      "2": {
+        "headline": "Grundlegende Idee",
+        "bullets": {
+          "1": "Schlanker Code durch Anwendung von allgemeinen Software-Entwurfsmustern, um Wiederverwendung von häufig wiederkehrenden Teilen der Webapp zu vereinfachen.",
+          "2": "Technologien sinnvoll und richtig einsetzen.",
+          "3": "Von Fehlern lernen and es beim nächsten Mal besser machen."
         }
+      },
+      "3": {
+        "headline": "Lösungen in diesem Projekt",
+        "paragraph": "Auch wenn der Inhalt der Webapp nicht aufsehenerregend ist, das Setup ist es allemal. Verwendet wird:",
+        "bullets": {
+          "1": "Ein schlankes, stabiles ES6+ modularisiertes Projekt,",
+          "2": "Webpack als Bundler,",
+          "3": "Babel als JavaScript \"Compiler\",",
+          "4": "Karma und Jasmine für die Unit-Test-Umgebung,",
+          "5": "AngularJS, UI-Router und AngularJS Material als Basis für die UI und",
+          "6": "eine Multi-Tenant-Umgebung, die Tenants zur Build-Zeit erstellt."
+        }
+      }
+    },
+    "images": {
+      "headline": "Bilder Testbereich",
+      "generic-subhead": "Bild {{number}}"
     }
+  }
 }

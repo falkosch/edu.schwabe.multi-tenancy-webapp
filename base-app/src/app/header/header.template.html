@@ -9,6 +9,16 @@
          translate-values="{tag: $ctrl.authentication.ident.name, first: $ctrl.profileName.first, last: $ctrl.profileName.last}">
     </div>
 </div>
+<div layout="row" layout-align="center">
+    <div>
+        <md-icon class="app-icon-36 material-icons">language</span>
+    </div>
+    <div layout-padding>
+        <span ng-repeat="availableLanguage in $ctrl.allAvailableLanguages">
+            <a href ng-click="$ctrl.changeLanguage(availableLanguage)" ng-bind="availableLanguage"></a>
+        </span>
+    </div>
+</div>
 <md-content>
     <app-nav role="navigation"></app-nav>
 </md-content>

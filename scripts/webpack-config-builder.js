@@ -3,50 +3,28 @@ const merge = require('webpack-merge');
 const path = require('path');
 const fs = require('fs');
 
+const {
+    ContextReplacementPlugin,
+    DefinePlugin,
+    NormalModuleReplacementPlugin,
+    ProgressPlugin,
+} = require('webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { DuplicatesPlugin } = require('inspectpack/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const ServiceworkerWebpackPlugin = require('serviceworker-webpack-plugin');
+
 const ConfigBuilder = require('./config-builder');
 
 module.exports = class WebpackConfigBuilder extends ConfigBuilder {
 
     constructor() {
         super();
-        this.requiredValues = {};
         this.dist = './dist';
         this.entries = [];
         this.htmlWebpackPluginConfigs = [];
         this.resourcesToOverride = /\.(png|svg|jpe?g|gif|woff2?|eot|ttf|otf)$/;
-    }
-
-    /**
-     * <p>Registers the required value identified by a given id. The value is put into a simple
-     * values registry.
-     *
-     * <p>We need this alternative require system due to this script is only in the root package of
-     * the monorepo and thus has only access to the node_modules in the root package. The
-     * node_modules of the package that has the actual configuration script cannot be accessed from
-     * here.
-     *
-     * @param {string} id identifies the required value
-     * @param {*} requiredValue the required value to register
-     */
-    withRequired(id, requiredValue) {
-        this.requiredValues[id] = requiredValue;
-        return this;
-    }
-
-    /**
-     * <p>Resolves required values, f.e. external plugins, using a simple required values registry.
-     * Required values must have been registered in before or otherwise undefined is returend.
-     *
-     * <p>We need this alternative require system due to this script is only in the root package of
-     * the monorepo and thus has only access to the node_modules in the root package. The
-     * node_modules of the package that has the actual configuration script cannot be accessed from
-     * here.
-     *
-     * @param {string} id identifies the required value
-     * @return {*} the registered required value for the given id or undefined
-     */
-    require(id) {
-        return this.requiredValues[id];
     }
 
     isWithBundleAnalyzer() {
@@ -62,7 +40,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         return ConfigBuilder.isTruthy(this.progress);
     }
 
-    withProgress(value) {
+    withProgress(value = true) {
         this.progress = value;
         return this;
     }
@@ -128,8 +106,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
 
         const baseAppSrcPath = path.resolve(__dirname, '..', 'base-app', 'src');
 
-        const webpack = this.require('webpack');
-        return new webpack.NormalModuleReplacementPlugin(
+        return new NormalModuleReplacementPlugin(
             this.resourcesToOverride,
             (resource) => {
                 const { context, request } = resource;
@@ -162,19 +139,16 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         const packageProperties = this.buildPackageProperties();
         const projectProperties = this.buildProjectProperties();
 
-        const { DuplicatesPlugin } = this.require('inspectpack/plugin');
-        const ServiceworkerWebpackPlugin = this.require('serviceworker-webpack-plugin');
-        const webpack = this.require('webpack');
         const plugins = [
             new DuplicatesPlugin(),
             new ServiceworkerWebpackPlugin({
                 entry: `./src/${projectProperties.ngAppModule}.sw.js`,
             }),
-            new webpack.DefinePlugin({
+            new DefinePlugin({
                 VERSION: JSON.stringify(packageProperties.version),
                 PROJECT_PROPERTIES: JSON.stringify(projectProperties),
             }),
-            new webpack.ContextReplacementPlugin(
+            new ContextReplacementPlugin(
                 /moment[/\\]locale$/,
                 new RegExp(_.join(projectProperties.language.allAvailable, '|')),
             ),
@@ -182,10 +156,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
 
         const htmlWebpackPluginConfig = this.buildHtmlWebpackPluginConfig();
         if (htmlWebpackPluginConfig) {
-            const HtmlWebpackPlugin = this.require('html-webpack-plugin');
             plugins.push(new HtmlWebpackPlugin(htmlWebpackPluginConfig));
-
-            const ScriptExtHtmlWebpackPlugin = this.require('script-ext-html-webpack-plugin');
             plugins.push(
                 new ScriptExtHtmlWebpackPlugin({
                     defaultAttribute: 'defer',
@@ -194,12 +165,11 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         }
 
         if (this.isWithProgress()) {
-            plugins.unshift(new webpack.ProgressPlugin());
+            plugins.unshift(new ProgressPlugin());
         }
 
         if (this.isWithBundleAnalyzer()) {
-            const webpackBundleAnalyzer = this.require('webpack-bundle-analyzer');
-            plugins.push(new webpackBundleAnalyzer.BundleAnalyzerPlugin());
+            plugins.push(new BundleAnalyzerPlugin());
         }
 
         const resourcesOverridePlugin = this.buildResourcesOverridePlugin();

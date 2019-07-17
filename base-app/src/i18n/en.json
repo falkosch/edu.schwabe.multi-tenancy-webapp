@@ -1,10 +1,10 @@
 {
-    "actions": {
-        "submit": "Submit",
-        "logout": "Logout"
-    },
-    "labels": {
-        "username": "Username",
-        "password": "Password"
-    }
+  "actions": {
+    "submit": "Submit",
+    "logout": "Logout"
+  },
+  "labels": {
+    "username": "Username",
+    "password": "Password"
+  }
 }

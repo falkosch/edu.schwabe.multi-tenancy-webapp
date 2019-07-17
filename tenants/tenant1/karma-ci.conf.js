@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const _ = require('lodash');
 
 const KarmaConfigBuilder = require('../../scripts/karma-config-builder');
-const testWebpackConfigBuilderFactory = require('./scripts/webpack.test');
+const testWebpackConfigBuilderFactory = require('../../scripts/webpack.test');
 const packageProperties = require('./package.json');
 
 process.env.NODE_ENV = 'test';

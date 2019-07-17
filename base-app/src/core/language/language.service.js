@@ -52,6 +52,10 @@ export class LanguageService {
         return LanguageConstants.allAvailable;
     }
 
+    get currentLanguage() {
+        return this.$translate.use();
+    }
+
     changeLanguage(code) {
         if (!_.includes(this.allAvailableLanguages, code)) {
             return this.$q.reject(new Error(ERROR_LANGUAGE_NOT_AVAILABLE));

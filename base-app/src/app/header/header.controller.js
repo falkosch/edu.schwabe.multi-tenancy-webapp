@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { UserStateServiceName } from '../../core/user-state/user-state.service';
 import { ProfileServiceName } from '../../core/backend/profile.service';
 import { GlobalSpinnerServiceName } from '../../ui/global-spinner/global-spinner.service';
+import { LanguageServiceName } from '../../core/language/language.service';
 
 export class HeaderController {
 
@@ -10,18 +11,20 @@ export class HeaderController {
         UserStateServiceName,
         ProfileServiceName,
         GlobalSpinnerServiceName,
+        LanguageServiceName,
     ];
 
-    constructor(userStateService, profileService, globalSpinnerService) {
+    constructor(userStateService, profileService, globalSpinnerService, languageService) {
         this.userStateService = userStateService;
         this.profileService = profileService;
         this.globalSpinnerService = globalSpinnerService;
+        this.languageService = languageService;
     }
 
     $onInit() {
         this._onLoginSubscription = this.userStateService
             .onLogin
-            .subscribe((event, authentication) => this._onLogin(authentication));
+            .subscribe((__, authentication) => this._onLogin(authentication));
 
         this._onLogoutSubscription = this.userStateService
             .onLogout
@@ -43,12 +46,24 @@ export class HeaderController {
         }
     }
 
+    get allAvailableLanguages() {
+        return this.languageService.allAvailableLanguages;
+    }
+
+    get currentLanguage() {
+        return this.languageService.currentLanguage;
+    }
+
     get isLoggedIn() {
         return this.userStateService.isLoggedIn;
     }
 
     get profileName() {
         return _.get(this.profile, 'name', {});
+    }
+
+    changeLanguage(code) {
+        return this.languageService.changeLanguage(code);
     }
 
     _onLogin(authentication) {

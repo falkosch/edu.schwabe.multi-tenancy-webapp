@@ -31,11 +31,11 @@ export class LoginController {
     }
 
     login() {
-        return this.globalSpinnerService.spinWhilePromise(
-            this.userStateService
-                .login(this.username, this.password)
-                .catch(e => this._handleLoginError(e)),
-        );
+        return this.globalSpinnerService
+            .spinWhilePromise(
+                this.userStateService.login(this.username, this.password),
+            )
+            .catch(e => this._handleLoginError(e));
     }
 
     _handleLoginError(e) {
