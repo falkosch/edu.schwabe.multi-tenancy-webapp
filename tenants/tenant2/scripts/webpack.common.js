@@ -1,6 +1,6 @@
 const common = require('../../../scripts/webpack.common');
 
-module.exports = (env = {}) => common(env)
+module.exports = () => common()
     .addHtmlWebpackPluginConfig({
         template: './src/index.html',
     });

@@ -1,12 +1,10 @@
-const ConfigBuilder = require('./config-builder');
 const WebpackConfigBuilder = require('./webpack-config-builder');
 
 function defaultBuilderFactory() {
     return new WebpackConfigBuilder();
 }
 
-module.exports = (env = {}, builderFactory = defaultBuilderFactory) => builderFactory()
-    .withProgress(ConfigBuilder.isFalsy(env.noProgress))
+module.exports = (builderFactory = defaultBuilderFactory) => builderFactory()
     .addEntry('core-js/stable')
     .addEntry('regenerator-runtime/runtime')
     .addEntry('default-passive-events')

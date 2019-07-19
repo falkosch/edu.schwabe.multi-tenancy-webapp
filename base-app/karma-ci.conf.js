@@ -1,4 +1,3 @@
-const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
 const _ = require('lodash');
 
@@ -14,18 +13,13 @@ process.env.NODE_ENV = 'test';
 
 module.exports = (config) => {
 
-    const testEnv = merge(
-        process.env,
-        config.env,
-    );
-
     config.set(
         new KarmaConfigBuilder()
             .withPackageProperties(packageProperties)
             .withWebpackConfig(
-                testWebpackConfigBuilderFactory(__dirname, testEnv)
+                testWebpackConfigBuilderFactory()
+                    .withContext(__dirname)
                     .withPackageProperties(packageProperties)
-                    .withProgress(false)
                     .build(),
             )
             .addConfig({

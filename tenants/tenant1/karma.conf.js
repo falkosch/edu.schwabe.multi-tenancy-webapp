@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const merge = require('webpack-merge');
 const puppeteer = require('puppeteer');
+const { ProgressPlugin } = require('webpack');
 
 const KarmaConfigBuilder = require('../../scripts/karma-config-builder');
 const testWebpackConfigBuilderFactory = require('../../scripts/webpack.test');
@@ -26,8 +27,14 @@ module.exports = (config) => {
         new KarmaConfigBuilder()
             .withPackageProperties(packageProperties)
             .withWebpackConfig(
-                testWebpackConfigBuilderFactory(__dirname, testEnv)
+                testWebpackConfigBuilderFactory()
+                    .withContext(__dirname)
                     .withPackageProperties(packageProperties)
+                    .addConfig({
+                        plugins: [
+                            new ProgressPlugin(),
+                        ],
+                    })
                     .build(),
             )
             .addConfig({

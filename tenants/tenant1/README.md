@@ -4,10 +4,8 @@ Simple tenant app that imports the base-app.
 
 ## How to Use
 
-Run the tenant app with `npm start`
+Please note, that you need to run all commands at the repository's root using `npx lerna run ...`, f.e.:
 
-Build it into `dist/` with `npm build`
+- Start the tenant with `/<repository-root>$ npx lerna run start --stream --scope */*1`
 
-Serve `dist/` with `npm build:serve`
-
-Run unit tests with `npm run test`
+See the README.md at the repository's root for more instructions.

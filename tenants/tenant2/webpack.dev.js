@@ -1,11 +1,11 @@
-const { HotModuleReplacementPlugin } = require('webpack');
+const { HotModuleReplacementPlugin, ProgressPlugin } = require('webpack');
 
 const common = require('./scripts/webpack.common');
 const packageProperties = require('./package.json');
 
 process.env.NODE_ENV = 'develop';
 
-module.exports = (env = {}) => common(env)
+module.exports = () => common()
     .withContext(__dirname)
     .withPackageProperties(packageProperties)
     .addConfig({
@@ -22,6 +22,7 @@ module.exports = (env = {}) => common(env)
             stats: 'minimal',
         },
         plugins: [
+            new ProgressPlugin(),
             new HotModuleReplacementPlugin(),
         ],
         optimization: {

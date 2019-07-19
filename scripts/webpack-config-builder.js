@@ -7,7 +7,6 @@ const {
     ContextReplacementPlugin,
     DefinePlugin,
     NormalModuleReplacementPlugin,
-    ProgressPlugin,
 } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { DuplicatesPlugin } = require('inspectpack/plugin');
@@ -33,15 +32,6 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
 
     withBundleAnalyzer(value = true) {
         this.bundleAnalyzer = value;
-        return this;
-    }
-
-    isWithProgress() {
-        return ConfigBuilder.isTruthy(this.progress);
-    }
-
-    withProgress(value = true) {
-        this.progress = value;
         return this;
     }
 
@@ -162,10 +152,6 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
                     defaultAttribute: 'defer',
                 }),
             );
-        }
-
-        if (this.isWithProgress()) {
-            plugins.unshift(new ProgressPlugin());
         }
 
         if (this.isWithBundleAnalyzer()) {

@@ -11,7 +11,7 @@ const packageProperties = require('./package.json');
 
 process.env.NODE_ENV = 'production';
 
-module.exports = (env = {}) => common(env)
+module.exports = (env = {}) => common()
     .withContext(__dirname)
     .withPackageProperties(packageProperties)
     .withBundleAnalyzer(!env.noBundleAnalyzer)
