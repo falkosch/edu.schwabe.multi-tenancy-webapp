@@ -25,6 +25,17 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
     const testUserPassword = 'TEST';
     const testError = 'Test fail';
 
+    let testUnit;
+
+    let authenticationServiceMock;
+    let eventEmitterMocks;
+    let eventEmitterServiceMock;
+    let injectionServiceMock;
+
+    let $injector;
+    let $q;
+    let $rootScope;
+
     function testIsLoggedIn() {
         expect(testUnit.isLoggedIn)
             .toBe(true);
@@ -40,17 +51,6 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
         expect(testUnit.authentication)
             .toBe(testAnonymousAuthentication);
     }
-
-    let testUnit;
-
-    let authenticationServiceMock;
-    let eventEmitterMocks;
-    let eventEmitterServiceMock;
-    let injectionServiceMock;
-
-    let $injector;
-    let $q;
-    let $rootScope;
 
     beforeEach(() => {
 

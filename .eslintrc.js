@@ -1,19 +1,21 @@
 module.exports = {
     root: true,
     extends: [
-        'eslint:recommended',
-        'problems',
+        'problems', // inherents extends of eslint:recommended
+        'plugin:import/recommended',
         'airbnb-base',
+        'plugin:import/typescript',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
         'plugin:jasmine/recommended',
         'plugin:lodash/recommended',
         'plugin:compat/recommended',
         'plugin:sonarjs/recommended',
+        'plugin:angular/johnpapa',
     ],
     env: {
         'angular/mocks': false,
-        browser: true,
         commonjs: true,
-        es6: true,
         jasmine: false,
         node: false,
     },
@@ -24,65 +26,93 @@ module.exports = {
         },
     },
     plugins: [
-        'angular',
-        'compat',
-        'html',
         'jasmine',
-        'json',
-        'lodash',
-        'markdown',
         'sonarjs',
+        'html',
+        'json',
+        'markdown',
     ],
     rules: {
         'class-methods-use-this': 'off',
         indent: ['error', 4],
         'linebreak-style': 'off',
         'no-underscore-dangle': 'off',
-        'no-use-before-define': 'off',
         'padded-blocks': 'off',
-
-        'compat/compat': 'error',
-
-        'import/prefer-default-export': 'off',
 
         'lodash/import-scope': 'off',
         'lodash/prefer-constant': 'off',
+
+        // our modules' file names use the different pattern "<name>.module.<ext>"
+        'angular/file-name': 'off',
+        // we use ES classes, so we won't use factories
+        'angular/no-service-method': 'off',
+
+        // credits: https://github.com/iamturns/create-exposed-app/blob/master/.eslintrc.js
+
+        // https://basarat.gitbooks.io/typescript/docs/tips/defaultIsBad.html
+        'import/prefer-default-export': 'off',
+        'import/no-default-export': 'error',
+        'no-use-before-define': ['error', {
+            functions: false,
+            classes: false,
+            variables: true,
+        }],
+        '@typescript-eslint/no-use-before-define': ['error', {
+            functions: false,
+            classes: false,
+            variables: true,
+            typedefs: true,
+        }],
+        '@typescript-eslint/explicit-function-return-type': ['error', {
+            allowExpressions: true,
+            allowTypedFunctionExpressions: true,
+        }],
+        '@typescript-eslint/no-explicit-any': 'off',
     },
     overrides: [
         {
             files: [
-                'base-app/src/**/*.js',
-                'tenants/*/src/**/*.js',
+                'base-service-worker/src/**/*.{t,j}s',
+                'base-app/src/**/*.{t,j}s',
+                'tenants/*/src/**/*.{t,j}s',
             ],
             globals: {
-                'process': true,
-                '__dirname': true,
-                '__filename': true,
-                'VERSION': true,
-                'PROJECT_PROPERTIES': true,
+                process: true,
+                __dirname: true,
+                __filename: true,
+                VERSION: true,
+                PROJECT_PROPERTIES: true,
             },
         },
         {
             files: [
-                'base-app/src/**/*.sw.js',
-                'tenants/*/src/**/*.sw.js',
+                'base-service-worker/src/**/*.sw.{t,j}s',
+                'tenants/*/src/**/*.sw.{t,j}s',
             ],
             env: {
                 serviceworker: true,
             },
             rules: {
-                'no-console': 'off',
                 'no-restricted-globals': 'off',
                 'compat/compat': 'off',
             },
         },
         {
             files: [
-                'base-app/src/**/*.module.js',
-                'tenants/*/src/**/*.module.js',
+                'base-app/src/**/*.module.{t,j}s',
+                'tenants/*/src/**/*.module.{t,j}s',
             ],
             rules: {
                 'lodash/prefer-lodash-method': 'off',
+            },
+        },
+        {
+            files: [
+                '**/*.d.ts',
+            ],
+            rules: {
+                'import/no-default-export': 'off',
+                'no-restricted-globals': 'off',
             },
         },
         {
@@ -91,12 +121,15 @@ module.exports = {
                 'angular/mocks': true,
             },
             files: [
-                'base-app/src/**/*.mock.js',
-                'base-app/src/**/*.spec.js',
-                'base-app/src/**/*.karma.js',
-                'tenants/*/src/**/*.mock.js',
-                'tenants/*/src/**/*.spec.js',
-                'tenants/*/src/**/*.karma.js',
+                'base-service-worker/src/**/*.mock.{t,j}s',
+                'base-service-worker/src/**/*.spec.{t,j}s',
+                'base-service-worker/src/**/*.karma.{t,j}s',
+                'base-app/src/**/*.mock.{t,j}s',
+                'base-app/src/**/*.spec.{t,j}s',
+                'base-app/src/**/*.karma.{t,j}s',
+                'tenants/*/src/**/*.mock.{t,j}s',
+                'tenants/*/src/**/*.spec.{t,j}s',
+                'tenants/*/src/**/*.karma.{t,j}s',
             ],
             globals: {
                 require: true,
@@ -133,6 +166,7 @@ module.exports = {
                 'no-console': 'off',
                 'import/no-extraneous-dependencies': 'off',
                 'sonarjs/no-duplicate-string': 'off',
+                '@typescript-eslint/no-var-requires': 'off',
             },
         },
     ],

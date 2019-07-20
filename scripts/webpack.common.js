@@ -4,6 +4,15 @@ function defaultBuilderFactory() {
     return new WebpackConfigBuilder();
 }
 
+const BABEL_LOADER = {
+    loader: 'babel-loader',
+    options: {
+        cacheDirectory: true,
+        cacheCompression: false,
+        rootMode: 'upward',
+    },
+};
+
 module.exports = (builderFactory = defaultBuilderFactory) => builderFactory()
     .addEntry('core-js/stable')
     .addEntry('regenerator-runtime/runtime')
@@ -22,19 +31,22 @@ module.exports = (builderFactory = defaultBuilderFactory) => builderFactory()
                     test: /\.js$/,
                     exclude: /[\\/]node_modules[\\/]/,
                     use: [
+                        BABEL_LOADER,
+                    ],
+                },
+                {
+                    test: /\.ts$/,
+                    exclude: /[\\/]node_modules[\\/]/,
+                    use: [
+                        BABEL_LOADER,
                         {
-                            loader: 'babel-loader',
-                            options: {
-                                cacheDirectory: true,
-                                cacheCompression: false,
-                                rootMode: 'upward',
-                            },
+                            loader: 'ts-loader',
                         },
                     ],
                 },
             ],
         },
         resolve: {
-            extensions: ['.js'],
+            extensions: ['.ts', '.js'],
         },
     });

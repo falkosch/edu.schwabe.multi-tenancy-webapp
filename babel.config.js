@@ -5,6 +5,7 @@ module.exports = (api) => {
     return {
         presets: [
             '@babel/preset-env',
+            '@babel/typescript',
         ],
         plugins: [
             '@babel/plugin-transform-runtime',
@@ -17,9 +18,9 @@ module.exports = (api) => {
                 plugins: [
                     ['istanbul', {
                         exclude: [
-                            '**/*.karma.js',
-                            '**/*.spec.js',
-                            '**/*.mock.js',
+                            '**/*.karma.{t,j}s',
+                            '**/*.spec.{t,j}s',
+                            '**/*.mock.{t,j}s',
                         ],
                     }],
                 ],

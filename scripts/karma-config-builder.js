@@ -23,7 +23,7 @@ module.exports = class KarmaConfigBuilder extends ConfigBuilder {
     buildFiles() {
         const projectProperties = this.buildProjectProperties();
         return [
-            `./src/${projectProperties.ngAppModule}.karma.js`,
+            `./src/${projectProperties.entryModule}.karma.{t,j}s`,
         ];
     }
 

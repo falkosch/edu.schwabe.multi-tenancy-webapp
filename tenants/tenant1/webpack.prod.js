@@ -60,6 +60,7 @@ module.exports = (env = {}) => common()
                     parallel: true,
                     terserOptions: {
                         compress: {
+                            // eslint-disable-next-line @typescript-eslint/camelcase
                             drop_console: true,
                             warnings: true,
                         },

@@ -1,4 +1,4 @@
-﻿# Base-app
+﻿# Base-App
 
 Contains the all app functionality shared by all tenants, i.e. base JS logic and SCSS for common UI elements such as spinners.
 

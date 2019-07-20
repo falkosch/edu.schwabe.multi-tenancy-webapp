@@ -5,8 +5,8 @@ node_modules/
 obj/
 bin/
 docs/
+Jenkinsfile
 *.yml
-*.json
 *.eot
 *.ttf
 *.woff
@@ -15,5 +15,8 @@ docs/
 *.jpeg
 *.jpg
 *.zip
+*.bat
 *.properties
-Jenkinsfile
+*.js
+*.ts
+*.json

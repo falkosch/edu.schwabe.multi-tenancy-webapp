@@ -9,7 +9,7 @@ import 'angular-material/angular-material-mocks';
     (mocksContext) => {
         _.forEach(mocksContext.keys(), (key) => { mocksContext(key); });
     }
-)(require.context('.', true, /\.mock\.js$/));
+)(require.context('.', true, /\.mock\.[tj]s$/));
 
 // require all specs
 (
@@ -20,4 +20,4 @@ import 'angular-material/angular-material-mocks';
             });
         });
     }
-)(require.context('.', true, /\.spec\.js$/));
+)(require.context('.', true, /\.spec\.[tj]s$/));

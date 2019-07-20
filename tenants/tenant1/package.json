@@ -8,7 +8,7 @@
   },
   "private": true,
   "@edu.schwabe.webapp-prototypes/angularjs-tenant1": {
-    "ngAppModule": "tenant1",
+    "entryModule": "tenant1",
     "shortName": "ngTenant1",
     "language": {
       "allAvailable": [
@@ -24,7 +24,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:ci": "webpack --config webpack.prod.js --env.noBundleAnalyzer && node ../../tools/hash-output.js \"./deploy\"",
     "build:serve": "static-server dist/",
-    "clean": "rimraf ./reports ./dist ./deploy",
+    "clean": "rimraf ./reports ./dist ./deploy ./node_modules/.cache",
     "clean:ci": "npm run clean",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "karma start",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@edu.schwabe.webapp-prototypes/angularjs-base-app": "^0.0.1",
+    "@edu.schwabe.webapp-prototypes/base-service-worker": "^0.0.1",
     "@uirouter/angularjs": "^1.0.22",
     "angular": "^1.7.8",
     "angular-animate": "^1.7.8",
@@ -49,7 +50,7 @@
     "angular-translate-loader-url": "^2.18.1",
     "core-js": "^3.1.4",
     "default-passive-events": "^1.0.10",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "material-icons": "^0.3.1",
     "moment": "^2.24.0",
     "regenerator-runtime": "^0.13.2",

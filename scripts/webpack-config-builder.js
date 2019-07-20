@@ -12,7 +12,6 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { DuplicatesPlugin } = require('inspectpack/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const ServiceworkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const ConfigBuilder = require('./config-builder');
 
@@ -60,7 +59,7 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
         const projectProperties = this.buildProjectProperties();
         return [
             ...this.entries,
-            `./src/${projectProperties.ngAppModule}.module.js`,
+            `./src/${projectProperties.entryModule}.module`,
         ];
     }
 
@@ -131,9 +130,6 @@ module.exports = class WebpackConfigBuilder extends ConfigBuilder {
 
         const plugins = [
             new DuplicatesPlugin(),
-            new ServiceworkerWebpackPlugin({
-                entry: `./src/${projectProperties.ngAppModule}.sw.js`,
-            }),
             new DefinePlugin({
                 VERSION: JSON.stringify(packageProperties.version),
                 PROJECT_PROPERTIES: JSON.stringify(projectProperties),

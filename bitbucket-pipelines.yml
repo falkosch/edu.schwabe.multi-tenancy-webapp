@@ -13,8 +13,8 @@ definitions:
           - npm install --unsafe-perm
           - npm run lint:ci
           - npm run test:ci
-          - npm run sonar:ci-js
-          - npm run sonar:ci-scss
+          - npm run sonar:ci-eslint
+          - npm run sonar:ci-stylelint
         artifacts:
           - reports/**
           - base-app/reports/**

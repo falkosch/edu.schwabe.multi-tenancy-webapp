@@ -1,6 +1,6 @@
 {
   "name": "@edu.schwabe.webapp-prototypes/angularjs-base-app",
-  "description": "Base app of an AngularJS multi-tenant web app prototype, build with webpack and babel and tested with karma and jasmine.",
+  "description": "Base app of the AngularJS multi-tenant web app prototype, build with webpack and babel and tested with karma and jasmine.",
   "version": "0.0.1",
   "author": {
     "name": "Falko Schwabe",
@@ -8,11 +8,9 @@
   },
   "private": true,
   "@edu.schwabe.webapp-prototypes/angularjs-base-app": {
-    "ngAppModule": "index",
-    "shortName": "ngBaseApp",
+    "entryModule": "index",
     "language": {
       "allAvailable": [
-        "de",
         "en"
       ],
       "fallback": "en",
@@ -21,7 +19,7 @@
     }
   },
   "scripts": {
-    "clean": "rimraf ./reports ./dist ./deploy",
+    "clean": "rimraf ./reports ./dist ./deploy ./node_modules/.cache",
     "clean:ci": "npm run clean",
     "start": "npm run test",
     "test": "karma start",
@@ -43,7 +41,7 @@
     "angular-translate-loader-partial": "^2.18.1",
     "angular-translate-loader-static-files": "^2.18.1",
     "angular-translate-loader-url": "^2.18.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "material-icons": "^0.3.1",
     "moment": "^2.24.0",
     "rx-angular": "^1.1.3",

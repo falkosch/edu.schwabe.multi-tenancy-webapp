@@ -5,3 +5,17 @@ node_modules/
 obj/
 bin/
 docs/
+Jenkinsfile
+*.yml
+*.eot
+*.ttf
+*.woff
+*.png
+*.webp
+*.jpeg
+*.jpg
+*.zip
+*.bat
+*.properties
+*.scss
+*.svg

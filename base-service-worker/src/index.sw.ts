@@ -12,26 +12,17 @@ const { assets } = global.serviceWorkerOption;
 const CACHE_PREFIX = __filename;
 const CACHE_NAME = `${CACHE_PREFIX}?v=${VERSION}`;
 
-const BLACK_LIST = [
-    // /\/i18n\/([A-Z]{2}|[a-z]{2})([-_]([A-Z]{2}|[a-z]{2}))?\.json/,
-];
-
 const BLACK_LIST_TESTER = [
     // Ignore failed requests
-    (_request, response) => !response || !response.ok,
+    (__: Request, response: Response) => !response || !response.ok,
     // Ignore non-GET requests
-    request => request.method !== 'GET',
+    (request: Request) => request.method !== 'GET',
     // Ignore foreign origins
-    request => new URL(request.url).origin !== global.location.origin,
-    // Ignore black listed
-    ..._.map(BLACK_LIST, tester => (request => tester.test(request.url))),
+    (request: Request) => new URL(request.url).origin !== global.location.origin,
 ];
 
 const ASSETS_TO_CACHE = _.map(
-    _.reject(
-        [...assets, './'],
-        v => _.some(BLACK_LIST, tester => tester.test(v)),
-    ),
+    [...assets, './'],
     path => new URL(path, global.location).toString(),
 );
 
@@ -41,7 +32,7 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         global.caches
             .open(CACHE_NAME)
-            .then(cache => cache.addAll(ASSETS_TO_CACHE)),
+            .then((cache: Cache) => cache.addAll(ASSETS_TO_CACHE)),
     );
 });
 
@@ -91,12 +82,12 @@ self.addEventListener('fetch', (event) => {
                                 return responseFromNetwork;
                             });
                     })
-                    .catch(() => {
+                    .catch((reason) => {
                         // User is landing on our page.
                         if (request.mode === 'navigate') {
                             return global.caches.match('./');
                         }
-                        return undefined;
+                        return Promise.reject(reason);
                     });
             }),
     );

@@ -21,15 +21,6 @@ import './index.scss';
 import './i18n/de.json';
 import './i18n/en.json';
 
-export function registerAppServiceWorkerRuntime({ default: runtime }) {
-    runtime.register();
-}
-
-if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    import('serviceworker-webpack-plugin/lib/runtime')
-        .then(registerAppServiceWorkerRuntime);
-}
-
 export const IndexModule = angular
     .module('index', [
         angularAnimate,

@@ -1,8 +1,4 @@
 import _ from 'lodash';
-import 'angular';
-import 'angular-mocks';
-import 'angular-material';
-import 'angular-material/angular-material-mocks';
 
 // require all mocks before all specs
 (
