@@ -1,13 +1,13 @@
 declare namespace NodeJS {
 
     interface Global {
-        caches: {
+        readonly caches: {
             delete(id: string): Promise<any>;
             keys(): Promise<string[]>;
             match(request: Request | string): Promise<Response>;
             open(id: string): Promise<Cache>;
         };
-        location: URL;
+        readonly location: URL;
         serviceWorkerOption: {
             assets: string[];
         };
@@ -16,7 +16,7 @@ declare namespace NodeJS {
 }
 
 interface Event {
-    request: Request;
+    readonly request: Request;
     respondWith(response: Promise<any>): void;
     waitUntil(arg0: Promise<any>): void;
 }

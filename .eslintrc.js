@@ -87,6 +87,8 @@ module.exports = {
         {
             files: [
                 'base-service-worker/src/**/*.sw.{t,j}s',
+                'base-service-worker/src/**/*.sw.mock.{t,j}s',
+                'base-service-worker/src/**/*.sw.spec.{t,j}s',
                 'tenants/*/src/**/*.sw.{t,j}s',
             ],
             env: {

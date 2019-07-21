@@ -1,6 +1,6 @@
 import { registerAppServiceWorkerRuntime } from './index.module';
 
-describe('base service worker', () => {
+describe('base service worker module', () => {
 
     it('should register the runtime for the service worker', () => {
         const runtimeImportMock = {

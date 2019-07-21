@@ -26,9 +26,9 @@ const ASSETS_TO_CACHE = _.map(
     path => new URL(path, global.location).toString(),
 );
 
-// When the service worker is first added to a computer.
+// When the service worker is first time installed,
 self.addEventListener('install', (event) => {
-    // Add core website files to cache during serviceworker installation.
+    // cache all bundled static assets.
     event.waitUntil(
         global.caches
             .open(CACHE_NAME)
