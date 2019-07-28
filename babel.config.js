@@ -4,7 +4,11 @@ module.exports = (api) => {
 
     return {
         presets: [
-            '@babel/preset-env',
+            ['@babel/preset-env', {
+                useBuiltIns: 'usage',
+                corejs: 3,
+            }],
+            // this is actually not required for webpack ts-loader, but for eslint-babel-parser
             '@babel/typescript',
         ],
         plugins: [
@@ -13,18 +17,5 @@ module.exports = (api) => {
             '@babel/plugin-syntax-dynamic-import',
             'lodash',
         ],
-        env: {
-            test: {
-                plugins: [
-                    ['istanbul', {
-                        exclude: [
-                            '**/*.karma.{t,j}s',
-                            '**/*.spec.{t,j}s',
-                            '**/*.mock.{t,j}s',
-                        ],
-                    }],
-                ],
-            },
-        },
     };
 };

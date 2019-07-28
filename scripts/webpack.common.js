@@ -41,6 +41,12 @@ module.exports = (builderFactory = defaultBuilderFactory) => builderFactory()
                         BABEL_LOADER,
                         {
                             loader: 'ts-loader',
+                            options: {
+                                transpileOnly: true,
+                                compilerOptions: {
+                                    noEmit: false,
+                                },
+                            },
                         },
                     ],
                 },

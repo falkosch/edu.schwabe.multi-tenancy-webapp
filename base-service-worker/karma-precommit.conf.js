@@ -30,20 +30,21 @@ module.exports = (config) => {
                         flags: ['--no-sandbox'],
                     },
                 },
-                coverageReporter: {
-                    reporters: [
-                        { type: 'text' },
-                    ],
-                    check: {
+                coverageIstanbulReporter: {
+                    combineBrowserReports: true,
+                    fixWebpackSourcePaths: true,
+                    skipFilesWithNoCoverage: true,
+                    reports: ['text-summary'],
+                    thresholds: {
                         global: {
                             statements: 80,
+                            lines: 80,
                             branches: 80,
                             functions: 80,
-                            lines: 80,
                         },
                     },
                 },
-                reporters: ['spec', 'coverage', 'summary'],
+                reporters: ['spec', 'coverage-istanbul', 'summary'],
                 singleRun: true,
                 specReporter: {
                     suppressErrorSummary: false,

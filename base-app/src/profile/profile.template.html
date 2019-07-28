@@ -3,12 +3,12 @@
 
         <div ng-if="!$ctrl.isEnabled('username')" ng-click="$ctrl.enableControl('username')">
             <label translate="labels.username"></label>
-            <div ng-bind="$ctrl.viewmodel.username | profileUnsetValue"></div>
+            <div ng-bind="$ctrl.view.viewModel.username | profileUnsetValue"></div>
         </div>
 
         <md-input-container ng-if="$ctrl.isEnabled('username')" class="md-block">
             <label for="username" translate="labels.username"></label>
-            <input id="username" name="username" ng-model="$ctrl.viewmodel.username">
+            <input id="username" name="username" ng-model="$ctrl.view.viewModel.username">
         </md-input-container>
 
         <div layout="row">

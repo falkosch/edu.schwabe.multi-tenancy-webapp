@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "**/node_modules/**",
+    "babel.config.js",
+    "lint-staged.config.js",
+    "postcss.config.js",
+    "stylelint.config.js",
+    "**/webpack.*.js",
+    "**/karma*.conf.js",
+    "**/scripts/**",
+    "**/tools/**",
+    "**/*.karma.ts",
+    "**/*.mock.ts",
+    "**/*.spec.ts"
+  ],
+  "excludePrivate": true,
+  "mode": "modules",
+  "out": "docs",
+  "readme": "README.md"
+}

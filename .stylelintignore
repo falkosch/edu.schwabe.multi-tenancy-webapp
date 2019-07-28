@@ -20,3 +20,4 @@ Jenkinsfile
 *.js
 *.ts
 *.json
+*.log

@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const _ = require('lodash');
 
 const KarmaConfigBuilder = require('../../scripts/karma-config-builder');
 const testWebpackConfigBuilderFactory = require('../../scripts/webpack.test');
@@ -28,27 +27,31 @@ module.exports = (config) => {
                         flags: ['--no-sandbox'],
                     },
                 },
-                coverageReporter: {
-                    dir: 'reports/coverage/',
-                    subdir: browser => _.head(_.split(_.toLower(browser), /[ /-]/)),
-                    reporters: [
-                        { type: 'text' },
-                        { type: 'lcovonly' },
-                        { type: 'cobertura', file: 'cobertura.xml' },
-                    ],
-                    check: {
+                coverageIstanbulReporter: {
+                    combineBrowserReports: true,
+                    dir: 'reports/',
+                    fixWebpackSourcePaths: true,
+                    skipFilesWithNoCoverage: true,
+                    reports: ['text', 'lcovonly', 'cobertura'],
+                    thresholds: {
                         global: {
                             statements: 80,
+                            lines: 80,
                             branches: 80,
                             functions: 80,
-                            lines: 80,
                         },
+                    },
+                    instrumentation: {
+                        excludes: [
+                            '**/base-app/**',
+                            '**/base-service-worker/**',
+                        ],
                     },
                 },
                 junitReporter: {
                     outputDir: 'reports/test-reports/',
                 },
-                reporters: ['junit', 'spec', 'coverage', 'summary'],
+                reporters: ['junit', 'spec', 'coverage-istanbul', 'summary'],
                 colors: false,
                 singleRun: true,
                 specReporter: {

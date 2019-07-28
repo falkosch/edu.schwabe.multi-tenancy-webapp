@@ -53,14 +53,15 @@ module.exports = (config) => {
                         ],
                     },
                 },
-                coverageReporter: {
-                    reporters: [
-                        { type: 'text' },
-                    ],
+                coverageIstanbulReporter: {
+                    combineBrowserReports: true,
+                    fixWebpackSourcePaths: true,
+                    skipFilesWithNoCoverage: true,
+                    reports: ['text'],
                 },
                 reporters: _.concat(
                     testEnv.noSpec ? [] : ['spec'],
-                    testEnv.noCoverage ? [] : ['coverage'],
+                    testEnv.noCoverage ? [] : ['coverage-istanbul'],
                     ['summary'],
                 ),
                 specReporter: {

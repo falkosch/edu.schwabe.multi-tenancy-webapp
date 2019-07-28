@@ -35,6 +35,17 @@ module.exports = () => common(() => new TestWebpackConfigBuilder())
         module: {
             rules: [
                 {
+                    test: /\.[tj]s$/,
+                    exclude: /[\\/]node_modules[\\/]/,
+                    use: {
+                        loader: 'istanbul-instrumenter-loader',
+                        options: {
+                            esModules: true,
+                        },
+                    },
+                    enforce: 'post',
+                },
+                {
                     test: /\.template\.html?$/,
                     use: [
                         {

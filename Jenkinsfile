@@ -45,8 +45,8 @@ pipeline {
               finally {
                 junit '**/reports/test-reports/TESTS*.xml'
                 cobertura([
-                  coberturaReportFile: '**/reports/coverage/**/cobertura.xml',
-                  conditionalCoverageTargets: '70, 0, 0',
+                  coberturaReportFile: '**/reports/cobertura-coverage.xml',
+                  conditionalCoverageTargets: '80, 0, 0',
                   enableNewApi: true,
                   lineCoverageTargets: '80, 0, 0',
                   maxNumberOfBuilds: 0,

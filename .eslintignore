@@ -19,3 +19,4 @@ Jenkinsfile
 *.properties
 *.scss
 *.svg
+*.log

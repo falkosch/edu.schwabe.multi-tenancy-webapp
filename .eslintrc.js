@@ -32,6 +32,12 @@ module.exports = {
         'json',
         'markdown',
     ],
+    settings: {
+        polyfills: [
+          // Marks Promise as polyfilled, see https://github.com/amilajack/eslint-plugin-compat/issues/103#issuecomment-349155444
+          "Promise",
+        ],
+    },
     rules: {
         'class-methods-use-this': 'off',
         indent: ['error', 4],
@@ -68,8 +74,28 @@ module.exports = {
             allowTypedFunctionExpressions: true,
         }],
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-parameter-properties': 'off',
+        '@typescript-eslint/no-unused-vars': ['error', {
+            argsIgnorePattern: '^__(_*|\\w+)$',
+        }]
     },
     overrides: [
+        {
+            files: [
+                '**/*.ts',
+            ],
+            rules: {
+                'no-useless-constructor': 'off',
+                'no-empty-function': ['error', {
+                    allow: [
+                        'arrowFunctions',
+                        'functions',
+                        'methods',
+                        'constructors',
+                    ],
+                }],
+            },
+        },
         {
             files: [
                 'base-service-worker/src/**/*.{t,j}s',

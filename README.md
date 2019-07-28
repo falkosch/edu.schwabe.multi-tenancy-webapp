@@ -4,6 +4,48 @@
 
 This project contains a customizable `base-app` and two example tenant clients in `tenants/*` , which showcase how to build a AngularJS, lerna, webpack and SCSS based multi-tenant app. The base-app consists of a landing page, a mock-login and a mock profile view. It is not meant to be a cool super functional demo app. The actual gist of the project is the setup of the tenancy for AngularJS apps.
 
+## How to Use
+
+Set up package with `npm i` .
+
+Generally available package.json scripts are:
+
+* Lint and "auto-fix" all sources of all tenants with `npm run lint` .
+
+* Generate JSDoc of all sources of all tenants into `docs/` with `npm run docs` . You can browse the output with `docs/` with `npm run docs:serve` .
+
+The package.json scripts `*:ci` are actually for the Bitbucket or Jenkins build pipeline, but of course are useful for you as well:
+
+* Build all tenants with `npm run build:ci` .
+
+* Run unit tests of all tenants once with `npm run test:ci` .
+
+* Clean up build temporary resources with `npm run clean:ci` .
+
+## Tenancy
+
+This mono-repo contains a customizable `base-app` and the actual tenant clients in `tenants/*` . The tenant clients depend on the base-app and can extend its functionality by f.e. adding new AngularJS modules, decorate existing AngularJS modules the AngularJS-way and add new ui-router states. Tenants can also add to well defined extension points in the base-app:
+
+* Add entries to the navigation in the side-menubar with `NavigationService.forState` .
+
+* Add access control guard services to the list `StateAccessControlService.guards` .
+
+Furthermore, lerna, webpack and the repo's build scripts manage the bundling of each tenant client independently and enable the following customizations at build time:
+
+* Replace or rather override static assets like images or translation files of the base-app by placing a variant at the same relative path in `tenants/<name of tenant>/src/**/*` as the original is placed in `base-app/src/**/*` . For example, `tenants/tenant1/src/assets/example.jpg` overrides `base-app/src/assets/example.jpg` for only `tenant1` .
+
+* Override base-app's SCSS variables by setting them in `tenants/<name of tenant>/src/scss/shared/_variables.scss` . Note that the base-app follows a component oriented organization: Each AngularJS-module can import its own SCSS root file. To enable the override, `_variables.scss` is hence injected at the beginning of each such SCSS root file during build time. The tenancy in this project is not designed to enable any other manipulation of SCSS or the rendered CSS. Though, `angular-material` still provides a theming system that is worth to mention here, although this project does not make use of it for now.
+
+### How to Use only one Tenant
+
+Start a tenant with `npx lerna run start --stream --scope */<name of tenant>` , f.e. `npx lerna run start --stream --scope */tenant1` or even `npx lerna run start --stream --scope */*1` . The asterisks behave like usual wildcards for lerna's `--scope` . `--stream` is for immediately see the output of the scripts.
+
+Build a tenant into its `dist/` with `npx lerna run build --stream --scope */<name of tenant>` .
+
+Browse a tenant's `dist/` with `npx lerna run build:serve --stream --scope */<name of tenant>` .
+
+Run and watch unit tests of a tenant with `npx lerna run test --stream --scope */<name of tenant>` or `npx lerna run test:debug --stream --scope */<name of tenant>` .
+
 ## What to Learn from this Project
 
 The development of this project took me about 2-3 months work time including the Bitbucket and Jenkins pipeline, unit tests, high test coverage, clean build scripts code and clean app code. I am quite happy with the current results and hope it will help others finding a good setup for their tenancy.
@@ -53,45 +95,3 @@ Here is a summary of what I learned:
 
     * Do not go for fast solutions, which developers can only hardly use or applicate or cause a lot new complex problems. Go for simple solutions, which actually take off effort of future development.
     * Do not simply put down problems by saying "we can care for that in the future". Until these problems are solved, you will have extra efforts dealing with such problems. If you cannot find a solution now, commit to a plan to solve it in the near future.
-
-## How to Use
-
-Set up package with `npm i` .
-
-Generally available package.json scripts are:
-
-* Lint and "auto-fix" all sources of all tenants with `npm run lint` .
-
-* Generate JSDoc of all sources of all tenants into `docs/` with `npm run docs` . You can browse the output with `docs/` with `npm run docs:serve` .
-
-The package.json scripts `*:ci` are actually for the Bitbucket or Jenkins build pipeline, but of course are useful for you as well:
-
-* Build all tenants with `npm run build:ci` .
-
-* Run unit tests of all tenants once with `npm run test:ci` .
-
-* Clean up build temporary resources with `npm run clean:ci` .
-
-## Tenancy
-
-This mono-repo contains a customizable `base-app` and the actual tenant clients in `tenants/*` . The tenant clients depend on the base-app and can extend its functionality by f.e. adding new AngularJS modules, decorate existing AngularJS modules the AngularJS-way and add new ui-router states. Tenants can also add to well defined extension points in the base-app:
-
-* Add entries to the navigation in the side-menubar with `NavigationService.forState` .
-
-* Add access control guard services to the list `StateAccessControlService.guards` .
-
-Furthermore, lerna, webpack and the repo's build scripts manage the bundling of each tenant client independently and enable the following customizations at build time:
-
-* Replace or rather override static assets like images or translation files of the base-app by placing a variant at the same relative path in `tenants/<name of tenant>/src/**/*` as the original is placed in `base-app/src/**/*` . For example, `tenants/tenant1/src/assets/example.jpg` overrides `base-app/src/assets/example.jpg` for only `tenant1` .
-
-* Override base-app's SCSS variables by setting them in `tenants/<name of tenant>/src/scss/shared/_variables.scss` . Note that the base-app follows a component oriented organization: Each AngularJS-module can import its own SCSS root file. To enable the override, `_variables.scss` is hence injected at the beginning of each such SCSS root file during build time. The tenancy in this project is not designed to enable any other manipulation of SCSS or the rendered CSS. Though, `angular-material` still provides a theming system that is worth to mention here, although this project does not make use of it for now.
-
-### How to Use only one Tenant
-
-Start a tenant with `npx lerna run start --stream --scope */<name of tenant>` , f.e. `npx lerna run start --stream --scope */tenant1` or even `npx lerna run start --stream --scope */*1` . The asterisks behave like usual wildcards for lerna's `--scope` . `--stream` is for immediately see the output of the scripts.
-
-Build a tenant into its `dist/` with `npx lerna run build --stream --scope */<name of tenant>` .
-
-Browse a tenant's `dist/` with `npx lerna run build:serve --stream --scope */<name of tenant>` .
-
-Run and watch unit tests of a tenant with `npx lerna run test --stream --scope */<name of tenant>` or `npx lerna run test:debug --stream --scope */<name of tenant>` .
