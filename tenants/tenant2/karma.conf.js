@@ -1,17 +1,10 @@
 const _ = require('lodash');
 const merge = require('webpack-merge');
-const puppeteer = require('puppeteer');
 const { ProgressPlugin } = require('webpack');
 
 const KarmaConfigBuilder = require('../../scripts/karma-config-builder');
 const testWebpackConfigBuilderFactory = require('../../scripts/webpack.test');
 const packageProperties = require('./package.json');
-
-process.env.NODE_ENV = 'test';
-
-const chromePath = puppeteer.executablePath();
-process.env.CHROME_BIN = chromePath;
-process.env.CHROMIUM_BIN = chromePath;
 
 module.exports = (config) => {
 
@@ -39,24 +32,7 @@ module.exports = (config) => {
             )
             .addConfig({
                 browsers: ['ChromiumHeadlessNoSandbox'],
-                customLaunchers: {
-                    ChromiumHeadlessNoSandbox: {
-                        base: 'ChromiumHeadless',
-                        flags: ['--no-sandbox'],
-                    },
-                    ChromeDebugging: {
-                        base: 'Chrome',
-                        flags: [
-                            '--remote-debugging-port=9333',
-                            '--auto-open-devtools-for-tabs',
-                            'http://localhost:9876/debug.html',
-                        ],
-                    },
-                },
                 coverageIstanbulReporter: {
-                    combineBrowserReports: true,
-                    fixWebpackSourcePaths: true,
-                    skipFilesWithNoCoverage: true,
                     reports: ['text'],
                     instrumentation: {
                         excludes: [
@@ -70,17 +46,11 @@ module.exports = (config) => {
                     testEnv.noCoverage ? [] : ['coverage-istanbul'],
                     ['summary'],
                 ),
-                specReporter: {
-                    showSpecTiming: true,
-                    suppressErrorSummary: false,
-                    suppressPassed: true,
-                    suppressSkipped: true,
-                    failFast: false,
-                },
-                summaryReporter: {
-                    specLength: 80,
-                },
             })
-            .build(),
+            .build({
+                autoWatch: true,
+                colors: true,
+                singleRun: false,
+            }),
     );
 };

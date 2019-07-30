@@ -18,6 +18,7 @@ definitions:
         artifacts:
           - reports/**
           - base-app/reports/**
+          - base-service-worker/reports/**
           - tenants/*/reports/**
     - step: &build
         name: Build

@@ -29,7 +29,7 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "karma start",
     "test:ci": "karma start karma-ci.conf",
-    "test:debug": "karma start --browsers ChromeDebugging --reporters kjhtml",
+    "test:debug": "karma start --browsers ChromiumDebugging --reporters kjhtml",
     "test:precommit": "karma start karma-precommit.conf"
   },
   "dependencies": {

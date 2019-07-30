@@ -1,6 +1,13 @@
 const _ = require('lodash');
+const puppeteer = require('puppeteer');
 
 const ConfigBuilder = require('./config-builder');
+
+const chromePath = puppeteer.executablePath();
+process.env.CHROME_BIN = chromePath;
+process.env.CHROMIUM_BIN = chromePath;
+
+process.env.NODE_ENV = 'test';
 
 module.exports = class KarmaConfigBuilder extends ConfigBuilder {
 
@@ -46,30 +53,57 @@ module.exports = class KarmaConfigBuilder extends ConfigBuilder {
         return this.webpackConfig;
     }
 
-    buildWebpackMiddleware() {
-        return {
-            stats: 'minimal',
-        };
-    }
-
-    buildFrameworks() {
-        return ['jasmine'];
-    }
-
     build(...appendConfigs) {
         const files = this.buildFiles();
-        const frameworks = this.buildFrameworks();
         const preprocessors = this.buildPreprocessors();
         const webpack = this.buildWebpack();
-        const webpackMiddleware = this.buildWebpackMiddleware();
 
         return super.build(
             {
                 files,
                 preprocessors,
                 webpack,
-                webpackMiddleware,
-                frameworks,
+
+                autoWatch: false,
+                colors: false,
+                coverageIstanbulReporter: {
+                    combineBrowserReports: true,
+                    dir: 'reports/',
+                    fixWebpackSourcePaths: true,
+                    skipFilesWithNoCoverage: true,
+                },
+                customLaunchers: {
+                    ChromiumHeadlessNoSandbox: {
+                        base: 'ChromiumHeadless',
+                        flags: ['--no-sandbox'],
+                    },
+                    ChromiumDebugging: {
+                        base: 'Chromium',
+                        flags: [
+                            '--remote-debugging-port=9333',
+                            '--auto-open-devtools-for-tabs',
+                            'http://localhost:9876/debug.html',
+                        ],
+                    },
+                },
+                frameworks: ['jasmine'],
+                junitReporter: {
+                    outputDir: 'reports/test-reports/',
+                },
+                singleRun: true,
+                specReporter: {
+                    suppressErrorSummary: false,
+                    suppressPassed: true,
+                    suppressSkipped: true,
+                    showSpecTiming: true,
+                    failFast: false,
+                },
+                summaryReporter: {
+                    specLength: 80,
+                },
+                webpackMiddleware: {
+                    stats: 'minimal',
+                },
             },
             ...appendConfigs,
         );
