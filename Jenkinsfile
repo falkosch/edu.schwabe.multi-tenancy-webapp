@@ -145,7 +145,7 @@ pipeline {
                     execCommand: "cd ${DEPLOY_DOC_ROOT}/staging" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
                     flatten: true,
                     makeEmptyDirs: true,
-                    remoteDirectory: "${BRANCH_NAME}",
+                    remoteDirectory: "staging",
                     sourceFiles: 'tenants/*/deploy/*.zip'
                   )
                 ])
@@ -176,7 +176,7 @@ pipeline {
                     execCommand: "cd ${DEPLOY_DOC_ROOT}/production" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
                     flatten: true,
                     makeEmptyDirs: true,
-                    remoteDirectory: "${BRANCH_NAME}",
+                    remoteDirectory: "production",
                     sourceFiles: 'tenants/*/deploy/*.zip'
                   )
                 ])
