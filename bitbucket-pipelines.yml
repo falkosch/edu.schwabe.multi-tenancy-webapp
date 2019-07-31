@@ -50,25 +50,26 @@ pipelines:
       - step: *validate
       - step: *build-gated
       - step:
-          name: Deploy to test branch
+          name: Deploy to testing
           deployment: test
           script:
+            - echo PR-${BITBUCKET_PR_ID}
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf ${BITBUCKET_BRANCH##*/} && mkdir ${BITBUCKET_BRANCH##*/}'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf PR-${BITBUCKET_PR_ID} && mkdir -p PR-${BITBUCKET_PR_ID}'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                REMOTE_PATH: '${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/}'
-                LOCAL_PATH: 'tenants/tenant1/deploy/*'
+                REMOTE_PATH: '${DEPLOY_DOC_ROOT}/PR-${BITBUCKET_PR_ID}'
+                LOCAL_PATH: 'tenants/*/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/${BITBUCKET_BRANCH##*/} && unzip *.zip && rm -f *.zip*'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/PR-${BITBUCKET_PR_ID} && for f in *.zip; do unzip \$f -d \${f%.zip}; done'
   branches:
     master:
       - step: *validate
@@ -81,20 +82,18 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf staging && mkdir staging'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf staging && mkdir -p staging'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/staging'
-                LOCAL_PATH: 'tenants/tenant1/deploy/*'
+                LOCAL_PATH: 'tenants/*/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/staging && unzip *.zip && rm -f *.zip*'
-    'release/*':
-      - step: *build
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/staging && for f in *.zip; do unzip \$f -d \${f%.zip}; done'
       - step:
           name: Deploy to production
           deployment: production
@@ -104,15 +103,15 @@ pipelines:
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf production && mkdir production'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf production && mkdir -p production'
             - pipe: atlassian/sftp-deploy:0.4.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/production'
-                LOCAL_PATH: 'tenants/tenant1/*'
+                LOCAL_PATH: 'tenants/*/deploy/*'
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
-                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/production && unzip *.zip && rm -f *.zip*'
+                COMMAND: 'cd ${DEPLOY_DOC_ROOT}/production && for f in *.zip; do unzip \$f -d \${f%.zip}; done'

@@ -9,6 +9,8 @@ const { HashedModuleIdsPlugin } = require('webpack');
 const common = require('./scripts/webpack.common');
 const packageProperties = require('./package.json');
 
+const projectProperties = packageProperties[packageProperties.name];
+
 process.env.NODE_ENV = 'production';
 
 module.exports = (env = {}) => common()
@@ -38,7 +40,7 @@ module.exports = (env = {}) => common()
                 cache: true,
                 logo: './src/assets/favicon.png',
                 favicons: {
-                    appShortName: packageProperties[packageProperties.name].shortName,
+                    appShortName: projectProperties.shortName,
                 },
             }),
             new ImageminPlugin({
@@ -218,7 +220,7 @@ module.exports = (env = {}) => common()
                     ],
                     archive: [{
                         source: './dist',
-                        destination: './deploy/prototype.zip',
+                        destination: `./deploy/${projectProperties.entryModule}.zip`,
                         options: {
                             zlib: {
                                 level: 1,

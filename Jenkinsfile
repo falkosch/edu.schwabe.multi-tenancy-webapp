@@ -4,7 +4,7 @@ pipeline {
     disableConcurrentBuilds()
     preserveStashes()
     skipStagesAfterUnstable()
-    timeout(time: 10, unit: 'MINUTES')
+    timeout(time: 1, unit: 'HOURS')
   }
   triggers {
     pollSCM('H */15 * * *')
@@ -65,29 +65,29 @@ pipeline {
     }
     stage('sonar quality gate') {
       steps {
-        script {
-          withSonarQubeEnv('sonarqube') {
-            withEnv(["sonar.branch.name=${env.BRANCH_NAME}"]) {
-              sh 'npm run sonar:ci'
-            }
+        withSonarQubeEnv('sonarqube') {
+          withEnv(["sonar.branch.name=${env.BRANCH_NAME}"]) {
+            sh 'npm run sonar:ci'
           }
-          timeout(time: 10, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-          }
+        }
+        timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
         }
       }
     }
     stage('build') {
       failFast true
       parallel {
-        stage('build artifact') {
+        stage('build artifacts') {
           steps {
             sh 'npm run build:ci'
+            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
           }
         }
         stage('generate docs') {
           steps {
             sh 'npm run docs:ci'
+            archiveArtifacts(artifacts: 'docs/**', fingerprint: false, onlyIfSuccessful: true)
           }
         }
       }
@@ -99,28 +99,89 @@ pipeline {
         }
       }
       stages {
-        stage('deploy artifact to change request stage') {
+        stage('Deploy to testing') {
           when {
             changeRequest()
           }
           steps {
-            echo 'deploying to change request stage'
+            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+              script {
+                deployConfig = readProperties(file: deployConfigFile)
+                DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
+              }
+            }
+            sshPublisher(
+              publishers: [
+                sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
+                  sshTransfer(
+                    cleanRemote: true,
+                    execCommand: "cd ${DEPLOY_DOC_ROOT}/${BRANCH_NAME}" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                    flatten: true,
+                    makeEmptyDirs: true,
+                    remoteDirectory: "${BRANCH_NAME}",
+                    sourceFiles: 'tenants/*/deploy/*.zip'
+                  )
+                ])
+              ]
+            )
           }
         }
-        stage('deploy artifact to master stage') {
+        stage('Deploy to staging') {
           when {
             branch 'master'
           }
           steps {
-            echo 'deploying to master stage'
+            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+              script {
+                deployConfig = readProperties(file: deployConfigFile)
+                DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
+              }
+            }
+            sshPublisher(
+              publishers: [
+                sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
+                  sshTransfer(
+                    cleanRemote: true,
+                    execCommand: "cd ${DEPLOY_DOC_ROOT}/staging" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                    flatten: true,
+                    makeEmptyDirs: true,
+                    remoteDirectory: "${BRANCH_NAME}",
+                    sourceFiles: 'tenants/*/deploy/*.zip'
+                  )
+                ])
+              ]
+            )
           }
         }
-        stage('deploy artifact to production stage') {
+        stage('Deploy to production') {
           when {
-            buildingTag()
+            beforeInput true
+            branch 'master'
+          }
+          input {
+            message 'Deploy to production?'
           }
           steps {
-            echo 'deploying to production stage'
+            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+              script {
+                deployConfig = readProperties(file: deployConfigFile)
+                DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
+              }
+            }
+            sshPublisher(
+              publishers: [
+                sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
+                  sshTransfer(
+                    cleanRemote: true,
+                    execCommand: "cd ${DEPLOY_DOC_ROOT}/production" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                    flatten: true,
+                    makeEmptyDirs: true,
+                    remoteDirectory: "${BRANCH_NAME}",
+                    sourceFiles: 'tenants/*/deploy/*.zip'
+                  )
+                ])
+              ]
+            )
           }
         }
       }
