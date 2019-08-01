@@ -8,6 +8,7 @@
   },
   "private": true,
   "@edu.schwabe.webapp-prototypes/angularjs-tenant2": {
+    "baseURL": "/",
     "entryModule": "tenant2",
     "shortName": "ngTenant2",
     "language": {

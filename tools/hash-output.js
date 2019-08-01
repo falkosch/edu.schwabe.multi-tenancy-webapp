@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 function _getDeployDirectory() {
-    const deployDirectory = process.argv.slice(2);
+    const deployDirectory = process.argv[2];
     if (!_.isEmpty(deployDirectory)) {
         return `${process.cwd()}/${deployDirectory}`;
     }

@@ -75,21 +75,17 @@ pipeline {
         }
       }
     }
-    stage('build') {
-      failFast true
-      parallel {
-        stage('build artifacts') {
-          steps {
-            sh 'npm run build:ci'
-            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
-          }
-        }
-        stage('generate docs') {
-          steps {
-            sh 'npm run docs:ci'
-            archiveArtifacts(artifacts: 'docs/**', fingerprint: false, onlyIfSuccessful: true)
-          }
-        }
+    stage('generate docs') {
+      steps {
+        sh 'npm run docs:ci'
+        publishHTML([
+          alwaysLinkToLastBuild: false,
+          allowMissing: false,
+          keepAll: true,
+          reportDir: 'docs',
+          reportFiles: 'index.html',
+          reportName: 'TypeDoc Files'
+        ])
       }
     }
     stage('deploy') {
@@ -104,6 +100,9 @@ pipeline {
             changeRequest()
           }
           steps {
+            sh "node tools/determine-base-URL.js ${BRANCH_NAME}"
+            sh 'npm run build:ci'
+            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
@@ -131,6 +130,9 @@ pipeline {
             branch 'master'
           }
           steps {
+            sh "node tools/determine-base-URL.js staging"
+            sh 'npm run build:ci'
+            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
@@ -162,6 +164,9 @@ pipeline {
             message 'Deploy to production?'
           }
           steps {
+            sh "node tools/determine-base-URL.js production"
+            sh 'npm run build:ci'
+            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)

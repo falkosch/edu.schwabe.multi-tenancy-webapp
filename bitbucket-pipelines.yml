@@ -9,51 +9,31 @@ definitions:
         name: Validate
         caches:
           - node
-        script:
-          - npm install --unsafe-perm
-          - npm run lint:ci
-          - npm run test:ci
-          - npm run sonar:ci-eslint
-          - npm run sonar:ci-stylelint
-        artifacts:
-          - reports/**
-          - base-app/reports/**
-          - base-service-worker/reports/**
-          - tenants/*/reports/**
-    - step: &build
-        name: Build
-        caches:
-          - node
-        script:
-          - npm install --unsafe-perm
-          - npm run build:ci
-        artifacts:
-          - tenants/*/deploy/**
-    - step: &build-gated
-        name: Quality Gate, then Build
-        caches:
-          - node
           - sonar
         clone:
           depth: full
         script:
+          - npm install --unsafe-perm
+          - npm run lint:ci
+          - npm run sonar:ci-eslint
+          - npm run sonar:ci-stylelint
+          - npm run test:ci
           - pipe: sonarsource/sonarcloud-scan:0.1.5
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
-          - npm install --unsafe-perm
-          - npm run build:ci
-        artifacts:
-          - tenants/*/deploy/**
 pipelines:
   pull-requests:
     '**':
       - step: *validate
-      - step: *build-gated
       - step:
           name: Deploy to testing
           deployment: test
+          caches:
+            - node
           script:
-            - echo PR-${BITBUCKET_PR_ID}
+            - npm install --unsafe-perm
+            - node tools/determine-base-URL.js PR-${BITBUCKET_PR_ID}
+            - npm run build:ci
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -73,11 +53,15 @@ pipelines:
   branches:
     master:
       - step: *validate
-      - step: *build-gated
       - step:
           name: Deploy to staging
           deployment: staging
+          caches:
+            - node
           script:
+            - npm install --unsafe-perm
+            - node tools/determine-base-URL.js staging
+            - npm run build:ci
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
@@ -98,7 +82,12 @@ pipelines:
           name: Deploy to production
           deployment: production
           trigger: manual
+          caches:
+            - node
           script:
+            - npm install --unsafe-perm
+            - node tools/determine-base-URL.js production
+            - npm run build:ci
             - pipe: atlassian/ssh-run:0.1.4
               variables:
                 SSH_USER: ${DEPLOY_USER}
