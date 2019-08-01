@@ -11,8 +11,12 @@ const baseURLBuilder = (function createBaseURLBuilder(deploymentTarget) {
     const defaultBuilder = _.constant('/');
     const DeploymentTargetToBaseURLBuilderMappings = [
         {
-            predicate: target => _.includes(['production', 'staging'], target),
+            predicate: target => target === 'production',
             builder: defaultBuilder,
+        },
+        {
+            predicate: target => target === 'staging',
+            builder: entryModule => `/${entryModule}/`,
         },
         {
             predicate: target => !_.isNil(target),
