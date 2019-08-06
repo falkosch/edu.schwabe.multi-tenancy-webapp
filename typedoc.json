@@ -1,17 +1,12 @@
 {
   "exclude": [
     "**/node_modules/**",
-    "babel.config.js",
-    "lint-staged.config.js",
-    "postcss.config.js",
-    "stylelint.config.js",
-    "**/webpack.*.js",
-    "**/karma*.conf.js",
-    "**/scripts/**",
-    "**/tools/**",
-    "**/*.karma.ts",
-    "**/*.mock.ts",
-    "**/*.spec.ts"
+    "{babel,lint-staged,postcss,stylelint}.config.js",
+    "**/*.conf.js",
+    "{tools,scripts}/**/*.js",
+    "{libs,apps}/*/scripts/**/*.js",
+    "{libs,apps}/*/src/**/*.{karma,mock,spec}.{t,j}s",
+    "apps/*/webpack.*.js"
   ],
   "excludePrivate": true,
   "mode": "modules",

@@ -14,7 +14,6 @@ const BABEL_LOADER = {
 };
 
 module.exports = (builderFactory = defaultBuilderFactory) => builderFactory()
-    .addEntry('core-js/stable')
     .addEntry('regenerator-runtime/runtime')
     .addEntry('default-passive-events')
     .addConfig({

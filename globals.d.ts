@@ -6,6 +6,7 @@ interface LanguageProjectProperties {
     fallback: string;
     default: string;
     partialsUrlTemplate: string;
+    dynamicLocalesUrlTemplate: string;
 }
 
 /** Project properties for the app set in its package.json */

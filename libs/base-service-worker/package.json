@@ -1,0 +1,40 @@
+{
+  "name": "@edu.schwabe.webapp-prototypes/base-service-worker",
+  "description": "Base service worker of the AngularJS multi-tenant web app prototype.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Falko Schwabe",
+    "url": "https://bitbucket.org/falko_schwabe/edu.schwabe.webapp-prototypes"
+  },
+  "private": true,
+  "main": "src/index.module.ts",
+  "browser": "src/index.module.ts",
+  "@edu.schwabe.webapp-prototypes/base-service-worker": {
+    "entryModule": "index",
+    "language": {
+      "allAvailable": [
+        "en"
+      ],
+      "fallback": "en",
+      "default": "en",
+      "partialsUrlTemplate": "{part}/i18n/{lang}.json",
+      "dynamicLocalesUrlTemplate": "./i18n/angular-locale_{{locale}}.js"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf ./reports ./dist ./deploy ./node_modules/.cache",
+    "clean:ci": "npm run clean",
+    "start": "npm run test",
+    "test": "karma start",
+    "test:ci": "karma start karma-ci.conf",
+    "test:debug": "karma start --browsers ChromiumDebugging --reporters kjhtml",
+    "test:precommit": "karma start karma-precommit.conf"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "lodash": "*",
+    "rimraf": "^2.6.3"
+  }
+}

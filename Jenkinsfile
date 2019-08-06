@@ -102,7 +102,7 @@ pipeline {
           steps {
             sh "node tools/determine-base-URL.js ${BRANCH_NAME}"
             sh 'npm run build:ci'
-            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
+            archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
@@ -118,7 +118,7 @@ pipeline {
                     flatten: true,
                     makeEmptyDirs: true,
                     remoteDirectory: "${BRANCH_NAME}",
-                    sourceFiles: 'tenants/*/deploy/*.zip'
+                    sourceFiles: 'apps/*/deploy/*.zip'
                   )
                 ])
               ]
@@ -132,7 +132,7 @@ pipeline {
           steps {
             sh "node tools/determine-base-URL.js staging"
             sh 'npm run build:ci'
-            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
+            archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
@@ -148,7 +148,7 @@ pipeline {
                     flatten: true,
                     makeEmptyDirs: true,
                     remoteDirectory: "staging",
-                    sourceFiles: 'tenants/*/deploy/*.zip'
+                    sourceFiles: 'apps/*/deploy/*.zip'
                   )
                 ])
               ]
@@ -166,7 +166,7 @@ pipeline {
           steps {
             sh "node tools/determine-base-URL.js production"
             sh 'npm run build:ci'
-            archiveArtifacts(artifacts: 'tenants/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
+            archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
             configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
@@ -182,7 +182,7 @@ pipeline {
                     flatten: true,
                     makeEmptyDirs: true,
                     remoteDirectory: "production",
-                    sourceFiles: 'tenants/*/deploy/*.zip'
+                    sourceFiles: 'apps/*/deploy/*.zip'
                   )
                 ])
               ]

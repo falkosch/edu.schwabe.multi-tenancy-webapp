@@ -34,8 +34,8 @@ module.exports = {
     ],
     settings: {
         polyfills: [
-          // Marks Promise as polyfilled, see https://github.com/amilajack/eslint-plugin-compat/issues/103#issuecomment-349155444
-          "Promise",
+            // Marks Promise as polyfilled, see https://github.com/amilajack/eslint-plugin-compat/issues/103#issuecomment-349155444
+            "Promise",
         ],
     },
     rules: {
@@ -98,9 +98,7 @@ module.exports = {
         },
         {
             files: [
-                'base-service-worker/src/**/*.{t,j}s',
-                'base-app/src/**/*.{t,j}s',
-                'tenants/*/src/**/*.{t,j}s',
+                '{libs,apps}/*/src/**/*.{t,j}s',
             ],
             globals: {
                 process: true,
@@ -112,10 +110,8 @@ module.exports = {
         },
         {
             files: [
-                'base-service-worker/src/**/*.sw.{t,j}s',
-                'base-service-worker/src/**/*.sw.mock.{t,j}s',
-                'base-service-worker/src/**/*.sw.spec.{t,j}s',
-                'tenants/*/src/**/*.sw.{t,j}s',
+                '{libs,apps}/*/src/**/*.sw.{t,j}s',
+                'libs/base-service-worker/src/**/*.sw.{mock,spec}.{t,j}s',
             ],
             env: {
                 serviceworker: true,
@@ -127,8 +123,7 @@ module.exports = {
         },
         {
             files: [
-                'base-app/src/**/*.module.{t,j}s',
-                'tenants/*/src/**/*.module.{t,j}s',
+                '{libs,apps}/*/src/**/*.module.{t,j}s',
             ],
             rules: {
                 'lodash/prefer-lodash-method': 'off',
@@ -149,15 +144,7 @@ module.exports = {
                 'angular/mocks': true,
             },
             files: [
-                'base-service-worker/src/**/*.mock.{t,j}s',
-                'base-service-worker/src/**/*.spec.{t,j}s',
-                'base-service-worker/src/**/*.karma.{t,j}s',
-                'base-app/src/**/*.mock.{t,j}s',
-                'base-app/src/**/*.spec.{t,j}s',
-                'base-app/src/**/*.karma.{t,j}s',
-                'tenants/*/src/**/*.mock.{t,j}s',
-                'tenants/*/src/**/*.spec.{t,j}s',
-                'tenants/*/src/**/*.karma.{t,j}s',
+                '{libs,apps}/*/src/**/*.{mock,spec,karma}.{t,j}s',
             ],
             globals: {
                 require: true,
@@ -177,18 +164,11 @@ module.exports = {
                 node: true,
             },
             files: [
-                'babel.config.js',
-                'jsdoc.conf.js',
-                'karma*.conf.js',
-                'lerna.json',
-                'package-lock.json',
-                'package.json',
-                'postcss.config.js',
-                'stylelint.config.js',
-                '{scripts,tools}/*',
-                'base-app/scripts/*.js',
-                'tenants/*/scripts/*.js',
-                'tenants/*/webpack.*.js',
+                '{babel,lint-staged,postcss,stylelint}.config.js',
+                '**/*.conf.js',
+                '{scripts,tools}/**/*.js',
+                '{libs,apps}/*/scripts/**/*.js',
+                'apps/*/webpack.*.js',
             ],
             rules: {
                 'no-console': 'off',

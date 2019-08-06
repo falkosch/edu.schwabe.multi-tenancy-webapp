@@ -1,16 +1,7 @@
 {
   "version": "0.0.1",
   "packages": [
-    "./base-service-worker",
-    "./base-app",
-    "./tenants/*"
-  ],
-  "command": {
-    "publish": {
-      "message": "chore(release): publish"
-    },
-    "bootstrap": {
-      "hoist": false
-    }
-  }
+    "./libs/*",
+    "./apps/*"
+  ]
 }
