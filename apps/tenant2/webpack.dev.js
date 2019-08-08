@@ -17,7 +17,6 @@ module.exports = () => common()
             pathinfo: false,
         },
         devServer: {
-            historyApiFallback: true,
             hot: true,
             stats: 'minimal',
         },

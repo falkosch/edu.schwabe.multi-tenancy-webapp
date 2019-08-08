@@ -3,9 +3,40 @@
 
 // The following code is adapted to the app needs
 
-// Service worker "index"
-
 import _ from 'lodash';
+
+function isFailedResponse(response?: Response): boolean {
+    return !response || !response.ok;
+}
+
+function isGETRequest(request: Request): boolean {
+    return request.method === 'GET';
+}
+
+function hasModeNavigate(request: Request): boolean {
+    return request.mode === 'navigate';
+}
+
+function isNavigateToSPAState(request: Request): boolean {
+    if (!hasModeNavigate(request)) {
+        return false;
+    }
+    if (!isGETRequest(request)) {
+        return false;
+    }
+    if (request.destination !== 'document') {
+        return false;
+    }
+
+    const { pathname } = new URL(request.url);
+    const { baseURL } = PROJECT_PROPERTIES;
+    if (!_.startsWith(pathname, baseURL)) {
+        return false;
+    }
+
+    return true;
+}
+
 
 const { assets } = global.serviceWorkerOption;
 
@@ -14,9 +45,9 @@ const CACHE_NAME = `${CACHE_PREFIX}?v=${VERSION}`;
 
 const BLACK_LIST_TESTER = [
     // Ignore failed requests
-    (__: Request, response: Response) => !response || !response.ok,
+    (__: Request, response: Response) => isFailedResponse(response),
     // Ignore non-GET requests
-    (request: Request) => request.method !== 'GET',
+    (request: Request) => !isGETRequest(request),
     // Ignore foreign origins
     (request: Request) => new URL(request.url).origin !== global.location.origin,
 ];
@@ -56,6 +87,11 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
+    if (isNavigateToSPAState(request)) {
+        event.respondWith(global.caches.match('./'));
+        return;
+    }
+
     event.respondWith(
         global.caches.match(request)
             .then((response) => {
@@ -84,7 +120,7 @@ self.addEventListener('fetch', (event) => {
                     })
                     .catch((reason) => {
                         // User is landing on our page.
-                        if (request.mode === 'navigate') {
+                        if (hasModeNavigate(request)) {
                             return global.caches.match('./');
                         }
                         return Promise.reject(reason);

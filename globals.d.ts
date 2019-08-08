@@ -11,6 +11,7 @@ interface LanguageProjectProperties {
 
 /** Project properties for the app set in its package.json */
 interface ProjectProperties {
+    baseURL: string;
     /**
      * name of the entry module, which determines the entry file and what AngularJS module to
      * bootstrap with

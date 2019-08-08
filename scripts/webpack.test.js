@@ -3,6 +3,13 @@ const common = require('./webpack.common');
 
 class TestWebpackConfigBuilder extends WebpackConfigBuilder {
 
+    buildProjectProperties() {
+        return {
+            ...super.buildProjectProperties(),
+            baseURL: '/',
+        };
+    }
+
     build(...appendConfigs) {
         const builtConfig = super.build(...appendConfigs);
 

@@ -35,6 +35,7 @@ describe('base service worker', () => {
         navigateMode = false,
         getMethod = true,
         url = testRequestUrl,
+        destination: RequestDestination = 'script',
     ): Request {
         // For the sake of simplicity of the tests we ignore that this object is not a full
         // Request object.
@@ -43,6 +44,7 @@ describe('base service worker', () => {
             url,
             mode: navigateMode ? 'navigate' : 'same-origin',
             method: getMethod ? 'GET' : 'POST',
+            destination,
         };
     }
 
@@ -187,10 +189,10 @@ describe('base service worker', () => {
     describe(`when SW-event ${ServiceWorkerEventNames.fetch} is fired`, () => {
 
         let eventMock: Event;
-        let eventListener: Function;
+        let fetchEventListener: Function;
 
         beforeEach(() => {
-            eventListener = getEventListener(ServiceWorkerEventNames.fetch);
+            fetchEventListener = getEventListener(ServiceWorkerEventNames.fetch);
         });
 
         beforeEach(() => {
@@ -205,6 +207,33 @@ describe('base service worker', () => {
             SPIES.caches.open.resetSpy();
         });
 
+
+        describe('when request is "navigate" to SPA state', () => {
+
+            const testRequestWithCachedResponse = requestMockFactory(true, true, testRequestUrl, 'document');
+            const testCachedResponse = responseMockFactory();
+
+            beforeEach(() => {
+                eventMock = eventMockFactory(testRequestWithCachedResponse);
+                SPIES.caches.match.strategy = () => Promise.resolve(testCachedResponse);
+                SPIES.caches.open.strategy = () => Promise.reject(new Error('test failure'));
+                SPIES.fetch.strategy = () => Promise.reject(new Error('test failure'));
+            });
+
+            it('should query and respond with the cached SPA index.html',
+                () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
+                    .then(() => {
+                        expect(
+                            SPIES.caches.match.toHaveBeenCalledWith('./'),
+                        ).toBe(true);
+
+                        expect(
+                            SPIES.caches.match.toHaveBeenCalledWith(testRequestWithCachedResponse),
+                        ).toBe(false);
+                    }));
+
+        });
+
         describe('when a cached response exists for the request in the event', () => {
 
             const testRequestWithCachedResponse = requestMockFactory();
@@ -217,7 +246,7 @@ describe('base service worker', () => {
             });
 
             it('should have queried the cache for a cached response using the given request',
-                () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                     .then(() => {
 
                         expect(
@@ -226,7 +255,7 @@ describe('base service worker', () => {
                     }));
 
             it('should return the cached response',
-                () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                     .then((actualResponse) => {
 
                         expect(actualResponse)
@@ -256,7 +285,7 @@ describe('base service worker', () => {
                 });
 
                 it('should have passed the request to fetch',
-                    () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                    () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                         .then(() => {
 
                             expect(SPIES.fetch.toHaveBeenCalledWith(testRequest))
@@ -264,7 +293,7 @@ describe('base service worker', () => {
                         }));
 
                 it('should return the original response',
-                    () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                    () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                         .then((actualResponse) => {
 
                             expect(actualResponse)
@@ -274,7 +303,7 @@ describe('base service worker', () => {
                 describe('when the request is fine and the response is "ok"', () => {
 
                     it('should cache a clone of the response',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.open.lastCall())
@@ -296,7 +325,7 @@ describe('base service worker', () => {
                     });
 
                     it('should NOT cache the response',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.open.lastCalls())
@@ -312,7 +341,7 @@ describe('base service worker', () => {
                     });
 
                     it('should NOT cache the response',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.open.lastCalls())
@@ -328,7 +357,7 @@ describe('base service worker', () => {
                     });
 
                     it('should NOT cache the response',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.open.lastCalls())
@@ -346,7 +375,7 @@ describe('base service worker', () => {
                     });
 
                     it('should NOT cache the response',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.open.lastCalls())
@@ -374,7 +403,7 @@ describe('base service worker', () => {
                     });
 
                     it('should have queried the cache for a cached response using the given request',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.match.toHaveBeenCalledWith(testNavigateRequest))
@@ -382,7 +411,7 @@ describe('base service worker', () => {
                             }));
 
                     it('should resolve with whatever is cached for resource "./" instead',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .then(() => {
 
                                 expect(SPIES.caches.match.toHaveBeenCalledWith('./'))
@@ -400,7 +429,7 @@ describe('base service worker', () => {
                     });
 
                     it('should have queried the cache for a cached response using the given request',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .catch(() => {
 
                                 expect(
@@ -409,7 +438,7 @@ describe('base service worker', () => {
                             }));
 
                     it('should reject and passthrough the reason for failing the fetch',
-                        () => invokeListenerAndExtractPromise(eventListener, eventMock, 'respondWith')
+                        () => invokeListenerAndExtractPromise(fetchEventListener, eventMock, 'respondWith')
                             .catch((actualReason) => {
 
                                 expect(actualReason)
