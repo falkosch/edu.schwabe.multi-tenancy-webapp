@@ -1,3 +1,25 @@
 $material-icons-font-path: '~material-icons/iconfont/';
 
-@import "~material-icons/iconfont/material-icons.scss";
+// Source is copied from "~material-icons/iconfont/material-icons.scss"
+// due to missing font-display property. We want it to be set to "swap"!
+
+@import '~material-icons/iconfont/variables.scss';
+@import '~material-icons/iconfont/mixins.scss';
+
+@font-face {
+    font-family: $material-icons-font-family;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('#{$material-icons-font-file}.eot'); /* For IE6-8 */
+    src:
+        local($material-icons-font-family),
+        local($material-icons-font-name),
+        url('#{$material-icons-font-file}.woff2') format('woff2'),
+        url('#{$material-icons-font-file}.woff') format('woff'),
+        url('#{$material-icons-font-file}.ttf') format('truetype');
+}
+
+.material-icons {
+    @include material-icons();
+}

@@ -70,8 +70,10 @@ pipeline {
             sh 'npm run sonar:ci'
           }
         }
-        timeout(time: 10, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
+        retry(2) {
+          timeout(time: 1, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+          }
         }
       }
     }

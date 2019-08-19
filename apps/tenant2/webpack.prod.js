@@ -1,9 +1,11 @@
 const CompressionPlugin = require('compression-webpack-plugin');
+const Critters = require('critters-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
 const common = require('./scripts/webpack.common');
@@ -37,7 +39,7 @@ module.exports = (env = {}) => common()
         },
         plugins: [
             new HashedModuleIdsPlugin(),
-            new WebappWebpackPlugin({
+            new FaviconsWebpackPlugin({
                 logo: './src/assets/favicon.png',
                 publicPath: '.',
                 prefix: '',
@@ -205,6 +207,12 @@ module.exports = (env = {}) => common()
     })
     .build({
         plugins: [
+            new PreloadWebpackPlugin(),
+            new Critters({
+                preload: 'swap',
+                fonts: true,
+                pruneSource: false,
+            }),
             new CompressionPlugin({
                 cache: true,
                 compressionOptions: {

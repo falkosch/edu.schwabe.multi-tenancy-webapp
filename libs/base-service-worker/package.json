@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "lodash": "*",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.7.1"
   }
 }

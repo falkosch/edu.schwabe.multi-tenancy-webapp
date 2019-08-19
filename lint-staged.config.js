@@ -1,5 +1,7 @@
+const _ = require('lodash');
+
 module.exports = {
-    '*.{js,json,md}': () => ['eslint --format=codeframe --fix', 'git add'],
-    '*.ts': () => ['tsc --project tsconfig.json --noEmit', 'eslint --format=codeframe --fix', 'git add'],
-    '*.{scss,css,svg}': () => ['stylelint --fix', 'git add'],
+    '*.{ts,js,json,md}': filenames => _.map(filenames, filename => `eslint --format=codeframe --fix "${filename}"`),
+    '*.ts': () => 'tsc --project tsconfig.json --noEmit',
+    '*.{scss,css,svg}': filenames => _.map(filenames, filename => `stylelint --fix "${filename}"`),
 };

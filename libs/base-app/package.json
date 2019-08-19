@@ -61,7 +61,7 @@
     "angular-aria": "*",
     "angular-dynamic-locale": "*",
     "angular-i18n": "*",
-    "angular-material": "*",
+    "angular-material": "^1.1.20",
     "angular-messages": "*",
     "angular-sanitize": "*",
     "angular-translate": "*",
@@ -73,7 +73,7 @@
     "lodash": "*",
     "material-icons": "*",
     "moment": "*",
-    "rimraf": "^2.6.3",
+    "rimraf": "^2.7.1",
     "rx-angular": "*",
     "uuid-browser": "*"
   }
