@@ -21,3 +21,4 @@ Jenkinsfile
 *.ts
 *.json
 *.log
+*.pdn

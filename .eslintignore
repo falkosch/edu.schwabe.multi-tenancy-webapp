@@ -20,3 +20,4 @@ Jenkinsfile
 *.scss
 *.svg
 *.log
+*.pdn

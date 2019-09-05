@@ -12,6 +12,8 @@ Additionally, the continuous deployment of each tenant app is also showcased:
 
 - Deployment to a `productive` environment must be triggered manually: [tenant1 on productive](https://tenant1.iterative-prototyping.com/) or [tenant2 on productive](https://tenant2.iterative-prototyping.com/)
 
+![alt text](./project-logo.jpg "Project Logo shows tenant1 at the left half and tenant2 at the right.")
+
 The project shall serve as a kind of a blueprint that can be used by other software developers to have a fully functional mono repository from start without dealing with most of the many annoying hassles while setting it up.
 
 ## Install
