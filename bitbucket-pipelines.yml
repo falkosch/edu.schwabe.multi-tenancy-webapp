@@ -1,6 +1,6 @@
-image: atlassianlabs/docker-node-jdk-chrome-firefox:latest
+image: atlassianlabs/docker-node-jdk-chrome-firefox:2019-09-09
 options:
-  max-time: 10 # minutes
+  max-time: 15 # minutes
 definitions:
   caches:
     sonar: ~/.sonar/cache
@@ -18,7 +18,7 @@ definitions:
           - npm run sonar:ci-eslint
           - npm run sonar:ci-stylelint
           - npm run test:ci
-          - pipe: sonarsource/sonarcloud-scan:0.1.5
+          - pipe: sonarsource/sonarcloud-scan:1.0.1
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
 pipelines:
@@ -34,18 +34,18 @@ pipelines:
             - npm install --unsafe-perm
             - node tools/determine-base-URL.js PR-${BITBUCKET_PR_ID}
             - npm run build:ci
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf PR-${BITBUCKET_PR_ID} && mkdir -p PR-${BITBUCKET_PR_ID}'
-            - pipe: atlassian/sftp-deploy:0.4.0
+            - pipe: atlassian/sftp-deploy:0.5.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/PR-${BITBUCKET_PR_ID}'
                 LOCAL_PATH: 'apps/*/deploy/*'
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
@@ -62,18 +62,18 @@ pipelines:
             - npm install --unsafe-perm
             - node tools/determine-base-URL.js staging
             - npm run build:ci
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf staging && mkdir -p staging'
-            - pipe: atlassian/sftp-deploy:0.4.0
+            - pipe: atlassian/sftp-deploy:0.5.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/staging'
                 LOCAL_PATH: 'apps/*/deploy/*'
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
@@ -88,18 +88,18 @@ pipelines:
             - npm install --unsafe-perm
             - node tools/determine-base-URL.js production
             - npm run build:ci
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 COMMAND: 'cd ${DEPLOY_DOC_ROOT} && rm -rf production && mkdir -p production'
-            - pipe: atlassian/sftp-deploy:0.4.0
+            - pipe: atlassian/sftp-deploy:0.5.0
               variables:
                 USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
                 REMOTE_PATH: '${DEPLOY_DOC_ROOT}/production'
                 LOCAL_PATH: 'apps/*/deploy/*'
-            - pipe: atlassian/ssh-run:0.1.4
+            - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: ${DEPLOY_USER}
                 SERVER: ${DEPLOY_WEBSERVER}
