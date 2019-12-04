@@ -21,6 +21,7 @@ definitions:
           - pipe: sonarsource/sonarcloud-scan:1.0.1
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
+              SONAR_SCANNER_OPTS: -Xmx256m
 pipelines:
   pull-requests:
     '**':
