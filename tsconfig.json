@@ -15,6 +15,13 @@
     "strict": true,
     "target": "es2018"
   },
+  "files": [
+      "globals.d.ts"
+  ],
+  "include": [
+      "apps/*/src/**/*",
+      "libs/*/src/**/*"
+  ],
   "exclude": [
       "node_modules",
       "dist",
