@@ -22,7 +22,9 @@ jobs:
         npm install
         npm run lint:ci
         npm run test:ci
-        find reports -type f -name '*.checkstyle.xml' | xargs sed -i 's+/home/runner/work/edu.schwabe.multi-tenancy-webapp/edu.schwabe.multi-tenancy-webapp+/github/workspace+g'
+        npm run sonar:ci-eslint
+        npm run sonar:ci-stylelint
+        find reports -type f -name '*.json' | xargs sed -i 's+/home/runner/work/edu.schwabe.multi-tenancy-webapp/edu.schwabe.multi-tenancy-webapp+/github/workspace+g'
         find {apps,libs}/*/reports -type f -name 'lcov.info' | xargs sed -i 's+/home/runner/work/edu.schwabe.multi-tenancy-webapp/edu.schwabe.multi-tenancy-webapp+/github/workspace+g'
       env:
         CI: true
