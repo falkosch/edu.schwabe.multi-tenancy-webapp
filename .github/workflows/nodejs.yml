@@ -22,6 +22,8 @@ jobs:
         npm install
         npm run lint:ci
         npm run test:ci
+        find reports -type f -name '*.checkstyle.xml' | xargs sed -i 's+/home/runner/work/edu.schwabe.multi-tenancy-webapp/edu.schwabe.multi-tenancy-webapp+/github/workspace+g'
+        find {apps,libs}/*/reports -type f -name 'lcov.info' | xargs sed -i 's+/home/runner/work/edu.schwabe.multi-tenancy-webapp/edu.schwabe.multi-tenancy-webapp+/github/workspace+g'
       env:
         CI: true
     - name: SonarCloud Scan
@@ -29,7 +31,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: npm install, build, and test
+    - name: generate docs and build artifacts
       run: |
         npm run docs:ci
         npm run build:ci
