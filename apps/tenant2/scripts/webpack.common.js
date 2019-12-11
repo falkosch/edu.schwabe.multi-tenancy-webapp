@@ -8,10 +8,10 @@ module.exports = () => common()
         path.dirname(require.resolve('angular-i18n/package.json')),
     )
     .addResourcesBasePathsToOverride(
-        path.dirname(require.resolve('@edu.schwabe.webapp-prototypes/angularjs-base-app')),
+        path.dirname(require.resolve('@edu.schwabe.multi-tenancy-webapp/angularjs-base-app')),
     )
     .addResourcesBasePathsToOverride(
-        path.dirname(require.resolve('@edu.schwabe.webapp-prototypes/base-service-worker')),
+        path.dirname(require.resolve('@edu.schwabe.multi-tenancy-webapp/base-service-worker')),
     )
     .addConfig({
         plugins: [
