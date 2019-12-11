@@ -129,7 +129,6 @@ module.exports = (env = {}) => common()
                             loader: 'sass-loader',
                             options: {
                                 sourceMap: true, // required for resolve-url-loader, do not omit!
-                                sourceMapContents: false,
                             },
                         },
                         {

@@ -31,10 +31,10 @@
     "test:precommit": "karma start karma-precommit.conf"
   },
   "peerDependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "4.17.15"
   },
   "devDependencies": {
     "lodash": "*",
-    "rimraf": "^2.7.1"
+    "rimraf": "3.0.0"
   }
 }
