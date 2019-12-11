@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import angular from 'angular';
 
-import { IndexModule } from '@edu.schwabe.webapp-prototypes/angularjs-base-app/src/index.module';
+import { IndexModule } from '@edu.schwabe.multi-tenancy-webapp/angularjs-base-app/src/index.module';
 import { Tenant2Module } from './tenant2.module';
 
 describe(`${Tenant2Module} architecture`, () => {
