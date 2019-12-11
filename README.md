@@ -1,4 +1,4 @@
-# edu.schwabe.webapp-prototypes
+# edu.schwabe.multi-tenancy-webapp
 
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 
@@ -24,7 +24,7 @@ Invoking `npm i` in any of the child packages' directories will remove the soft 
 
 ## How to Use
 
-Generally available package.json scripts are:
+General available package.json scripts are:
 
 - Lint and "auto-fix" all sources with `npm run lint`.
 
@@ -46,7 +46,7 @@ As mentioned, the mono repository contains a customizable `base-app` in `libs/` 
 
 - Add access control guard services to the list `StateAccessControlService.guards`.
 
-The functionality is IMHO already way to complex to be a good blueprint example. In that sense, please do not understand it as a blueprint for the next cool looking freaking most modern app that vastly improves everyones life.
+The functionality is IMHO already way to complex to be a good blueprint example. In that sense, please do not understand the app as a blueprint for the next cool looking freaking most modern app that vastly improves every ones life.
 
 Furthermore, lerna, webpack and the repo's build scripts manage the bundling of each tenant app independently and enable the following customizations at build time:
 
@@ -54,7 +54,7 @@ Furthermore, lerna, webpack and the repo's build scripts manage the bundling of 
 
 - Override base-app's SCSS variables by setting them in `apps/<name of tenant>/src/scss/shared/_variables.scss`. Note that the base-app follows a component oriented organization: Each AngularJS-module can import its own SCSS root file. To enable variable overrides, `_variables.scss` is hence injected at the beginning of each such SCSS root file during build time. The tenancy in this project is not designed to enable any other manipulation of SCSS or the rendered CSS. Though, `angular-material` still provides a theming system that is worth to mention here, although this project does not make use of it for now.
 
-### How to Use only one Tenant
+### How to Use one Tenant
 
 Start a tenant with `npx lerna run start --stream --scope */<package.json name of tenant>`, f.e. `npx lerna run start --stream --scope */*tenant1` or even `npx lerna run start --stream --scope */*1`.
 
@@ -70,7 +70,7 @@ Run and watch unit tests of a tenant with `npx lerna run test --stream --scope *
 
 ## What to Learn from this Project
 
-The development of this project took me about 3-4 months (probably more) work time, which includes the Bitbucket and Jenkins pipeline, unit tests, high test coverage, set up of a good toolchain for maintaining clean build scripts code and clean app code. The whole set up went through many cycles of changing the setup over and over again. I am quite happy with the current results now and hope it will help others finding a good setup for their tenancy based projects.
+The development of this project took me about 3-4 months (probably more) work time, which includes the Bitbucket and Jenkins pipeline, unit tests, high test coverage, set up of a good tool chain for maintaining clean build scripts code and clean app code. The whole set up went through many cycles of changing the setup over and over again. I am quite happy with the current results now and hope it will help others finding a good setup for their tenancy based projects.
 
 Although the setup is using AngularJS, it can surely be adapted to contain React, Angular, VueJS or ES6+ tenancy apps as well. For mono repositories containing Angular apps, I would rather recommend using [nrwl/nx](https://github.com/nrwl/nx). It is a little bit more powerful than lerna and integrates well with the "set up, maintaining and extending the app via CLI" approach of Angular.
 
@@ -80,4 +80,4 @@ Get used to it. Do not underestimate efforts for potentially changing already ex
 
 ## Credits
 
-Credits go out to all the software developers of the many projects that actually make the world of a software developer a little bit easier day by day. There are many big projects like lerna or webpack but also many little projects like ngtemplate-loader, material-icons, etc, which would all deserve to be mentioned. However, I do not want to maintain a second depedency list here, so please have a look at the package.json files. All dependencies turned out to be pleasently useful.
+Credits go out to all the software developers of the many projects that actually make the world of a software developer a little bit easier day by day. There are many big projects like lerna or webpack but also many little projects like ngtemplate-loader, material-icons, etc, which would all deserve to be mentioned. However, I do not want to maintain a second dependency list here, so please have a look at the package.json files. All dependencies turned out to be pleasantly useful.

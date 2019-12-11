@@ -24,7 +24,7 @@ describe(`${StateAccessControlModule}.${StateAccessControlServiceName}`, () => {
 
         stateAccessGuardMocks = _.reduce(
             _.times(3),
-            (mocks: Record<string, StateAccessGuard>, i: number) => {
+            (mocks: Record<string, jasmine.SpyObj<StateAccessGuard>>, i: number) => {
                 // eslint-disable-next-line no-param-reassign
                 mocks[`testStateAccessGuard${i}`] = {
                     authorize: jasmine.createSpy('authorize'),

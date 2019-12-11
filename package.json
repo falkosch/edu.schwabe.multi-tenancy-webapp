@@ -1,10 +1,10 @@
 {
-  "name": "@edu.schwabe.webapp-prototypes/webapp-prototypes",
+  "name": "@edu.schwabe.multi-tenancy-webapp/multi-tenancy-webapp",
   "description": "AngularJS multi-tenant web app prototype, build with webpack and babel and tested with karma and jasmine.",
   "private": true,
   "author": {
     "name": "Falko Schwabe",
-    "url": "https://bitbucket.org/falko_schwabe/edu.schwabe.webapp-prototypes"
+    "url": "https://github.com/falkosch/edu.schwabe.multi-tenancy-webapp"
   },
   "scripts": {
     "build:ci": "lerna run build:ci",
