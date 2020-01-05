@@ -1,6 +1,8 @@
 # edu.schwabe.multi-tenancy-webapp
 
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=edu.schwabe.multi-tenancy-webapp&metric=alert_status)](https://sonarcloud.io/dashboard?id=edu.schwabe.multi-tenancy-webapp)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=edu.schwabe.multi-tenancy-webapp&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.schwabe.multi-tenancy-webapp)
 
 This project contains a customizable `base-app` and two example tenant apps in `apps/*`. They showcase how to set up a mono repository for multiple tenant apps.
 

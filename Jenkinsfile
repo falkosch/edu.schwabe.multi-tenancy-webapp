@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'atlassianlabs/docker-node-jdk-chrome-firefox:2019-12-30'
+      label 'docker && linux'
+    }
+  }
   options {
     disableConcurrentBuilds()
     preserveStashes()
@@ -8,6 +13,10 @@ pipeline {
   }
   triggers {
     pollSCM('H */15 * * *')
+  }
+  environment {
+      CI = true
+      HOME = "${env.WORKSPACE}"
   }
   stages {
     stage('checkout') {
@@ -105,7 +114,7 @@ pipeline {
             sh "node tools/determine-base-URL.js ${BRANCH_NAME}"
             sh 'npm run build:ci'
             archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
-            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+            configFileProvider([configFile(fileId: 'webserver-deploy-config', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
                 DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
@@ -135,7 +144,7 @@ pipeline {
             sh "node tools/determine-base-URL.js staging"
             sh 'npm run build:ci'
             archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
-            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+            configFileProvider([configFile(fileId: 'webserver-deploy-config', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
                 DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
@@ -169,7 +178,7 @@ pipeline {
             sh "node tools/determine-base-URL.js production"
             sh 'npm run build:ci'
             archiveArtifacts(artifacts: 'apps/*/deploy/*.zip', fingerprint: true, onlyIfSuccessful: true)
-            configFileProvider([configFile(fileId: '2c564057-2216-4b75-9778-869119e8ff34', variable: 'deployConfigFile')]) {
+            configFileProvider([configFile(fileId: 'webserver-deploy-config', variable: 'deployConfigFile')]) {
               script {
                 deployConfig = readProperties(file: deployConfigFile)
                 DEPLOY_DOC_ROOT = deployConfig.DEPLOY_DOC_ROOT
