@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'atlassianlabs/docker-node-jdk-chrome-firefox:2019-12-30'
+      label 'docker && linux'
+    }
+  }
   options {
     disableConcurrentBuilds()
     preserveStashes()
@@ -8,6 +13,10 @@ pipeline {
   }
   triggers {
     pollSCM('H */15 * * *')
+  }
+  environment {
+      CI = true
+      HOME = "${env.WORKSPACE}"
   }
   stages {
     stage('checkout') {
