@@ -25,7 +25,7 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-        sh 'npm install'
+        sh 'npm ci'
         sh 'npm run clean:ci'
       }
     }
