@@ -167,11 +167,11 @@ module.exports = (env = {}) => common()
                                 },
                                 optipng: {
                                     // https://github.com/imagemin/imagemin-optipng#options
-                                    optimizationLevel: 1,
+                                    optimizationLevel: 7,
                                 },
                                 pngquant: {
                                     // https://github.com/imagemin/imagemin-pngquant#options
-                                    speed: 10,
+                                    speed: 1,
                                 },
                                 gifsicle: {
                                     // https://github.com/imagemin/imagemin-gifsicle#options
@@ -216,7 +216,10 @@ module.exports = (env = {}) => common()
                 cache: true,
                 compressionOptions: {
                     // https://nodejs.org/api/zlib.html#zlib_class_options
-                    level: 1, // compression with best speed
+                    // use as much memory as needed to improve compression ratio
+                    memLevel: 9,
+                    // compression with best ratio
+                    level: 9,
                 },
             }),
             new FileManagerPlugin({
@@ -232,7 +235,10 @@ module.exports = (env = {}) => common()
                         destination: `./deploy/${projectProperties.entryModule}.zip`,
                         options: {
                             zlib: {
-                                level: 1,
+                                // use as much memory as needed to improve compression ratio
+                                memLevel: 9,
+                                // compression with best ratio
+                                level: 9,
                             },
                         },
                     }],
