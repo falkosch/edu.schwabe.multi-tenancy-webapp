@@ -10,7 +10,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '10'))
     preserveStashes(buildCount: 3)
     skipStagesAfterUnstable()
-    timeout(time: 1, unit: 'HOURS')
+    timeout(time: 4, unit: 'HOURS')
   }
 
   triggers {
@@ -148,16 +148,19 @@ pipeline {
 
               sshPublisher(
                 publishers: [
-                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
-                    sshTransfer(
-                      cleanRemote: true,
-                      execCommand: "cd ${DEPLOY_DOC_ROOT}/${BRANCH_NAME}" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                      flatten: true,
-                      makeEmptyDirs: true,
-                      remoteDirectory: "${BRANCH_NAME}",
-                      sourceFiles: 'apps/*/deploy/*.zip'
-                    )
-                  ])
+                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true,
+                    sshRetry: [retries: 99, retryDelay: 1000],
+                    transfers: [
+                      sshTransfer(
+                        cleanRemote: true,
+                        execCommand: "cd ${DEPLOY_DOC_ROOT}/${BRANCH_NAME}" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                        flatten: true,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "${BRANCH_NAME}",
+                        sourceFiles: 'apps/*/deploy/*.zip'
+                      )
+                    ]
+                  )
                 ]
               )
             }
@@ -190,16 +193,19 @@ pipeline {
 
               sshPublisher(
                 publishers: [
-                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
-                    sshTransfer(
-                      cleanRemote: true,
-                      execCommand: "cd ${DEPLOY_DOC_ROOT}/staging" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                      flatten: true,
-                      makeEmptyDirs: true,
-                      remoteDirectory: "staging",
-                      sourceFiles: 'apps/*/deploy/*.zip'
-                    )
-                  ])
+                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true,
+                    sshRetry: [retries: 99, retryDelay: 1000],
+                    transfers: [
+                      sshTransfer(
+                        cleanRemote: true,
+                        execCommand: "cd ${DEPLOY_DOC_ROOT}/staging" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                        flatten: true,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "staging",
+                        sourceFiles: 'apps/*/deploy/*.zip'
+                      )
+                    ]
+                  )
                 ]
               )
             }
@@ -237,16 +243,19 @@ pipeline {
 
               sshPublisher(
                 publishers: [
-                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true, transfers: [
-                    sshTransfer(
-                      cleanRemote: true,
-                      execCommand: "cd ${DEPLOY_DOC_ROOT}/production" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                      flatten: true,
-                      makeEmptyDirs: true,
-                      remoteDirectory: "production",
-                      sourceFiles: 'apps/*/deploy/*.zip'
-                    )
-                  ])
+                  sshPublisherDesc(configName: 'Deploy to webserver', verbose: true,
+                    sshRetry: [retries: 99, retryDelay: 1000],
+                    transfers: [
+                      sshTransfer(
+                        cleanRemote: true,
+                        execCommand: "cd ${DEPLOY_DOC_ROOT}/production" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
+                        flatten: true,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "production",
+                        sourceFiles: 'apps/*/deploy/*.zip'
+                      )
+                    ]
+                  )
                 ]
               ) // sshPublisher
             } // deploy-multi-tenancy-webapp
