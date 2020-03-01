@@ -26,7 +26,7 @@ export class RequiresLoginStateAccessGuardService implements StateAccessGuard {
     public authorize(
         transition: Transition,
         requiresLogin: boolean,
-    ): angular.IPromise<AccessValue<any>> {
+    ): angular.IPromise<AccessValue> {
         if (!requiresLogin || this.userStateService.isLoggedIn) {
             return this.$q.resolve(new AllowanceAccessValue());
         }

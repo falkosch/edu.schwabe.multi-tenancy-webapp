@@ -6,7 +6,7 @@ export const ProfileUnsetValueFilterName = `${ProfileUnsetValueProviderName}Filt
 
 export function ProfileUnsetValueFilter(): angular.IFilterFunction {
 
-    return function filterProfileUnsetValue(input: any): string {
+    return function filterProfileUnsetValue(input: unknown): string {
         if (_.isNil(input)) {
             return '<not set>';
         }

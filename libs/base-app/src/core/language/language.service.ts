@@ -24,7 +24,7 @@ export class LanguageService {
     public constructor(
         private $q: angular.IQService,
         private $translate: angular.translate.ITranslateService,
-        private tmhDynamicLocale: angular.dynamicLocale.tmhDynamicLocaleService,
+        private tmhDynamicLocale: tmh.tmh.IDynamicLocale | any,
         private eventEmitterService: EventEmitterService,
     ) {
         this.eventEmitterService
@@ -64,7 +64,8 @@ export class LanguageService {
 
     private changeLocale(code: string): angular.IPromise<string> {
         moment.locale(code);
-        return this.tmhDynamicLocale.set(code);
+        return this.tmhDynamicLocale.set(code)
+            .then((v: angular.ILocaleService) => v.id);
     }
 
     public onReady(): angular.IPromise<void> {

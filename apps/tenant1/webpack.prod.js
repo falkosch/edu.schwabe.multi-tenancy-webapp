@@ -4,7 +4,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 

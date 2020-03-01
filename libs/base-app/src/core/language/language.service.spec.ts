@@ -22,7 +22,7 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
     let eventEmitterServiceMock: jasmine.SpyObj<EventEmitterService>;
 
     let $translateMock: jasmine.SpyObj<angular.translate.ITranslateService>;
-    let tmhDynamicLocaleMock: jasmine.SpyObj<angular.dynamicLocale.tmhDynamicLocaleService>;
+    let tmhDynamicLocaleMock: jasmine.SpyObj<tmh.tmh.IDynamicLocale>;
 
     let $injector: angular.auto.IInjectorService;
     let $rootScope: angular.IRootScopeService;
@@ -143,7 +143,7 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
 
         beforeEach(() => {
             $translateMock.use
-                .withArgs().and.returnValue(testLanguageCode as any);
+                .and.returnValue(testLanguageCode as any);
         });
 
         it('should return the language code of the currently set language', () => {
@@ -158,7 +158,9 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
         describe('when language code is in the available languages', () => {
 
             beforeEach(() => {
-                tmhDynamicLocaleMock.set.and.returnValue($q.resolve(testLanguageCode));
+                tmhDynamicLocaleMock.set.and.returnValue(
+                    $q.resolve({ id: testLanguageCode } as any),
+                );
                 $translateMock.use.and.returnValue($q.resolve(testLanguageCode));
                 $translateMock.use.calls.reset();
             });
@@ -230,7 +232,7 @@ describe(`${LanguageModule}.${LanguageServiceName}`, () => {
     describe('.onReady()', () => {
 
         beforeEach(() => {
-            tmhDynamicLocaleMock.set.and.returnValue($q.resolve(testLanguageCode));
+            tmhDynamicLocaleMock.set.and.returnValue($q.resolve({ id: testLanguageCode } as any));
             $translateMock.onReady.and.returnValue($q.resolve());
         });
 

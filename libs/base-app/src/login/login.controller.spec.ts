@@ -105,7 +105,7 @@ describe(`${LoginModule}.${LoginComponentName} controller`, () => {
 
         beforeEach(() => {
             globalSpinnerServiceMock.spinWhilePromise
-                .and.callFake(promise => promise);
+                .and.callFake((promise) => promise);
 
             userStateServiceMock.login
                 .and.returnValue(

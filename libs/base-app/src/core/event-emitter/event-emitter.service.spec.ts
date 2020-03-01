@@ -116,7 +116,7 @@ describe(`${EventEmitterModule}.${EventEmitterServiceName}`, () => {
                     $injector.has.withArgs(testEmitterName)
                         .and.returnValue(true);
 
-                    $injector.get.withArgs(testEmitterName)
+                    ($injector.get as any).withArgs(testEmitterName)
                         .and.returnValue(eventEmitterMock as any);
                 });
 
@@ -130,7 +130,7 @@ describe(`${EventEmitterModule}.${EventEmitterServiceName}`, () => {
                     expect($injector.has)
                         .toHaveBeenCalledWith(testEmitterName);
 
-                    expect($injector.get)
+                    expect($injector.get as any)
                         .toHaveBeenCalledWith(testEmitterName);
                 });
 
@@ -149,7 +149,7 @@ describe(`${EventEmitterModule}.${EventEmitterServiceName}`, () => {
                     $injector.has.withArgs(testEmitterName)
                         .and.returnValue(false);
 
-                    $injector.get.withArgs(testEmitterName)
+                    ($injector.get as any).withArgs(testEmitterName)
                         .and.throwError('test failure');
                 });
 
@@ -168,7 +168,7 @@ describe(`${EventEmitterModule}.${EventEmitterServiceName}`, () => {
                     expect($injector.has)
                         .toHaveBeenCalledWith(testEmitterName);
 
-                    expect($injector.get)
+                    expect($injector.get as any)
                         .not.toHaveBeenCalledWith(testEmitterName);
                 });
 

@@ -38,7 +38,7 @@ export class MockAuthenticationService extends AuthenticationService {
 
         return this.profileService.loadProfiles()
             .then(
-                profiles => this.$timeout(_.noop, MockAuthenticationService.MockDelay)
+                (profiles) => this.$timeout(_.noop, MockAuthenticationService.MockDelay)
                     .then(() => {
                         const firstProfile = _.head(profiles);
                         const id = _.get(firstProfile, 'login.uuid') || uuidV4();

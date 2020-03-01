@@ -16,7 +16,7 @@ export class LanguageServiceProvider implements angular.IServiceProvider {
         (
             $q: angular.IQService,
             $translate: angular.translate.ITranslateService,
-            tmhDynamicLocale: angular.dynamicLocale.tmhDynamicLocaleService,
+            tmhDynamicLocale: tmh.tmh.IDynamicLocale | any,
             eventEmitterService: EventEmitterService,
         ) => new LanguageService($q, $translate, tmhDynamicLocale, eventEmitterService),
     );

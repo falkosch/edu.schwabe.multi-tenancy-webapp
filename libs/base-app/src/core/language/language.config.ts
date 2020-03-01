@@ -7,7 +7,7 @@ languageConfig.$inject = [
 
 export function languageConfig(
     $translateProvider: angular.translate.ITranslateProvider,
-    tmhDynamicLocaleProvider: angular.dynamicLocale.tmhDynamicLocaleProvider,
+    tmhDynamicLocaleProvider: any,
 ): void {
     if (process.env.NODE_ENV !== 'test') {
         $translateProvider

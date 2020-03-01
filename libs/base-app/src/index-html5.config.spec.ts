@@ -42,7 +42,7 @@ describe(`${IndexModule} html5 config`, () => {
     });
 
     it('should setup html5Mode', () => {
-        expect($locationProviderMock.html5Mode)
+        expect($locationProviderMock.html5Mode as any)
             .toHaveBeenCalledWith(true);
     });
 

@@ -37,22 +37,22 @@
   "dependencies": {
     "@edu.schwabe.multi-tenancy-webapp/angularjs-base-app": "^0.0.1",
     "@edu.schwabe.multi-tenancy-webapp/base-service-worker": "^0.0.1",
-    "@uirouter/angularjs": "1.0.23",
+    "@uirouter/angularjs": "1.0.25",
     "angular": "1.7.9",
     "angular-animate": "1.7.9",
     "angular-aria": "1.7.9",
     "angular-dynamic-locale": "0.1.37",
     "angular-i18n": "1.7.9",
-    "angular-material": "1.1.20",
+    "angular-material": "1.1.21",
     "angular-messages": "1.7.9",
     "angular-sanitize": "1.7.9",
-    "angular-translate": "2.18.1",
-    "angular-translate-handler-log": "2.18.1",
-    "angular-translate-interpolation-messageformat": "2.18.1",
-    "angular-translate-loader-partial": "2.18.1",
-    "angular-translate-loader-static-files": "2.18.1",
-    "angular-translate-loader-url": "2.18.1",
-    "core-js": "3.4.8",
+    "angular-translate": "2.18.2",
+    "angular-translate-handler-log": "2.18.2",
+    "angular-translate-interpolation-messageformat": "2.18.2",
+    "angular-translate-loader-partial": "2.18.2",
+    "angular-translate-loader-static-files": "2.18.2",
+    "angular-translate-loader-url": "2.18.2",
+    "core-js": "3.6.4",
     "default-passive-events": "1.0.10",
     "lodash": "4.17.15",
     "material-icons": "0.3.1",
@@ -62,9 +62,9 @@
     "uuid-browser": "3.1.0"
   },
   "devDependencies": {
-    "rimraf": "3.0.0",
+    "rimraf": "3.0.2",
     "static-server": "2.2.1",
-    "webpack": "4.41.2",
-    "webpack-dev-server": "3.9.0"
+    "webpack": "4.41.6",
+    "webpack-dev-server": "3.10.3"
   }
 }

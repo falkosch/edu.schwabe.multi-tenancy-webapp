@@ -140,7 +140,7 @@ describe(`${MockBackendModule}.${MockAuthenticationServiceName} implementing ${B
 
                         done();
                     })
-                    .catch(e => done.fail(e));
+                    .catch((e) => done.fail(e));
 
                 $rootScope.$digest();
                 $timeout.flush();

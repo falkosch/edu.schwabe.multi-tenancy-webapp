@@ -140,7 +140,7 @@ describe('base service worker', () => {
                     expect(cacheMock.addAll)
                         .toHaveBeenCalledWith(
                             jasmine.arrayContaining(
-                                _.map(ASSETS, asset => jasmine.stringMatching(asset)),
+                                _.map(ASSETS, (asset) => jasmine.stringMatching(asset)),
                             ),
                         );
                 }));

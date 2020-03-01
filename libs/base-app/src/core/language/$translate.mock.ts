@@ -9,7 +9,7 @@ beforeAll(() => {
 
     const $translateMock: any = jasmine.createSpy()
         .withArgs(jasmine.any(Array))
-        .and.callFake(keys => $q.resolve(_.zipObject(keys, keys)))
+        .and.callFake((keys) => $q.resolve(_.zipObject(keys, keys)))
         .withArgs(jasmine.any(String))
         .and.callFake(_.identity);
 

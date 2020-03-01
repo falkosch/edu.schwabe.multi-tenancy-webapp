@@ -44,7 +44,7 @@ export class MockProfileService extends ProfileService {
             // Let's use some random mock data from randomuser.me
             this._loadProfilesPromise = this.$http
                 .get<{ results: Profile[] }>(MockProfilesUrl)
-                .then(response => response.data.results);
+                .then((response) => response.data.results);
         }
 
         return this._loadProfilesPromise;

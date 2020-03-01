@@ -286,7 +286,7 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
 
                         done();
                     })
-                    .catch(error => done.fail(error));
+                    .catch((error) => done.fail(error));
 
                 $rootScope.$digest();
             });
@@ -405,7 +405,7 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
 
                 testUnit.login(testUserName, testUserPassword)
                     .then(() => done())
-                    .catch(error => done.fail(error));
+                    .catch((error) => done.fail(error));
 
                 $rootScope.$digest();
             });
@@ -417,7 +417,7 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
 
                         done();
                     })
-                    .catch(error => done.fail(error));
+                    .catch((error) => done.fail(error));
 
                 $rootScope.$digest();
             });
@@ -430,7 +430,7 @@ describe(`${UserStateModule}.${UserStateServiceName}`, () => {
 
                         done();
                     })
-                    .catch(error => done.fail(error));
+                    .catch((error) => done.fail(error));
 
                 $rootScope.$digest();
             });

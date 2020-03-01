@@ -31,7 +31,7 @@ function _hashFile(file) {
     // console.log('Hashing', file);
     _.forEach(
         _filterSupportedAlgorithms(['md5', 'sha1', 'sha256', 'sha384', 'sha512']),
-        algorithm => _hashFileWithAlgorithm(file, algorithm),
+        (algorithm) => _hashFileWithAlgorithm(file, algorithm),
     );
 }
 
@@ -40,6 +40,6 @@ const deployDirectory = _getDeployDirectory();
 fs.readdir(
     deployDirectory,
     (__, files) => {
-        _.forEach(files, file => _hashFile(`${deployDirectory}/${file}`));
+        _.forEach(files, (file) => _hashFile(`${deployDirectory}/${file}`));
     },
 );

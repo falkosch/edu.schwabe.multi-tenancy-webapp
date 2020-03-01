@@ -54,7 +54,7 @@ const BLACK_LIST_TESTER = [
 
 const ASSETS_TO_CACHE = _.map(
     [...assets, './'],
-    path => new URL(path, global.location).toString(),
+    (path) => new URL(path, global.location).toString(),
 );
 
 // When the service worker is first time installed,
@@ -72,7 +72,7 @@ self.addEventListener('activate', (event) => {
     // Clean the caches
     event.waitUntil(
         global.caches.keys()
-            .then(cacheNames => Promise.all(
+            .then((cacheNames) => Promise.all(
                 _.map(cacheNames, (cacheName) => {
                     // Delete the caches that are not the current one.
                     if (_.startsWith(cacheName, CACHE_PREFIX)) {
@@ -105,7 +105,7 @@ self.addEventListener('fetch', (event) => {
                     .then((responseFromNetwork) => {
                         const isBlacklisted = _.some(
                             BLACK_LIST_TESTER,
-                            tester => tester(request, responseFromNetwork),
+                            (tester) => tester(request, responseFromNetwork),
                         );
                         if (isBlacklisted) {
                             return responseFromNetwork;

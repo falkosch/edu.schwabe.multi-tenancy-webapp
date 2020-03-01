@@ -15,9 +15,9 @@ export class LoginController {
 
     public $loginForm?: angular.IFormController;
 
-    public username: string = '';
+    public username = '';
 
-    public password: string = '';
+    public password = '';
 
     public constructor(
         private userStateService: UserStateService,

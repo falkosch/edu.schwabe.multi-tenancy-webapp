@@ -74,7 +74,7 @@ describe(`${MenubarModule}.${MenubarName} controller`, () => {
         globalSpinnerServiceMock = {
             spinWhilePromise: jasmine.createSpy()
                 .and
-                .callFake(v => v),
+                .callFake((v) => v),
         } as any;
 
         profileServiceMock = {

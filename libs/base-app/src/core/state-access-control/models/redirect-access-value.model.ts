@@ -3,7 +3,7 @@ import { TargetState } from '@uirouter/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AccessValue } from './access-value.model';
 
-export class RedirectAccessValue implements AccessValue<TargetState> {
+export class RedirectAccessValue implements AccessValue {
 
     public constructor(private targetState: TargetState) { }
 

@@ -7,7 +7,7 @@ export class AppController {
         GlobalSpinnerServiceName,
     ];
 
-    public sideNavId: string = 'left';
+    public sideNavId = 'left';
 
     public constructor(
         private $mdSidenav: angular.material.ISidenavService,

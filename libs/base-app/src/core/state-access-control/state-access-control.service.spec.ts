@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import angular from 'angular';
+import { StateObject } from '@uirouter/angularjs';
 import { Transition } from '@uirouter/core';
 
 import { StateAccessControlModule } from './state-access-control.module';
 import { StateAccessControlServiceName, StateAccessControlService } from './state-access-control.service';
-import { StateAccessControlProperty } from './state-access-control-decorator.config';
+import { StateAccessControlProperty } from './models/state-access-control-value.model';
 import { StateAccessGuard } from './models/state-access-guard.model';
 import { AllowanceAccessValue } from './models/allowance-access-value.model';
 import { DenialAccessValue } from './models/denial-access-value.model';
@@ -72,7 +73,7 @@ describe(`${StateAccessControlModule}.${StateAccessControlServiceName}`, () => {
 
     describe('.authorize(transition)', () => {
 
-        let testState;
+        let testState: StateObject;
 
         let transitionMock: Transition;
 
@@ -94,7 +95,7 @@ describe(`${StateAccessControlModule}.${StateAccessControlServiceName}`, () => {
 
             testState = {
                 [StateAccessControlProperty]: {
-                    ...guardsMock,
+                    ..._.mapValues(guardsMock, _.constant(true)),
                 },
             };
 
@@ -128,11 +129,9 @@ describe(`${StateAccessControlModule}.${StateAccessControlServiceName}`, () => {
 
             it('should pass parameters defined in the state to the guards', (done) => {
                 testGuardSetup(done, () => {
-                    _.forEach(stateAccessGuardMocks, (stateAccessGuardMock, guardProperty) => {
-                        const guardParameter = guardProperty;
-
+                    _.forEach(stateAccessGuardMocks, (stateAccessGuardMock) => {
                         expect(stateAccessGuardMock.authorize)
-                            .toHaveBeenCalledWith(transitionMock, guardParameter);
+                            .toHaveBeenCalledWith(transitionMock, true);
                     });
                 });
             });

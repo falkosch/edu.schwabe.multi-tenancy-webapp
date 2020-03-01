@@ -11,16 +11,16 @@ const baseURLBuilder = (function createBaseURLBuilder(deploymentTarget) {
     const defaultBuilder = _.constant('/');
     const DeploymentTargetToBaseURLBuilderMappings = [
         {
-            predicate: target => target === 'production',
+            predicate: (target) => target === 'production',
             builder: defaultBuilder,
         },
         {
-            predicate: target => target === 'staging',
-            builder: entryModule => `/${entryModule}/`,
+            predicate: (target) => target === 'staging',
+            builder: (entryModule) => `/${entryModule}/`,
         },
         {
-            predicate: target => !_.isNil(target),
-            builder: entryModule => `/${deploymentTarget}/${entryModule}/`,
+            predicate: (target) => !_.isNil(target),
+            builder: (entryModule) => `/${deploymentTarget}/${entryModule}/`,
         },
         {
             predicate: _.constant(true),
@@ -36,8 +36,8 @@ const baseURLBuilder = (function createBaseURLBuilder(deploymentTarget) {
 
 lernaListRepoPackages()
     .then(
-        repoPackages => Promise.all(
-            _.map(repoPackages, repoPackage => determineBaseURLFor(repoPackage)),
+        (repoPackages) => Promise.all(
+            _.map(repoPackages, (repoPackage) => determineBaseURLFor(repoPackage)),
         ),
     )
     .then((result) => {

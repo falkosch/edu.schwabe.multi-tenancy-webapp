@@ -1,15 +1,12 @@
 module.exports = {
     root: true,
     extends: [
-        'problems', // inherents extends of eslint:recommended
-        'plugin:import/recommended',
         'airbnb-base',
         'plugin:import/typescript',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:jasmine/recommended',
         'plugin:lodash/recommended',
-        'plugin:compat/recommended',
         'plugin:sonarjs/recommended',
         'plugin:angular/johnpapa',
     ],
@@ -26,18 +23,13 @@ module.exports = {
         },
     },
     plugins: [
+        '@typescript-eslint',
         'jasmine',
         'sonarjs',
         'html',
         'json',
         'markdown',
     ],
-    settings: {
-        polyfills: [
-            // Marks Promise as polyfilled, see https://github.com/amilajack/eslint-plugin-compat/issues/103#issuecomment-349155444
-            "Promise",
-        ],
-    },
     rules: {
         'class-methods-use-this': 'off',
         indent: ['error', 4],
@@ -47,6 +39,8 @@ module.exports = {
 
         'lodash/import-scope': 'off',
         'lodash/prefer-constant': 'off',
+
+        'max-classes-per-file': 'off',
 
         // our modules' file names use the different pattern "<name>.module.<ext>"
         'angular/file-name': 'off',
@@ -58,11 +52,9 @@ module.exports = {
         // https://basarat.gitbooks.io/typescript/docs/tips/defaultIsBad.html
         'import/prefer-default-export': 'off',
         'import/no-default-export': 'error',
-        'no-use-before-define': ['error', {
-            functions: false,
-            classes: false,
-            variables: true,
-        }],
+
+        'import/extensions': 'off',
+        '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/no-use-before-define': ['error', {
             functions: false,
             classes: false,
@@ -74,7 +66,6 @@ module.exports = {
             allowTypedFunctionExpressions: true,
         }],
         '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-parameter-properties': 'off',
         '@typescript-eslint/no-unused-vars': ['error', {
             argsIgnorePattern: '^__(_*|\\w+)$',
         }]
@@ -86,14 +77,6 @@ module.exports = {
             ],
             rules: {
                 'no-useless-constructor': 'off',
-                'no-empty-function': ['error', {
-                    allow: [
-                        'arrowFunctions',
-                        'functions',
-                        'methods',
-                        'constructors',
-                    ],
-                }],
             },
         },
         {
@@ -118,7 +101,6 @@ module.exports = {
             },
             rules: {
                 'no-restricted-globals': 'off',
-                'compat/compat': 'off',
             },
         },
         {
@@ -134,8 +116,8 @@ module.exports = {
                 '**/*.d.ts',
             ],
             rules: {
-                'import/no-default-export': 'off',
                 'no-restricted-globals': 'off',
+                'import/no-default-export': 'off',
             },
         },
         {
@@ -171,10 +153,11 @@ module.exports = {
                 'apps/*/webpack.*.js',
             ],
             rules: {
-                'no-console': 'off',
                 'import/no-extraneous-dependencies': 'off',
+                'no-console': 'off',
                 'sonarjs/no-duplicate-string': 'off',
                 '@typescript-eslint/no-var-requires': 'off',
+                '@typescript-eslint/explicit-function-return-type': 'off',
             },
         },
     ],

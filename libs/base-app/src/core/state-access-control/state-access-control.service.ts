@@ -26,16 +26,16 @@ export class StateAccessControlService {
 
     public authorize(
         transition: Transition,
-    ): angular.IPromise<AccessValue<any>> {
+    ): angular.IPromise<AccessValue> {
         const targetState = transition.to();
         const stateAccessControl = stateAccessControlDecorator(targetState);
 
         return this._forEachGuard(
             (
-                promise: angular.IPromise<AccessValue<any>>,
+                promise: angular.IPromise<AccessValue>,
                 guardService: StateAccessGuard,
                 guardProperty: string,
-            ) => promise.then((currentAccessValue: AccessValue<any>) => {
+            ) => promise.then((currentAccessValue: AccessValue) => {
                 if (currentAccessValue.isAuthorized()) {
                     const guardParameters = stateAccessControl[guardProperty];
                     return guardService.authorize(transition, guardParameters);
@@ -50,15 +50,15 @@ export class StateAccessControlService {
 
     private _forEachGuard(
         iteratee: (
-            promise: angular.IPromise<AccessValue<any>>,
+            promise: angular.IPromise<AccessValue>,
             guardService: StateAccessGuard,
             guardProperty: string,
-        ) => angular.IPromise<AccessValue<any>>,
-    ): angular.IPromise<AccessValue<any>> {
+        ) => angular.IPromise<AccessValue>,
+    ): angular.IPromise<AccessValue> {
         return _.reduce(
             this.guards,
             (
-                promise: angular.IPromise<AccessValue<any>>,
+                promise: angular.IPromise<AccessValue>,
                 guardServiceName: string,
                 guardProperty: string,
             ) => {

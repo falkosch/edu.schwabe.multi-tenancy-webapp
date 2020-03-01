@@ -73,7 +73,7 @@ describe(`${RequiresLoginStateAccessGuardModule}.${RequiresLoginStateAccessGuard
             expectedAuthorized: boolean,
         ): void {
             testUnit.authorize(transitionMock, requiresLogin)
-                .then((accessValue: AccessValue<any>) => {
+                .then((accessValue: AccessValue) => {
 
                     expect(accessValue.isAuthorized())
                         .toBe(expectedAuthorized);

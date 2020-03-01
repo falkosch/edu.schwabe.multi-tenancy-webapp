@@ -2,8 +2,9 @@ import _ from 'lodash';
 import angular from 'angular';
 import uiRouter, { StateProvider, StateObject } from '@uirouter/angularjs';
 
+import { StateAccessControlProperty } from './models/state-access-control-value.model';
 import { StateAccessControlModule } from './state-access-control.module';
-import { stateAccessControlDecoratorConfig, StateAccessControlProperty, stateAccessControlDecorator } from './state-access-control-decorator.config';
+import { stateAccessControlDecoratorConfig, stateAccessControlDecorator } from './state-access-control-decorator.config';
 
 describe(`${StateAccessControlModule} state decorator config`, () => {
 
@@ -49,12 +50,12 @@ describe(`${StateAccessControlModule} state decorator config`, () => {
         describe(`when ${StateAccessControlProperty} is already present on the state`, () => {
             const testState: StateObject = {
                 [StateAccessControlProperty]: {
-                    test: 'test',
+                    test: true,
                 },
             } as any;
 
             it('should return that already annotated data', () => {
-                expect(stateAccessControlDecorator(testState))
+                expect(stateAccessControlDecorator(testState) as any)
                     .toBe(testState[StateAccessControlProperty]);
             });
 

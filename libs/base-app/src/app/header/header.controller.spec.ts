@@ -330,7 +330,7 @@ describe(`${HeaderModule}.${HeaderComponentName} controller`, () => {
 
         beforeEach(() => {
             languageServiceMock.changeLanguage
-                .and.callFake(code => $q.resolve(code));
+                .and.callFake((code) => $q.resolve(code));
         });
 
         it('should change the language', () => {

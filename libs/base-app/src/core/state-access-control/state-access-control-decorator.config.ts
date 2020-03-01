@@ -1,12 +1,12 @@
 import { StateProvider, StateObject, Ng1StateDeclaration } from '@uirouter/angularjs';
 
-stateAccessControlDecoratorConfig.$inject = ['$stateProvider'];
+import { StateAccessControlValue, StateAccessControlProperty } from './models/state-access-control-value.model';
 
-export const StateAccessControlProperty = 'accessControl';
+stateAccessControlDecoratorConfig.$inject = ['$stateProvider'];
 
 export function stateAccessControlDecorator(
     state: StateObject | Ng1StateDeclaration,
-): any {
+): StateAccessControlValue {
     return state[StateAccessControlProperty] || {};
 }
 

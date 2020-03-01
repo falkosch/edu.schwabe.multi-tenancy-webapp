@@ -25,7 +25,7 @@ describe(`${GlobalSpinnerModule}.${GlobalSpinnerServiceName}`, () => {
                 return mockIsBusy;
             },
             track: jasmine.createSpy('track')
-                .and.callFake(promise => promise),
+                .and.callFake((promise) => promise),
         };
 
         angular.mock.module(GlobalSpinnerModule, {

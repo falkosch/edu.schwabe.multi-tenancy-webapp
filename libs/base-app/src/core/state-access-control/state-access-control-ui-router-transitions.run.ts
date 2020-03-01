@@ -12,7 +12,7 @@ export function onBeforeHookBuilder(
 ): TransitionHookFn {
     return (transition: Transition) => Promise.resolve(
         stateAccessControlService.authorize(transition)
-            .then(accessValue => accessValue.routerResponse()),
+            .then((accessValue) => accessValue.routerResponse()),
     );
 }
 

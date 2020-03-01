@@ -10,7 +10,7 @@ export const ASSETS = [
 // cannot be postponed to later when jasmine is scheduling the it-tests.
 export class SpyData {
 
-    public strategy = (...args: any[]) => this.passthrough(...args);
+    public strategy = (...args: any[]): any => this.passthrough(...args);
 
     private original: Function;
 
@@ -38,7 +38,7 @@ export class SpyData {
     public lastCalls(...argsSample: any[]): any[][] {
         return _.filter(
             this.calls,
-            callArgs => _.isEqual(argsSample, _.slice(callArgs, 0, _.size(argsSample))),
+            (callArgs) => _.isEqual(argsSample, _.slice(callArgs, 0, _.size(argsSample))),
         );
     }
 

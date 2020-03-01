@@ -1,4 +1,6 @@
-export interface AccessValue<T> {
+import { HookResult } from '@uirouter/core';
+
+export interface AccessValue {
     isAuthorized(): boolean;
-    routerResponse(): T;
+    routerResponse(): HookResult;
 }

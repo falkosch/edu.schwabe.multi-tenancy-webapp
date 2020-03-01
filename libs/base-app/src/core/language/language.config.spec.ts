@@ -9,7 +9,7 @@ import { languageConfig } from './language.config';
 describe(`${LanguageModule} config`, () => {
 
     let $translateProviderMock: angular.translate.ITranslateProvider;
-    let tmhDynamicLocaleProviderMock: angular.dynamicLocale.tmhDynamicLocaleProvider;
+    let tmhDynamicLocaleProviderMock: any;
 
     let $injector: angular.auto.IInjectorService;
 
@@ -30,11 +30,11 @@ describe(`${LanguageModule} config`, () => {
             spyOn($translateProviderMock, 'useSanitizeValueStrategy')
                 .and.returnValue($translateProviderMock);
             spyOn($translateProviderMock, 'use')
-                .withArgs().and.returnValue(LanguageConstants.default as any);
+                .and.returnValue(LanguageConstants.default as any);
         });
 
         angular.mock.module('tmh.dynamicLocale', (
-            tmhDynamicLocaleProvider: angular.dynamicLocale.tmhDynamicLocaleProvider,
+            tmhDynamicLocaleProvider: any,
         ) => {
             tmhDynamicLocaleProviderMock = tmhDynamicLocaleProvider;
             spyOn(tmhDynamicLocaleProviderMock, 'localeLocationPattern');
@@ -72,7 +72,7 @@ describe(`${LanguageModule} config`, () => {
     });
 
     it('should set a fallback language', () => {
-        expect($translateProviderMock.fallbackLanguage)
+        expect($translateProviderMock.fallbackLanguage as any)
             .toHaveBeenCalledWith(LanguageConstants.fallback);
     });
 
