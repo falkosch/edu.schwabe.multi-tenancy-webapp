@@ -63,13 +63,15 @@ pipeline {
 
                 cobertura([
                   coberturaReportFile: '**/reports/cobertura-coverage.xml',
-                  conditionalCoverageTargets: '80, 0, 0',
+                  conditionalCoverageTargets: '50, 0, 0',
                   enableNewApi: true,
-                  lineCoverageTargets: '80, 0, 0',
+                  lineCoverageTargets: '50, 0, 0',
                   maxNumberOfBuilds: 0,
-                  methodCoverageTargets: '80, 0, 0',
+                  methodCoverageTargets: '50, 0, 0',
                   onlyStable: false,
-                  sourceEncoding: 'ASCII'
+                  sourceEncoding: 'ASCII',
+                  autoUpdateHealth: false,
+                  autoUpdateStability: false
                 ])
               }
 
