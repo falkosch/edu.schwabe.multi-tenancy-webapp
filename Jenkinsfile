@@ -153,11 +153,19 @@ pipeline {
                     transfers: [
                       sshTransfer(
                         cleanRemote: true,
-                        execCommand: "cd ${DEPLOY_DOC_ROOT}/${BRANCH_NAME}" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                        flatten: true,
+                        flatten: false,
                         makeEmptyDirs: true,
-                        remoteDirectory: "${BRANCH_NAME}",
-                        sourceFiles: 'apps/*/deploy/*.zip'
+                        remoteDirectory: "${BRANCH_NAME}/tenant1",
+                        sourceFiles: 'apps/tenant1/dist/*',
+                        removePrefix: 'apps/tenant1/dist'
+                      ),
+                      sshTransfer(
+                        cleanRemote: true,
+                        flatten: false,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "${BRANCH_NAME}/tenant2",
+                        sourceFiles: 'apps/tenant2/dist/*',
+                        removePrefix: 'apps/tenant2/dist'
                       )
                     ]
                   )
@@ -198,11 +206,19 @@ pipeline {
                     transfers: [
                       sshTransfer(
                         cleanRemote: true,
-                        execCommand: "cd ${DEPLOY_DOC_ROOT}/staging" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                        flatten: true,
+                        flatten: false,
                         makeEmptyDirs: true,
-                        remoteDirectory: "staging",
-                        sourceFiles: 'apps/*/deploy/*.zip'
+                        remoteDirectory: "staging/tenant1",
+                        sourceFiles: 'apps/tenant1/dist/*',
+                        removePrefix: 'apps/tenant1/dist'
+                      ),
+                      sshTransfer(
+                        cleanRemote: true,
+                        flatten: false,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "staging/tenant2",
+                        sourceFiles: 'apps/tenant2/dist/*',
+                        removePrefix: 'apps/tenant2/dist'
                       )
                     ]
                   )
@@ -248,11 +264,19 @@ pipeline {
                     transfers: [
                       sshTransfer(
                         cleanRemote: true,
-                        execCommand: "cd ${DEPLOY_DOC_ROOT}/production" + ' && for f in *.zip; do unzip \$f -d \${f%.zip}; done',
-                        flatten: true,
+                        flatten: false,
                         makeEmptyDirs: true,
-                        remoteDirectory: "production",
-                        sourceFiles: 'apps/*/deploy/*.zip'
+                        remoteDirectory: "production/tenant1",
+                        sourceFiles: 'apps/tenant1/dist/*',
+                        removePrefix: 'apps/tenant1/dist'
+                      ),
+                      sshTransfer(
+                        cleanRemote: true,
+                        flatten: false,
+                        makeEmptyDirs: true,
+                        remoteDirectory: "production/tenant2",
+                        sourceFiles: 'apps/tenant2/dist/*',
+                        removePrefix: 'apps/tenant2/dist'
                       )
                     ]
                   )
