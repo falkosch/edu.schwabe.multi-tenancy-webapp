@@ -7,7 +7,7 @@
     "url": "https://github.com/falkosch/edu.schwabe.multi-tenancy-webapp"
   },
   "scripts": {
-    "build:ci": "lerna run build:ci",
+    "build:ci": "lerna run build:ci --concurrency 1",
     "clean": "rimraf ./.scannerwork ./reports ./docs ./node_modules/.cache",
     "clean:ci": "npm run clean && lerna run clean:ci",
     "docs": "typedoc",
@@ -26,7 +26,7 @@
     "sonar:ci": "npm run sonar:ci-eslint && npm run sonar:ci-stylelint && sonar-scanner",
     "sonar:ci-eslint": "eslint \"**/*\" -f json -o reports/eslint.json",
     "sonar:ci-stylelint": "stylelint . -f json > reports/stylelint.json",
-    "test:ci": "lerna run test:ci",
+    "test:ci": "lerna run test:ci --concurrency 1",
     "test:precommit": "lerna run test:precommit"
   },
   "husky": {
