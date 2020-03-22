@@ -73,7 +73,7 @@
     "lodash": "*",
     "material-icons": "*",
     "moment": "*",
-    "rimraf": "3.0.0",
+    "rimraf": "3.0.2",
     "rx-angular": "*",
     "uuid-browser": "*"
   }
