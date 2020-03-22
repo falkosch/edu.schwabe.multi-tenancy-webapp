@@ -31,55 +31,49 @@ pipeline {
       }
     }
 
-    stage('validation') {
-      failFast false
-
-      parallel {
-        stage('lint') {
-          steps {
-            script {
-              try {
-                sh 'npm run lint:ci'
-              }
-              finally {
-                recordIssues(
-                  enabledForFailure: true,
-                  ignoreFailedBuilds: false,
-                  qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
-                  tools: [checkStyle(pattern: 'reports/*.checkstyle.xml')]
-                )
-              }
-            }
+    stage('lint') {
+      steps {
+        script {
+          try {
+            sh 'npm run lint:ci'
+          }
+          finally {
+            recordIssues(
+              enabledForFailure: true,
+              ignoreFailedBuilds: false,
+              qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
+              tools: [checkStyle(pattern: 'reports/*.checkstyle.xml')]
+            )
           }
         }
+      }
+    }
 
-        stage('unit tests') {
-          steps {
-            script {
-              try {
-                sh 'npm run test:ci'
-              }
-              finally {
-                junit '**/reports/test-reports/TESTS*.xml'
+    stage('unit tests') {
+      steps {
+        script {
+          try {
+            sh 'npm run test:ci'
+          }
+          finally {
+            junit '**/reports/test-reports/TESTS*.xml'
 
-                cobertura([
-                  coberturaReportFile: '**/reports/cobertura-coverage.xml',
-                  conditionalCoverageTargets: '50, 0, 0',
-                  enableNewApi: true,
-                  lineCoverageTargets: '50, 0, 0',
-                  maxNumberOfBuilds: 0,
-                  methodCoverageTargets: '50, 0, 0',
-                  onlyStable: false,
-                  sourceEncoding: 'ASCII',
-                  autoUpdateHealth: false,
-                  autoUpdateStability: false
-                ])
-              }
+            cobertura([
+                coberturaReportFile: '**/reports/cobertura-coverage.xml',
+                conditionalCoverageTargets: '50, 0, 0',
+                enableNewApi: true,
+                lineCoverageTargets: '50, 0, 0',
+                maxNumberOfBuilds: 0,
+                methodCoverageTargets: '50, 0, 0',
+                onlyStable: false,
+                sourceEncoding: 'ASCII',
+                autoUpdateHealth: false,
+                autoUpdateStability: false
+            ])
+          }
 
-              if (currentBuild.resultIsWorseOrEqualTo('UNSTABLE')) {
-                error('Test stage did not pass')
-              }
-            }
+          if (currentBuild.resultIsWorseOrEqualTo('UNSTABLE')) {
+            error('Test stage did not pass')
           }
         }
       }
