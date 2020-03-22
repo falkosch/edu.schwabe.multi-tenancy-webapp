@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'atlassianlabs/docker-node-jdk-chrome-firefox:2019-12-30'
+      image 'schwabe/nodejs-toolchain:latest'
       label 'docker && linux'
     }
   }
