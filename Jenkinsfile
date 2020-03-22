@@ -3,6 +3,7 @@ pipeline {
     docker {
       image 'schwabe/nodejs-toolchain:latest'
       label 'docker && linux'
+      args '--memory=1g --memory-swap=1g'
     }
   }
 
