@@ -9,7 +9,7 @@ This project contains a customizable `base-app` and two example tenant apps in `
 
 Additionally, the continuous deployment of each tenant app is also showcased:
 
-- Pull requests are build and deployed to a temporary ´test´ environment, f.e. [tenant1 of PR-23](https://iterative-prototyping.com/PR-23/tenant1/) or [tenant2 of PR-23](https://iterative-prototyping.com/PR-23/tenant2/).
+- Pull requests are build and deployed to a temporary ´test´ environment, f.e. [tenant1 of PR-9](https://iterative-prototyping.com/PR-9/tenant1/) or [tenant2 of PR-9](https://iterative-prototyping.com/PR-9/tenant2/).
 
 - The master branch is build and deployed to the `staging` environment for every pull request merged into that branch, i.e. [tenant1 on staging](https://staging.iterative-prototyping.com/tenant1/) or [tenant2 on staging](https://staging.iterative-prototyping.com/tenant2/).
 
